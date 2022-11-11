@@ -1,6 +1,6 @@
 function validateEndDate() {
 	if(document.getElementById('availabilityEnd').value<document.getElementById('availabilityStart').value) 
-		document.getElementById('availabilityEnd').setCustomValidity('Esta fecha debe ser mayor a la fecha inicial');
+		document.getElementById('availabilityEnd').setCustomValidity('end date must be greater than start date');
 	else 
 		document.getElementById('availabilityEnd').setCustomValidity('');
 }
@@ -28,32 +28,11 @@ function validateStartDate(){
         document.getElementById('availabilityStart').setCustomValidity('');
 }
 
+
 function validcuil(cuit) //recibe un string
-	{
-		if (cuit.length != 13) return 0; //si el largo del string es menor a 13, retorna 0 la funcion
-		
-		var rv = false;
-		var resultado = 0;
-		var cuit_nro = cuit.replace("-", ""); //reemplaza guiones por espacios
-		var codes = "6789456789";
-		var cuit_long = parseInt(cuit_nro); //convierte string a int
-		var verificador = parseInt(cuit_nro[cuit_nro.length-1]);
-		var x = 0;
-		
-		while (x < 10)
-		{
-			var digitoValidador = parseInt(codes.substring(x, x+1));
-			if (isNaN(digitoValidador)) digitoValidador = 0;
-			var digito = parseInt(cuit_nro.substring(x, x+1));
-			if (isNaN(digito)) digito = 0;
-			var digitoValidacion = digitoValidador * digito;
-			resultado += digitoValidacion;
-			x++;
-		}
-		resultado = resultado % 11;
-		rv = (resultado == verificador);
-		return rv;
-	}
+{
+		if (cuit.length != 11) return 0; //si el largo del string es distinto a 11, retorna 0 la funcion
+}
 
 function validateCuil()
 {
@@ -65,6 +44,15 @@ function validateCuil()
     }
     console.log(cuil);
     
+}
+
+function validatePassword()
+{
+	if(document.getElementById('Password').value.length < 6){
+		document.getElementById('Password').setCustomValidity("password must be at least 6 characters long");
+	}else{
+		document.getElementById('Password').setCustomValidity('');
+	}
 }
 
 

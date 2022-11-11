@@ -38,12 +38,10 @@ include_once('header.php');
         
         <div class="row mb-4 mt-4">
             
-            <div class="col">
-                <input type="number" id="Cuil" class="form-control" name="cuil" required />
-                <label class="form-label" for="Cuil">CUIL</label>
-            </div>
-
-            
+        <div class="col">
+        <label class="form-label" for="Cuil">CUIL</label>
+        <input type="number" id="Cuil" class="form-control" name="cuil" oninput="validateCuil()" />
+        </div>
             <div class="col">
                 <input type="text" id="Address" class="form-control" name="address" required />
                 <label class="form-label" for="Address">Address</label>
@@ -83,9 +81,9 @@ include_once('header.php');
             </div>
             <!-- pass -->
             <div class="col">
-                <div class="form-outline">
-                    <input type="password" id="Password" class="form-control" name="password" required />
+            <div class="form-outline">
                     <label class="form-label" for="Password">Password</label>
+                    <input type="password" id="Password" class="form-control" name="password" oninput="validatePassword()" required />
                 </div>
             </div>
         </div>

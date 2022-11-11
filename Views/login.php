@@ -20,7 +20,7 @@ include_once("header.php");
         <input type="radio" id="keeper" name="userType" value ="keeper"  />
         
         <br>
-        <button type="submit" class="btn btn-info">Register</button>
+        <button type="submit" class="btn btn-info">Log in</button>
     </form>
         </div>
 </body>
