@@ -1,11 +1,11 @@
 <?php include("navbar-home.php"); ?>
-<div class="card mb-3">
+<div class="card-body mb-3 ">
     <div class="row g-0 d-flex align-items-center bg-dark text-white ">
         <div class="col-lg-4 d-none d-lg-flex">
             <img src="https://i.pinimg.com/originals/0a/19/55/0a1955fd5c4bd0bea8d4f6397dce80bd.jpg" alt="Trendy Pants and Shoes" class="w-100 rounded-t-5 rounded-tr-lg-0 rounded-bl-lg-5" />
         </div>
         <div class="col-lg-8">
-            <div class="card-body py-5 px-md-5">
+            <div id=""class="card-body py-5 px-md-5">
                 <div class="text-center mb-5">
                     <h1 class="h1">¡WELCOME,OWNER!</h1>
                 </div>

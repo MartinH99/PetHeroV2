@@ -41,6 +41,8 @@
             require_once(VIEWS_PATH."pet-list-byid.php");
         }
 
+        
+        
         public function Add($name, $size,$breed,$animalType) ///Aca no tomo el id de la mascota porque se hace automatico al ingresar al DAO 
         {///Pueden pasar esta func a los otros controllers /**Consultar como la funcion recibe estos parametros del form relacionado al Router/Request  */
             echo "ANIMALTYPE";var_dump($animalType);
