@@ -1,0 +1,60 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: white;
+}
+
+.hr {
+  border: 0;
+  height: 2px;
+  background-image: linear-gradient(to right, white, rgb(153, 69, 192), white);
+}
+
+.btn {
+  color: rgb(104, 22, 129);
+  background-color: white;
+}
+.btn:hover {
+  transition: background-color 0.5s ease;
+  background-color: rgb(178, 108, 199);
+  color: white;
+}
+
+.badge {
+  color: white;
+  background-color: rgb(104, 22, 129);
+}
+
+.bg-color {
+  background-image: linear-gradient(to right, white, rgb(153, 69, 192), white);
+  color: white;
+}
+
+.form-floating {
+  width: 30%;
+}
+
+.bg-image {
+  background-image: url(../imgs/fondosnk.jpg);
+  background-size: cover;
+}
+
+.bg-contacto {
+  background-color: rgba(4, 7, 7, 0.582);
+  color: white;
+}
+
+/*mapas*/
+.dat--contact {
+  color: rgb(214, 160, 221);
+}
+
+/*animaciones*/
+.card:hover {
+  transform: scale(1.1);
+  transition-property: all;
+  transition-duration: 0.5s;
+}/*# sourceMappingURL=style.css.map */

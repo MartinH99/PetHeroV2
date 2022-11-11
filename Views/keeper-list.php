@@ -34,7 +34,6 @@
                     <td><?php echo $keeper->getEmail() ?></td>
                     <td><?php echo $keeper->getAddress() ?></td>
                     <td><?php echo $keeper->getCuil() ?></td>
-                    <td><?php echo $keeper->getAddress() ?></td>
                     <td><?php echo $keeper->getAvailStart() ?></td>
                     <td><?php echo $keeper->getAvailEnd() ?></td>
                     <td><?php echo $keeper->getPrice() ?></td>

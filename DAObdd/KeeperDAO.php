@@ -75,12 +75,12 @@ class KeeperDAO
                     $keeper->setTelephone($row["telephone"]);
                     $keeper->setCuil($row["cuil"]);
                     $keeper->setAvailStart($row["availStart"]);
-                    $keeper->setAvailEnd($row["availStart"]);
+                    $keeper->setAvailEnd($row["availEnd"]);
                     $keeper->setInterval(0);
                     $keeper->setPrice($row["price"]);
                     $keeper->setStars($row["stars"]);
 
-                    var_dump($keeper);
+                    
 
                     array_push($keeperList, $keeper);
                 }
@@ -117,6 +117,36 @@ class KeeperDAO
 
             $query = "SELECT * FROM $this->tablename WHERE username = :username;";
             $parameters["username"] = $username;
+            try
+            {
+                
+                $this->connection = Connection::GetInstance();
+                $result = $this->connection->Execute($query,$parameters); //Tendria que devolver el array asociativo...
+                $newResult  = reset($result);
+                 //Si devuelve 1 es xq el Execute retorno alguna fila y sino error
+            }catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            
+
+            if(!empty($newResult))
+            {
+                
+                return $this->mapping2($newResult);
+                //Result viene en un array asocitativo,pero estamos trabajado con POO...
+            }else 
+            {
+                return false;
+            }
+        }
+
+
+        public function searchKeeperById($idKeeper)
+        {
+
+            $query = "SELECT * FROM $this->tablename WHERE keeperId = :keeperId;";
+            $parameters["keeperId"] = $idKeeper;
             try
             {
                 
