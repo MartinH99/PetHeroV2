@@ -7,7 +7,7 @@ include('nav-bar-owner.php');
     <h1 class="h1 dark text-center">ADD PET</h1>
     <div class="row h-100 border border-primary mt-5  ml-5  d-flex align-items-center justify-content-center">
         <div class="col-10 col-md-8 col-lg-6 mt-5">
-            <form action="<?php echo FRONT_ROOT . "Pet/Add" ?>" method="post">
+            <form action="<?php echo FRONT_ROOT."Pet/Add" ?>" method="post">
                 <div class="form-outline ">
                     <label class="form-label" for="Name">Name</label>
                     <input type="text" id="Name" name="name" class="form-control" />

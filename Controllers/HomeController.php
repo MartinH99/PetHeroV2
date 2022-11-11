@@ -2,17 +2,23 @@
     namespace Controllers;
 
     use DAO\UserDAO as UserDAO; //Usamos USER DAO || OWNERDAO || KEEPERDAO?
- 
+    use DAObdd\KeeperDAO as KeeperDAO;
 
     class HomeController
     {
+        private $keeperDAO;
+
+        function __construct()
+        {
+            $this->keeperDAO = new KeeperDAO();  
+        }
         public function index($message = "")
         {
             // require_once(VIEWS_PATH."validate-session-keep.php");
             // require_once(VIEWS_PATH."validate-session-own.php");
 
             require_once(VIEWS_PATH."navbar-home.php");
-            echo $message;
+            $keeperList = $this->keeperDAO->getAll();
             require_once(VIEWS_PATH."main-home.php");
             
         }

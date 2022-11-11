@@ -5,14 +5,18 @@
     use DAObdd\OwnerDAO as OwnerDAO;
     use Models\Owner as Owner;
     use Controllers\HomeController as HomeController;
+    use DAObdd\KeeperDAO as KeeperDAO;
+
     class OwnerController{
 
         private $ownerDAO;
         private $homeController;
+        private $keeperDAO;
 
         function __construct()
         {
             $this->ownerDAO = new OwnerDAO();
+            $this->keeperDAO = new KeeperDAO();
             $this->homeController = new HomeController();
         }
 
@@ -20,7 +24,7 @@
         {
             require_once(VIEWS_PATH."validate-session-own.php");
             require_once(VIEWS_PATH."nav-bar-owner.php");
-            echo $message;
+            $keeperList = $this->keeperDAO->getAll();
             require_once(VIEWS_PATH."main-home.php");
             
         }
@@ -86,7 +90,7 @@
                 if ($owner->getPassword() === $password) {
                     $this->setSession($owner);
 
-                    $this->indexOwner("Bienvenido,logeado");
+                    $this->indexOwner("");
                     return $owner;
                 } else {
 
@@ -94,6 +98,16 @@
                     return false;
                 }
             }
+        }
+
+
+
+        public function showKeeperOwnView()
+        {   
+            require_once(VIEWS_PATH."validate-session-own.php");
+            require_once(VIEWS_PATH."nav-bar-owner.php");
+            
+            require_once(VIEWS_PATH."main-home.php");
         }
 
         
