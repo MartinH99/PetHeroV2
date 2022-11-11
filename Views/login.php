@@ -14,10 +14,10 @@ include_once("header.php");
         
 
         <label class="btn btn-primary labshape"  for="owner">Owner</label>
-        <input type="radio" id="owner" name="userType" value ="owner" />
+        <input type="radio" id="owner" name="userType" value ="owner" required/>
 
         <label class="btn btn-primary labshape" for="keeper">Keeper</label>
-        <input type="radio" id="keeper" name="userType" value ="keeper"  />
+        <input type="radio" id="keeper" name="userType" value ="keeper"  required/>
         
         <br>
         <button type="submit" class="btn btn-info">Log in</button>
