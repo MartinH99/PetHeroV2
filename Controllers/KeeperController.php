@@ -7,17 +7,18 @@
     use Controllers\HomeController as HomeController;
     class KeeperController{
         private $keeperDAO;
-
+        
         function __construct()
         {
             $this->keeperDAO = new KeeperDAO();
-            $this->homeController = new HomeController(); //No estoy seguro si esto esta bien
+             //No estoy seguro si esto esta bien
         }
 
         public function indexKeeper($message = "")
         {
             require_once(VIEWS_PATH."validate-session-keep.php");
             require_once(VIEWS_PATH."nav-bar-keeper.php");
+            $keeperList = $this->keeperDAO->getAll();
             require_once(VIEWS_PATH."main-home.php");
             
         }
@@ -93,7 +94,9 @@
                 return $keeper;
             } else {
 
-                $this->homeController->index("Rechazado");
+                require_once(VIEWS_PATH."navbar-home.php");
+                
+                require_once(VIEWS_PATH."main-home.php");
                 return false;
             }
         }

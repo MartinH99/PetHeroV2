@@ -110,7 +110,15 @@
             require_once(VIEWS_PATH."main-home.php");
         }
 
-        
+        public function filterDateKeep($initDate,$endDate){
+
+            require_once(VIEWS_PATH."validate-session-own.php");
+            require_once(VIEWS_PATH."nav-bar-owner.php");
+            $keeperListNew = $this->keeperDAO->filterKeepersByDate($initDate,$endDate);
+            require_once(VIEWS_PATH."main-home-by.php");
+            
+
+        }
 
 
     }
