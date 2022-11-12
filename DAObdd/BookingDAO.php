@@ -9,7 +9,8 @@ use DAObdd\KeeperDAO as Keeper;
 use DAObdd\OwnerDAO as Owner;
 use DAObdd\PetDAO as Pet;
 
-class BookingDAO{
+class BookingDAO
+{
 
     private $connection;
     private $tablename = "bookings";
@@ -127,7 +128,47 @@ class BookingDAO{
         {
             return $ex;
         }
+
     }
+        public function getBookingByKeepId($idKeep)
+        {
+            try
+            {
+                $bookingListById = array(); //Inicializo un array de keepers
+
+                $query = "SELECT * FROM $this->tablename where keeperId = $idKeep;"; //Traigo todo de keepers
+
+                $this->connection = Connection::GetInstance();
+
+                $resultadoQuery = $this->connection->Execute($query);
+                
+                foreach ($resultadoQuery as $row) //Voy pasando a un objeto owner lo que recupera de la BD en un array asociativo por filas
+                {                
+                    //Revisar si precisa del methodPass / rta = nop
+                    $booking = new Booking();
+                    $booking->setCodeBook($row["codeBook"]);
+                    $booking->setInitDate($row["initDate"]);
+                    $booking->setEndDate($row["endDate"]);
+                    $booking->setInterval($row["interval"]);
+                    $booking->setStatus($row["status"]);
+                    $booking->setIdOwner($row["ownerId"]);
+                    $booking->setIdKeeper($row["keeperId"]);
+                    $booking->setIdPet($row["petId"]);
+                
+
+                    var_dump($booking);
+
+                    array_push($bookingListById, $booking);
+                }
+
+                return $bookingListById;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+    
 
 
 

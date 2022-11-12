@@ -224,6 +224,50 @@ class KeeperDAO
 
     }
 
+    public function filterKeepersByDate($initDate,$initEnd)
+    {
+        try
+        {
+            $keeperListByDate = array();
+
+            $query = "SELECT * FROM $this->tablename WHERE availStart >= '$initDate' AND availEnd <= '$initEnd';";
+
+            $this->connection = Connection::GetInstance();
+
+            $result = $this->connection->Execute($query);
+            var_dump($result);
+            foreach ($result as $row) //Voy pasando a un objeto owner lo que recupera de la BD en un array asociativo por filas
+                {                
+                    //Revisar si precisa del methodPass / rta = nop
+                    $keeper = new Keeper();
+
+                    $keeper->setId($row["keeperId"]);
+                    $keeper->setFirstname($row["firstname"]);
+                    $keeper->setLastName($row["lastname"]);
+                    $keeper->setUsername($row["username"]);
+                    $keeper->setPassword($row["password"]);
+                    $keeper->setEmail($row["email"]);
+                    $keeper->setAddress($row["address"]);
+                    $keeper->setTelephone($row["telephone"]);
+                    $keeper->setCuil($row["cuil"]);
+                    $keeper->setAvailStart($row["availStart"]);
+                    $keeper->setAvailEnd($row["availEnd"]);
+                    $keeper->setPrice($row["price"]);
+                    $keeper->setStars($row["stars"]);
+
+                    
+
+                    array_push($keeperListByDate, $keeper);
+                }
+
+                return $keeperListByDate;
+
+        }catch(Exception $ex)
+        {
+            return $ex;
+        }
+    }
+
 
     
 }
