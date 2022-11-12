@@ -21,6 +21,7 @@ function formatDate(date) {
 tiempo = Date.now();
 fechaActual = formatDate(tiempo);
 console.log(fechaActual);
+
 function validateStartDate(){
     if(document.getElementById('availabilityStart').value< fechaActual)
         document.getElementById('availabilityStart').setCustomValidity('start date must be equal or greater than current date');
