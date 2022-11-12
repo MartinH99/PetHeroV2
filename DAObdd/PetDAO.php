@@ -81,15 +81,12 @@
         {
             try
             {
-
                 
                 $query = "DELETE FROM $this->tablename WHERE petId= :petId;";
 
                 $this->connection = Connection::GetInstance();
                 $parameters["petId"] = $petId;
                 $resultado = $this->connection->ExecuteNonQuery($query, $parameters);
-
-                var_dump($resultado);
             }catch(Exception $ex)
             {
                 throw $ex;

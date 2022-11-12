@@ -56,7 +56,7 @@ include_once('header.php');
     <br>
     <div class="col">
         <label for="availabilityEnd">End date:</label>
-        <input id="availabilityEnd" value="" name="availEnd" type="date" class="form-control" title="" required="" onchange="validateEndDate()">
+        <input id="availabilityEnd" name="availEnd" type="date" class="form-control" title="" required="" oninput="validateEndDate()">
     </div>
         <br>
         <div class="row mb-4 mt-4">
