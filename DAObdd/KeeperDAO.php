@@ -230,7 +230,7 @@ class KeeperDAO
         {
             $keeperListByDate = array();
 
-            $query = "SELECT * FROM $this->tablename WHERE availStart >= '$initDate' AND '$initEnd' <= availEnd;";
+            $query = "SELECT * FROM $this->tablename WHERE availStart >= '$initDate' AND availEnd <= '$initEnd';";
 
             $this->connection = Connection::GetInstance();
 

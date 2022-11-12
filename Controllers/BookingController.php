@@ -77,6 +77,15 @@ class BookingController
             $petListById = $this->petDAO->getPetsByOwnerId($id2);
             require_once(VIEWS_PATH."booking-request.php");
         }
+
+        public function getBookingsById()
+        {
+            require_once(VIEWS_PATH."validate-session-own.php");
+            $arraySession = array(); ///Si hacer todo esto del usuario logeado O directamente levantarlo del html...
+            $arraySession = $_SESSION["userLogged"];
+            $id2 = $arraySession->getId();
+            $bookingListById = $this->bookingDAO->getBookingByKeepId($id2);
+        }
 }
 
 ?>

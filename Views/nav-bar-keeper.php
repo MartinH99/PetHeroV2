@@ -15,7 +15,7 @@
         <a class="nav-link" href="<?php echo FRONT_ROOT."User/Logout"?>">Logout</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Mis reservas</a>
+        <a class="nav-link" href="<?php echo FRONT_ROOT."Booking/getBookingsById"?>">Mis reservas</a>
       </li>
       <li class="nav-item dropdown">
         <button class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
