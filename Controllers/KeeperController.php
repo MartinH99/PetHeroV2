@@ -78,6 +78,11 @@
         }
 
 
+        public function errorLogin($message="")
+        {
+            require_once(VIEWS_PATH."login-keep.php");
+        }
+
     public function Login($username, $password)
     {
         
@@ -94,11 +99,11 @@
                 return $keeper;
             } else {
 
-                require_once(VIEWS_PATH."navbar-home.php");
-                
-                require_once(VIEWS_PATH."main-home.php");
-                return false;
+                $this->errorLogin("Password error!");
             }
+        }else
+        {
+            $this->errorLogin("Not such owner with that username!");
         }
     }
 

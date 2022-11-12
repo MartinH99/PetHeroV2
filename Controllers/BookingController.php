@@ -85,6 +85,7 @@ class BookingController
             $arraySession = $_SESSION["userLogged"];
             $id2 = $arraySession->getId();
             $bookingListById = $this->bookingDAO->getBookingByKeepId($id2);
+            require_once(VIEWS_PATH."bookings-keep.php");
         }
 }
 

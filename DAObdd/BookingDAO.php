@@ -136,29 +136,38 @@ class BookingDAO
             {
                 $bookingListById = array(); //Inicializo un array de keepers
 
-                $query = "SELECT * FROM $this->tablename where keeperId = $idKeep;"; //Traigo todo de keepers
+                $query = "SELECT o.username,o.dni,p.name,s.size,p.breed,b.codebook,b.initDate,b.endDate,b.status 
+                from owners as o 
+                join bookings as b 
+                on o.ownerId = b.ownerId 
+                join pets as p 
+                on p.petId = b.petId 
+                join sizes as s on s.sizeId = p.sizeId 
+                WHERE b.keeperId = $idKeep
+                group by o.username,o.dni,p.name,s.size,p.breed,b.codebook,b.initDate,b.endDate,b.status;"; //Traigo la query con la info necesaria de la reserva
 
                 $this->connection = Connection::GetInstance();
 
                 $resultadoQuery = $this->connection->Execute($query);
-                
+                var_dump($resultadoQuery);
+                $bookInfo = array();
                 foreach ($resultadoQuery as $row) //Voy pasando a un objeto owner lo que recupera de la BD en un array asociativo por filas
                 {                
-                    //Revisar si precisa del methodPass / rta = nop
-                    $booking = new Booking();
-                    $booking->setCodeBook($row["codeBook"]);
-                    $booking->setInitDate($row["initDate"]);
-                    $booking->setEndDate($row["endDate"]);
-                    $booking->setInterval($row["interval"]);
-                    $booking->setStatus($row["status"]);
-                    $booking->setIdOwner($row["ownerId"]);
-                    $booking->setIdKeeper($row["keeperId"]);
-                    $booking->setIdPet($row["petId"]);
+                    $bookInfo["username"] = $row["username"];
+                    $bookInfo["dni"] = $row["dni"];
+                    $bookInfo["name"] = $row["name"];
+                    $bookInfo["size"] = $row["size"];
+                    $bookInfo["breed"] = $row["breed"];
+                    $bookInfo["codebook"] = $row["codebook"];
+                    $bookInfo["initDate"] = $row["initDate"];
+                    $bookInfo["endDate"] = $row["endDate"];
+                    $bookInfo["status"] = $row["status"];
+                    //Probar dps si no puedo pushear row de una
                 
 
-                    var_dump($booking);
+                    var_dump($bookInfo);
 
-                    array_push($bookingListById, $booking);
+                    array_push($bookingListById, $bookInfo);
                 }
 
                 return $bookingListById;

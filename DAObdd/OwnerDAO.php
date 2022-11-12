@@ -147,6 +147,7 @@ class OwnerDAO
                 //  //Si devuelve 1 es xq el Execute retorno alguna fila y sino error
             }catch(Exception $ex)
             {
+                die("Error : ".$ex->getMessage());
                 throw $ex;
             }
             
