@@ -13,6 +13,7 @@ class Pet
     private $image;
     private $vaccines;
     private $video;
+    private $descrip;
 
     public function __construct()
     {
@@ -164,6 +165,26 @@ class Pet
     public function setSize($size)
     {
         $this->size = $size;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of descrip
+     */ 
+    public function getDescrip()
+    {
+        return $this->descrip;
+    }
+
+    /**
+     * Set the value of descrip
+     *
+     * @return  self
+     */ 
+    public function setDescrip($descrip)
+    {
+        $this->descrip = $descrip;
 
         return $this;
     }

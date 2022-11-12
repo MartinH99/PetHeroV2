@@ -11,6 +11,7 @@ class Keeper extends User
         private $interval;
         private  $price;
         private $stars;
+        private $typeKeep;
 
         public function __construct()
         {
@@ -138,6 +139,26 @@ class Keeper extends User
         public function setInterval($interval)
         {
                 $this->interval = $interval;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of typeKeep
+         */ 
+        public function getTypeKeep()
+        {
+                return $this->typeKeep;
+        }
+
+        /**
+         * Set the value of typeKeep
+         *
+         * @return  self
+         */ 
+        public function setTypeKeep($typeKeep)
+        {
+                $this->typeKeep = $typeKeep;
 
                 return $this;
         }

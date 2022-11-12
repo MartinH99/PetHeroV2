@@ -1,7 +1,7 @@
 <?php
 include("header.php");
 include("inner-nav.php");
-include("avail-dates.php");
+include ("avail-dates.php");
 ?>
 <form action="<?php echo FRONT_ROOT ."Booking/AddBookView"?>" method="post">
 <div class="container-fluid bg-light d-flex justify-content-center ">
