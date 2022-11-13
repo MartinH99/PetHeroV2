@@ -84,8 +84,20 @@ class BookingController
             $arraySession = array(); ///Si hacer todo esto del usuario logeado O directamente levantarlo del html...
             $arraySession = $_SESSION["userLogged"];
             $id2 = $arraySession->getId();
+            //var_dump($id2);
             $bookingListById = $this->bookingDAO->getBookingByKeepId($id2);
             require_once(VIEWS_PATH."bookings-keep.php");
+            return $bookingListById;
+        }
+
+        public function getBookingsByStatus($status)
+        {
+            require_once(VIEWS_PATH."validate-session-own.php");
+            $arraySession = array(); ///Si hacer todo esto del usuario logeado O directamente levantarlo del html...
+            $arraySession = $_SESSION["userLogged"];
+            $id2 = $arraySession->getId();
+            $bookingListByKeepStatus = $this->bookingDAO->getBookingByStatus2($status,$id2);
+            require_once(VIEWS_PATH."bookings-keep-status.php");
         }
 }
 

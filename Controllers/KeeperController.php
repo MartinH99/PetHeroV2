@@ -89,7 +89,7 @@
         $newDao = new keeperDAO();
         //$keeper = $this->keeperDAO->searchkeeper($username);ASI NO 
         $keeper = $newDao->searchKeeper($username);
-        
+        $message = "";
         if ($keeper) {
 
             if ($keeper->getPassword() === $password) {

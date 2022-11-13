@@ -150,6 +150,60 @@ class BookingDAO
 
                 $resultadoQuery = $this->connection->Execute($query);
                 var_dump($resultadoQuery);
+                echo "<br>";
+                echo "<br>";
+                //$bookInfo = array();
+                // foreach ($resultadoQuery as $row) //Voy pasando a un objeto owner lo que recupera de la BD en un array asociativo por filas
+                // {                
+                //     $bookInfo["username"] = $row["username"];
+                //     $bookInfo["dni"] = $row["dni"];
+                //     $bookInfo["name"] = $row["name"];
+                //     $bookInfo["size"] = $row["size"];
+                //     $bookInfo["breed"] = $row["breed"];
+                //     $bookInfo["codebook"] = $row["codebook"];
+                //     $bookInfo["initDate"] = $row["initDate"];
+                //     $bookInfo["endDate"] = $row["endDate"];
+                //     $bookInfo["status"] = $row["status"];
+                //     //Probar dps si no puedo pushear row de una
+                
+
+                //     var_dump($bookInfo);
+
+                //     array_push($bookingListById, $bookInfo);
+                // }
+
+                // echo "<br>";
+                // echo "<br>";
+                // var_dump($bookingListById);
+                
+                return $resultadoQuery;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+    
+        public function getBookingByStatus($status)
+        {
+            try
+            {
+                $bookingListByStatus = array(); //Inicializo un array de keepers
+
+                $query = "SELECT o.username,o.dni,p.name,s.size,p.breed,b.codebook,b.initDate,b.endDate,b.status 
+                from owners as o 
+                join bookings as b 
+                on o.ownerId = b.ownerId 
+                join pets as p 
+                on p.petId = b.petId 
+                join sizes as s on s.sizeId = p.sizeId 
+                WHERE b.status = $status
+                group by o.username,o.dni,p.name,s.size,p.breed,b.codebook,b.initDate,b.endDate,b.status;"; //Traigo la query con la info necesaria de la reserva
+
+                $this->connection = Connection::GetInstance();
+
+                $resultadoQuery = $this->connection->Execute($query);
+                var_dump($resultadoQuery);
                 $bookInfo = array();
                 foreach ($resultadoQuery as $row) //Voy pasando a un objeto owner lo que recupera de la BD en un array asociativo por filas
                 {                
@@ -167,19 +221,44 @@ class BookingDAO
 
                     var_dump($bookInfo);
 
-                    array_push($bookingListById, $bookInfo);
+                    array_push($bookingListByStatus, $bookInfo);
                 }
 
-                return $bookingListById;
+                return $bookingListByStatus;
             }
             catch(Exception $ex)
             {
                 throw $ex;
             }
         }
-    
 
+        public function getBookingByStatus2($status,$idKeep) //Intente con un callback y la de arrayfilter pero no funciono
+        {   
+            try
+            {
+                $arrayStatus = array();
+                $bookingListById = $this->getBookingByKeepId($idKeep);
+                $i = 0;
+                while ($i < count($bookingListById)) 
+                {
+                    $booking = $bookingListById[$i];
+                    if(strcmp($booking["status"],$status) == 0)
+                    {
+                        array_push($arrayStatus,$booking);
+                    }
+                    $i++;
 
+                }
+                return $arrayStatus;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            //Al final no pude aplicar la funcion de arrayfilter con callback para que devuelva al mismo arreglo aquello que cumple con X condicion xq no estoy trabajando con un arrays de objs
+        }
+
+        
 
 }
 
