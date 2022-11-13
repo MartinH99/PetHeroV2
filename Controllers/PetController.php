@@ -97,12 +97,11 @@
 
        
 
-        public function Remove($id)
+        public function Remove($petId)
         {
-            
-            $this->petDAO->remove($id);
-
-            $this->ShowListPetsView(); //Pendiente
+            require_once(VIEWS_PATH."validate-session-own.php");
+            $this->petDAO->remove($petId);
+            require_once(VIEWS_PATH."pet-list-byid.php");
         }
 
 
