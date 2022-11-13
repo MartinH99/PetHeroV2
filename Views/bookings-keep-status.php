@@ -46,7 +46,7 @@ include("inner-nav.php");
                             <li class="list-group-item">Status :<?php echo $booking["status"]; ?> </li>
                         </ul>
                         <div class="card-body">
-                            <a href="#" class="card-link">Patea a x</a>
+                        <a href="<?php echo FRONT_ROOT . "Booking/ShowChangeStatus" ?>" class="card-link">Edit Status</a>
                             <!--Algun lugar q sirva como info del user o de la pet -->
                             <a href="#" class="card-link">Patea a y</a>
                             <!--Algun lugar q sirva como info del user o de la pet -->

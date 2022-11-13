@@ -163,7 +163,7 @@ class OwnerDAO
             }
         }
 
-        public function mapping2($value)
+        public function mapping2($value) //Como con callback se rompia lo hice mas 'rustico'
         {
             $value = is_array($value) ? $value : []; //Si es arreglo sigue con su valor sino se hace uno vacio  
 
@@ -224,8 +224,29 @@ class OwnerDAO
             return $ex;
         }
         
+        
 
     }
+
+    public function getUsernameOwner($idOwner)
+        {
+
+            $query = "SELECT username FROM $this->tablename WHERE ownerId = :ownerId;";
+            $parameters["ownerId"] = $idOwner;
+            try
+            {
+                
+                $this->connection = Connection::GetInstance();
+                $result = $this->connection->Execute($query,$parameters); //Tendria que devolver el array asociativo...
+                $newResult  = reset($result);
+                 //Si devuelve 1 es xq el Execute retorno alguna fila y sino error
+                 return $newResult;
+            }catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+
 
 }
 

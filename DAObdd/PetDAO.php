@@ -158,6 +158,26 @@
 
         }
 
+        public function getPetName($idPet)
+        {
+
+            $query = "SELECT `name` FROM $this->tablename WHERE petId = :petId;";
+            $parameters["petId"] = $idPet;
+            try
+            {
+                
+                $this->connection = Connection::GetInstance();
+                $result = $this->connection->Execute($query,$parameters); //Tendria que devolver el array asociativo...
+                $newResult  = reset($result);
+                 //Si devuelve 1 es xq el Execute retorno alguna fila y sino error
+                 return $newResult;
+            }catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+
+
     
         
 

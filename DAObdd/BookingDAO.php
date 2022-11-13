@@ -48,7 +48,7 @@ class BookingDAO
         {
             try
             {
-                $keeperList = array(); //Inicializo un array de keepers
+                $bookingList = array();
 
                 $query = "SELECT * FROM ".$this->tablename; //Traigo todo de keepers
 
@@ -184,54 +184,7 @@ class BookingDAO
             }
         }
     
-        public function getBookingByStatus($status)
-        {
-            try
-            {
-                $bookingListByStatus = array(); //Inicializo un array de keepers
-
-                $query = "SELECT o.username,o.dni,p.name,s.size,p.breed,b.codebook,b.initDate,b.endDate,b.status 
-                from owners as o 
-                join bookings as b 
-                on o.ownerId = b.ownerId 
-                join pets as p 
-                on p.petId = b.petId 
-                join sizes as s on s.sizeId = p.sizeId 
-                WHERE b.status = $status
-                group by o.username,o.dni,p.name,s.size,p.breed,b.codebook,b.initDate,b.endDate,b.status;"; //Traigo la query con la info necesaria de la reserva
-
-                $this->connection = Connection::GetInstance();
-
-                $resultadoQuery = $this->connection->Execute($query);
-                var_dump($resultadoQuery);
-                $bookInfo = array();
-                foreach ($resultadoQuery as $row) //Voy pasando a un objeto owner lo que recupera de la BD en un array asociativo por filas
-                {                
-                    $bookInfo["username"] = $row["username"];
-                    $bookInfo["dni"] = $row["dni"];
-                    $bookInfo["name"] = $row["name"];
-                    $bookInfo["size"] = $row["size"];
-                    $bookInfo["breed"] = $row["breed"];
-                    $bookInfo["codebook"] = $row["codebook"];
-                    $bookInfo["initDate"] = $row["initDate"];
-                    $bookInfo["endDate"] = $row["endDate"];
-                    $bookInfo["status"] = $row["status"];
-                    //Probar dps si no puedo pushear row de una
-                
-
-                    var_dump($bookInfo);
-
-                    array_push($bookingListByStatus, $bookInfo);
-                }
-
-                return $bookingListByStatus;
-            }
-            catch(Exception $ex)
-            {
-                throw $ex;
-            }
-        }
-
+        
         public function getBookingByStatus2($status,$idKeep) //Intente con un callback y la de arrayfilter pero no funciono
         {   
             try
@@ -256,6 +209,117 @@ class BookingDAO
                 throw $ex;
             }
             //Al final no pude aplicar la funcion de arrayfilter con callback para que devuelva al mismo arreglo aquello que cumple con X condicion xq no estoy trabajando con un arrays de objs
+        }
+
+        public function getOneBook($codeBook)
+        {
+            try
+            {
+                $query = "SELECT * $this->tablename where codeBook = $codeBook;";
+
+                $this->connection = Connection::GetInstance();
+
+                $resultado = $this->connection->Execute($query);
+
+                $book = reset($resultado);
+
+                var_dump($resultado);
+
+                
+
+                
+            }catch(Exception $ex)
+            {
+                throw $ex;
+            }
+
+            if(!empty($book))
+            {
+                return $this->mapping2Booking($book);
+            }else
+            {
+                return false;
+            }
+        }
+
+        public function confirmBooking($codeBook,$status)
+        {
+            try
+            {
+                $query = "UPDATE $this->tablename SET `status` = '$status' WHERE codeBook = $codeBook;";
+
+                $this->connection = Connection::GetInstance();
+
+                $parameters["codeBook"] = $codeBook;
+
+                $resultado = $this->connection->ExecuteNonQuery($query, $parameters);
+
+                var_dump($resultado);
+            }catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+
+        public function mapping2Booking($value)
+        {
+            $value = is_array($value) ? $value : []; //Si es arreglo sigue con su valor sino se hace uno vacio  
+
+                $booking = new Booking();
+                $booking->setCodeBook($value["codeBook"]);
+                $booking->setInitDate($value["initDate"]);
+                $booking->setendDate($value["endDate"]);
+                $booking->setInterval($value["interval"]);
+                $booking->setStatus($value["status"]);
+                $booking->setIdOwner($value["ownerId"]);
+                $booking->setIdKeeper($value["keeperId"]);
+                $booking->setIdPet($value["petId"]);
+                
+
+                return $booking;
+            
+        }
+
+
+        public function getAllById($codeBook)
+        {
+            try
+            {
+                $bookingList = array(); //Inicializo un array de 
+
+                $query = "SELECT * FROM $this->tablename WHERE codeBook = :codeBook;"; //Traigo todo de 
+
+                $parameters["codeBook"] = $codeBook;
+
+                $this->connection = Connection::GetInstance();
+
+                $resultadoQuery = $this->connection->Execute($query,$parameters);
+                
+                foreach ($resultadoQuery as $row) //Voy pasando a un objeto owner lo que recupera de la BD en un array asociativo por filas
+                {                
+                    //Revisar si precisa del methodPass / rta = nop
+                    $booking = new Booking();
+                    $booking->setCodeBook($row["codeBook"]);
+                    $booking->setInitDate($row["initDate"]);
+                    $booking->setEndDate($row["endDate"]);
+                    $booking->setInterval(0);
+                    $booking->setStatus($row["status"]);
+                    $booking->setIdOwner($row["ownerId"]);
+                    $booking->setIdKeeper($row["keeperId"]);
+                    $booking->setIdPet($row["petId"]);
+                
+
+                    var_dump($booking);
+
+                    array_push($bookingList, $booking);
+                }
+
+                return $bookingList;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
         }
 
         
