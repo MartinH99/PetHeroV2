@@ -4,11 +4,11 @@ include("nav-bar-keeper.php");
 include("inner-nav.php");
 ?>
 
-<h1>Booking status change</h1>
+<h1>Booking status pendings</h1>
 <form action="<?php echo FRONT_ROOT . "Booking/modifyStatusBook" ?>" method="post">
 
     <div class="row card-group w-60 mt-5 mb-4 ms-8 p-5 ">
-        <?php foreach ($allBookingById as $booking) {
+        <?php foreach ($allBookingByIdndStatus as $booking) {
         ?>
             <div class="col-md-4">
                 <div class="card bg-light m-5 border-start ">
@@ -32,19 +32,15 @@ include("inner-nav.php");
                         </h6>
                         <h4>Status : <?php echo $booking->getStatus(); ?></h4>
                     </div>
-                    <div class="d-flex card-footer">
+                    <div class="card-footer">
 
-                        <button type="submit" class="btn" name="codeBook" value="<?php echo $booking->getCodeBook(); ?>" id="danger-outlined"> Modify </button>
-
-                        <div class="form-check">
-                            <label class="form-check-label" for="Confirmed">Confirm</label>
-                            <input class="form-check-input" name="status" type="radio" value="confirmed" id="Confirmed" />
-                           
+                        <div class="p-2 d-inline">
+                        <button type="submit" class="btn" name="codeBook" value="<?php echo $booking->getCodeBook(); ?>" id="danger-outlined">Apply </button>
                         </div>
 
-                        <div class="form-check">
-                            <label class="form-check-label" for="Rejected">Reject</label>
-                            <input class="form-check-input" name="status" type="radio" value="rejected" id="Rejected" />
+                        <div class="ms-5 p-2 d-inline-flex">
+                        <input class="form-check-input" name="status" type="checkbox" value="cancelled" id="Cancelled" />
+                            <label class="form-check-label" for="Cancelled">Cancel booking </label>
                             
                         </div>
 

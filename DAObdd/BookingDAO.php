@@ -186,7 +186,7 @@ class BookingDAO
     
         
         public function getBookingByStatus2($status,$idKeep) //Intente con un callback y la de arrayfilter pero no funciono
-        {   
+        {   ///Recordar que esto trae array y no objetos
             try
             {
                 $arrayStatus = array();
@@ -242,19 +242,22 @@ class BookingDAO
             }
         }
 
-        public function confirmBooking($codeBook,$status)
+        public function updateBooking($status,$codeBook)
         {
             try
             {
-                $query = "UPDATE $this->tablename SET `status` = '$status' WHERE codeBook = $codeBook;";
-
+                $query = "UPDATE $this->tablename SET `status` = :status where codeBook = :codeBook;";
+                var_dump($query);
                 $this->connection = Connection::GetInstance();
-
+                $parameters["status"] = $status;
                 $parameters["codeBook"] = $codeBook;
-
-                $resultado = $this->connection->ExecuteNonQuery($query, $parameters);
-
-                var_dump($resultado);
+               
+                
+                
+                $result = $this->connection->ExecuteNonQuery($query, $parameters);
+                var_dump($result);
+                
+                
             }catch(Exception $ex)
             {
                 throw $ex;
@@ -281,15 +284,15 @@ class BookingDAO
         }
 
 
-        public function getAllById($codeBook)
+        public function getAllById($keepId)
         {
             try
             {
                 $bookingList = array(); //Inicializo un array de 
 
-                $query = "SELECT * FROM $this->tablename WHERE codeBook = :codeBook;"; //Traigo todo de 
+                $query = "SELECT * FROM $this->tablename WHERE keeperId = :keepId;"; //Traigo todo de 
 
-                $parameters["codeBook"] = $codeBook;
+                $parameters["keepId"] = $keepId;
 
                 $this->connection = Connection::GetInstance();
 
@@ -321,6 +324,25 @@ class BookingDAO
                 throw $ex;
             }
         }
+
+        public function getAllByIdStatus($idKeep,$status)
+        {
+            $bookingListKeepId = $this->getAllById($idKeep);
+
+            $bookingStatusndId = array();
+
+            foreach($bookingListKeepId as $booking)
+            {
+                if($booking->getStatus() == $status)
+                {
+                    array_push($bookingStatusndId,$booking);
+                }
+            }
+            //var_dump($bookingStatusndId);
+            return $bookingStatusndId;
+        }
+
+
 
         
 

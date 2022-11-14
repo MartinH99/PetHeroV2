@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:4306
--- Generation Time: Nov 11, 2022 at 01:16 AM
+-- Generation Time: Nov 14, 2022 at 04:38 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -50,8 +50,8 @@ CREATE TABLE `bookings` (
   `codeBook` int(11) NOT NULL,
   `initDate` date DEFAULT NULL,
   `endDate` date DEFAULT NULL,
-  `interval` int(11) DEFAULT NULL,
-  `status` varchar(15) DEFAULT NULL,
+  `interv` int(11) DEFAULT NULL,
+  `status` varchar(50) NOT NULL,
   `ownerId` int(11) NOT NULL,
   `keeperId` int(11) NOT NULL,
   `petId` int(11) NOT NULL
@@ -61,8 +61,38 @@ CREATE TABLE `bookings` (
 -- Dumping data for table `bookings`
 --
 
-INSERT INTO `bookings` (`codeBook`, `initDate`, `endDate`, `interval`, `status`, `ownerId`, `keeperId`, `petId`) VALUES
-(0, '2022-11-12', '2022-11-15', NULL, 'PREAPROBADO', 1, 1, 3);
+INSERT INTO `bookings` (`codeBook`, `initDate`, `endDate`, `interv`, `status`, `ownerId`, `keeperId`, `petId`) VALUES
+(0, '2022-11-12', '2022-11-15', NULL, '3', 1, 1, 3),
+(1, '2022-11-23', '2022-11-25', 0, 'pending', 1, 5, 6),
+(2, '2022-11-13', '2022-11-16', 0, 'confirmed', 3, 4, 1),
+(3, '2022-11-15', '2022-11-19', 0, 'pending', 2, 4, 3),
+(4, '2022-11-16', '2022-11-30', 0, 'pending', 4, 2, 10);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `coupons`
+--
+
+CREATE TABLE `coupons` (
+  `couponId` int(11) NOT NULL,
+  `subtotal` float DEFAULT NULL,
+  `total` float DEFAULT NULL,
+  `codeBook` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inters`
+--
+
+CREATE TABLE `inters` (
+  `interId` int(10) UNSIGNED NOT NULL,
+  `initDate` date NOT NULL,
+  `endDate` date NOT NULL,
+  `interDays` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -85,21 +115,22 @@ CREATE TABLE `keepers` (
   `price` float UNSIGNED DEFAULT NULL,
   `stars` int(10) UNSIGNED DEFAULT NULL,
   `disponibilidad` tinyint(4) DEFAULT NULL,
-  `existencia` tinyint(4) DEFAULT NULL
+  `existencia` tinyint(4) DEFAULT NULL,
+  `sizeId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `keepers`
 --
 
-INSERT INTO `keepers` (`keeperId`, `firstname`, `lastname`, `username`, `password`, `email`, `address`, `telephone`, `cuil`, `availStart`, `availEnd`, `price`, `stars`, `disponibilidad`, `existencia`) VALUES
-(1, 'keepercito', 'asdkjn', 'keper', '1234', 'asdasd@gmail.com', 'aslkdm 123', 123213123, 213123, '2022-11-10', '2022-11-24', 80, 1, NULL, NULL),
-(2, 'dsfggxdfgfsd', 'asds', 'keepero', '1234', 'askdjnaa@gmail.com', '3332asdasd', 6754776, 231456, '2022-11-17', '2022-11-25', 235, 1, NULL, NULL),
-(3, 'aaazzzaaa', 'sadbvbb', 'kiip', '1234', 'askldmkeep@gmai.com', 'asjdn332', 776734, 768679, '2022-11-10', '2022-11-19', 10, 1, NULL, NULL),
-(4, 'dfghdfg', 'hhhh', 'registrado', '1234', 'reg@gmai.com', 'asd 2', 656654, 234456, '2022-11-10', '2022-11-24', 222, 1, NULL, NULL),
-(5, 'skiper', 'kip', 'quiper', '1234', 'sdjkfnmnn@gmai.com', '923 askjdn', 824390, 894598, '2022-11-17', '2022-11-18', 90, 1, NULL, NULL),
-(6, 'zzzzzz', 'zzz', 'quip', '1234', 'sdkjlfnm@gmai.com', 'zzz 123', 6785, 545636, '2022-11-10', '2022-11-17', 55, 1, NULL, NULL),
-(7, 'zxxczxcc', 'xzccx', 'kip', '1234', '324@gmail.com', '34asdxc', 2345667, 456564, '2022-11-18', '2022-11-25', 56, 1, NULL, NULL);
+INSERT INTO `keepers` (`keeperId`, `firstname`, `lastname`, `username`, `password`, `email`, `address`, `telephone`, `cuil`, `availStart`, `availEnd`, `price`, `stars`, `disponibilidad`, `existencia`, `sizeId`) VALUES
+(1, 'keepercito', 'asdkjn', 'keper', '1234', 'asdasd@gmail.com', 'aslkdm 123', 123213123, 213123, '2022-11-10', '2022-11-24', 80, 1, NULL, NULL, NULL),
+(2, 'dsfggxdfgfsd', 'asds', 'keepero', '1234', 'askdjnaa@gmail.com', '3332asdasd', 6754776, 231456, '2022-11-17', '2022-11-25', 235, 1, NULL, NULL, NULL),
+(3, 'aaazzzaaa', 'sadbvbb', 'kiip', '1234', 'askldmkeep@gmai.com', 'asjdn332', 776734, 768679, '2022-11-10', '2022-11-19', 10, 1, NULL, NULL, NULL),
+(4, 'dfghdfg', 'hhhh', 'registrado', '1234', 'reg@gmai.com', 'asd 2', 656654, 234456, '2022-11-10', '2022-11-24', 222, 1, NULL, NULL, NULL),
+(5, 'skiper', 'kip', 'quiper', '1234', 'sdjkfnmnn@gmai.com', '923 askjdn', 824390, 894598, '2022-11-17', '2022-11-18', 90, 1, NULL, NULL, NULL),
+(6, 'zzzzzz', 'zzz', 'quip', '1234', 'sdkjlfnm@gmai.com', 'zzz 123', 6785, 545636, '2022-11-10', '2022-11-17', 55, 1, NULL, NULL, NULL),
+(7, 'zxxczxcc', 'xzccx', 'kip', '1234', '324@gmail.com', '34asdxc', 2345667, 456564, '2022-11-18', '2022-11-25', 56, 1, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -126,7 +157,8 @@ CREATE TABLE `owners` (
 INSERT INTO `owners` (`ownerId`, `firstname`, `lastname`, `dni`, `username`, `password`, `email`, `address`, `telephone`) VALUES
 (1, 'usernombre', 'userapellido', 123123, 'user', '1234', 'asjkdn@gmail.com', 'asdjn 213', 123123),
 (2, 'asdasdasdasd', 'gsdfasd', 312443, 'usuario2', '1234', 'askjdnm@gmail.com', 'asdsd2', 65456),
-(3, 'ssssssss', 'ffffffff', 3456666, 'usuario3', '1234', 'aslkdms@gaail.com', 'dasdasd', 343111);
+(3, 'ssssssss', 'ffffffff', 3456666, 'usuario3', '1234', 'aslkdms@gaail.com', 'dasdasd', 343111),
+(4, 'zzzzwwww', 'sdgdsfg', 4566723, 'usuarioprueba', '1234', 'pruebbba@gmail.com', 'asdg 223', 89686);
 
 -- --------------------------------------------------------
 
@@ -151,7 +183,12 @@ INSERT INTO `pets` (`petId`, `name`, `sizeId`, `breed`, `ownerId`, `animalTypeId
 (1, 'Pochita', 1, 'Callejero', 1, 1),
 (3, 'assdad', 3, 'Labrador', 1, 1),
 (5, 'Ipa', 2, 'Labrador', 1, 2),
-(6, 'Averahoraconestes', 1, 'Caniche', 1, 1);
+(6, 'Averahoraconestes', 1, 'Caniche', 1, 1),
+(7, 'Nala', 3, 'Ovejero aleman', 1, 1),
+(8, 'Ocho', 2, 'Dogo', 3, 1),
+(9, 'Novi', 3, 'Fenicio', 3, 2),
+(10, 'Michi', 2, 'Egipcio', 4, 2),
+(11, 'Michidos', 1, 'Egipcio', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -194,13 +231,27 @@ ALTER TABLE `bookings`
   ADD KEY `FK-idPetBook` (`petId`);
 
 --
+-- Indexes for table `coupons`
+--
+ALTER TABLE `coupons`
+  ADD PRIMARY KEY (`couponId`),
+  ADD KEY `FK-codeBookCoup` (`codeBook`);
+
+--
+-- Indexes for table `inters`
+--
+ALTER TABLE `inters`
+  ADD PRIMARY KEY (`interId`);
+
+--
 -- Indexes for table `keepers`
 --
 ALTER TABLE `keepers`
   ADD PRIMARY KEY (`keeperId`),
   ADD UNIQUE KEY `username` (`username`),
   ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `cuil` (`cuil`);
+  ADD UNIQUE KEY `cuil` (`cuil`),
+  ADD KEY `FK-idSize` (`sizeId`);
 
 --
 -- Indexes for table `owners`
@@ -237,6 +288,18 @@ ALTER TABLE `bookings`
   ADD CONSTRAINT `FK-idKeeperBook` FOREIGN KEY (`keeperId`) REFERENCES `keepers` (`keeperId`),
   ADD CONSTRAINT `FK-idOwnerBook` FOREIGN KEY (`ownerId`) REFERENCES `owners` (`ownerId`),
   ADD CONSTRAINT `FK-idPetBook` FOREIGN KEY (`petId`) REFERENCES `pets` (`petId`);
+
+--
+-- Constraints for table `coupons`
+--
+ALTER TABLE `coupons`
+  ADD CONSTRAINT `FK-codeBookCoup` FOREIGN KEY (`codeBook`) REFERENCES `bookings` (`codeBook`);
+
+--
+-- Constraints for table `keepers`
+--
+ALTER TABLE `keepers`
+  ADD CONSTRAINT `FK-idSize` FOREIGN KEY (`sizeId`) REFERENCES `sizes` (`sizeId`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `pets`

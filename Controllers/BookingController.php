@@ -90,7 +90,7 @@ class BookingController
             //var_dump($id2);
             $bookingListById = $this->bookingDAO->getBookingByKeepId($id2);
             require_once(VIEWS_PATH."bookings-keep.php");
-            return $bookingListById;
+            ///return $bookingListById;
         }
 
         public function getBookingsByStatus($status)
@@ -114,6 +114,39 @@ class BookingController
             // $keeperUsername = $this->keeperDAO->getUsernameKeeper($booking->getIdKeeper());
             // $petName = $this->petDAO->getPetName($booking->getIdPet());
             require_once(VIEWS_PATH."booking-status.php");
+        }
+
+        public function modifyStatusBook($codeBook,$status)
+        {
+            var_dump($_POST);
+            require_once(VIEWS_PATH."validate-session-own.php");
+            $this->bookingDAO->updateBooking($status,$codeBook);
+            $arraySession = array(); ///Si hacer todo esto del usuario logeado O directamente levantarlo del html...
+            $arraySession = $_SESSION["userLogged"];
+            $id2 = $arraySession->getId();
+            $allBookingById = $this->bookingDAO->getAllById($id2);
+            require_once(VIEWS_PATH."booking-status.php");
+        }
+
+
+        public function showBooksPendings($status = "pending")
+        {
+            require_once(VIEWS_PATH."validate-session-own.php");
+            $arraySession = array(); ///Si hacer todo esto del usuario logeado O directamente levantarlo del html...
+            $arraySession = $_SESSION["userLogged"];
+            $id2 = $arraySession->getId();
+            $allBookingByIdndStatus = $this->bookingDAO->getAllByIdStatus($id2,$status);
+            require_once(VIEWS_PATH."booking-status2.php");
+        }
+
+        public function showBooksByConfirmed($status = "confirmed")
+        {
+            require_once(VIEWS_PATH."validate-session-own.php");
+            $arraySession = array(); ///Si hacer todo esto del usuario logeado O directamente levantarlo del html...
+            $arraySession = $_SESSION["userLogged"];
+            $id2 = $arraySession->getId();
+            $allBookingByIdndStatus = $this->bookingDAO->getAllByIdStatus($id2,$status);
+            require_once(VIEWS_PATH."booking-status3.php");
         }
 }
 

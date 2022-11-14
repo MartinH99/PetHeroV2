@@ -7,9 +7,11 @@ include("inner-nav.php");
 <form action="<?php echo FRONT_ROOT . "Booking/getBookingsByStatus" ?>" method="post">
 
 
-    <div class="d-flex justify-content-center align-self-center p-5 m-2">
+    <div class="d-flex justify-content-center align-self-center p-5 m-5">
+        
+        <div class="container-fluid bg-light d-flex">
         <select class="form-select" name="status" aria-label="Default select example">
-            <option selected>Status</option>
+            <option selected value="rejected">REJECTED</option>
             <option value="pending">PENDING</option>
             <option value="confirmed">CONFIRMED</option>
             <option value="finished">FINISHED</option>
@@ -18,9 +20,12 @@ include("inner-nav.php");
             Filtrar
         </button>
         </div>
-        <div class="container-fluid bg-light d-flex justify-content-center ">
         </div>
-        <div class="row card-group w-60 mt-5 mb-4 ms-8 p-5 ">
+        <div class="d-flex flex-row-reverse p-2 m-2">
+            <a href="<?php echo FRONT_ROOT . "Booking/ShowBooksPendings" ?>" class="btn btn-outline btn-lg p-1 m-3 bg-danger text-light">Pendings</a><!--Lista de pendientes confirm/rejected pendiente -->
+            <a href="<?php echo FRONT_ROOT . "Booking/ShowBooksByConfirmed"?>" class="btn btn-outline btn-lg p-1 m-3 bg-success text-light">Confirmed</a><!--Lista de confirmados que podes dar de baja -->
+        </div>
+        <div class="row card-group w-60 mt-5 mb-4 ms-8 p-5  ">
             <?php $i = 0;
             while ($i < count($bookingListById)) {
                 $booking = $bookingListById[$i];
