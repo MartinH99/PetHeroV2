@@ -42,9 +42,11 @@
         {
             if(strcmp($userType,"owner") == 0)
             {
+                $message = "";
                 require_once(VIEWS_PATH."login-own.php");
             }else if(strcmp($userType,"keeper") == 0)
             {
+                $message = "";
                 require_once(VIEWS_PATH."login-keep.php");
             }
         }

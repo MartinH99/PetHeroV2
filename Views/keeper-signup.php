@@ -77,6 +77,7 @@ include_once('header.php');
                 <div class="form-outline">
                     <input type="text" id="userName" class="form-control" name="username" required />
                     <label class="form-label" for="firstName">Username</label>
+                    <p style="color: red;"><?php echo $message ?></p>
                 </div>
             </div>
             <!-- pass -->

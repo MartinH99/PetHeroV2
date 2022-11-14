@@ -76,7 +76,10 @@
         }
 
 
-
+        public function errorLogin($message="")
+        {
+            require_once(VIEWS_PATH."login-own.php");
+        }
 
         public function Login($username,$password)
         {
@@ -84,8 +87,8 @@
             $newDao =new OwnerDAO();
             //$owner = $this->ownerDAO->searchOwner($username);ASI NO 
             $owner = $newDao->searchOwner($username);
-
-            if ($owner) {
+            var_dump($owner);
+            if ($owner != false) {
 
                 if ($owner->getPassword() === $password) {
                     $this->setSession($owner);
@@ -94,9 +97,11 @@
                     return $owner;
                 } else {
 
-                    $this->homeController->index("Rechazado");
-                    return false;
+                    $this->errorLogin("Password error!");
                 }
+            }else
+            {
+                $this->errorLogin("Not such owner with that username!");
             }
         }
 

@@ -5,6 +5,8 @@
     use DAObdd\KeeperDAO as KeeperDAO;
     use Models\Keeper as Keeper;
     use Controllers\HomeController as HomeController;
+use Exception;
+
     class KeeperController{
         private $keeperDAO;
         
@@ -29,6 +31,12 @@
             $keeperList = $this->keeperDAO->getAll(); //$keeperlist llega al keeper-list por el require entonces ahi lo podes iterar con el foreach (linea 21)
             
             require_once(VIEWS_PATH."keeper-list.php");
+        }
+        
+        public function showSignUpKeeper($message = "")
+        {
+            
+            require_once(VIEWS_PATH."keeper-signup.php");
         }
 
 
@@ -56,10 +64,17 @@
             $keeper->setAvailEnd($availEnd); 
             $keeper->setPrice($price);
             
-
-            $this->keeperDAO->Add($keeper);
-            session_destroy();
-            require_once(VIEWS_PATH."login-keep.php");
+            try{
+                 session_destroy();
+                 $this->keeperDAO->Add($keeper);
+            }catch(Exception $ex)
+            {
+                $this->showSignUpKeeper("Error en el nombre");
+            }
+           
+            
+            
+            //require_once(VIEWS_PATH."login-keep.php");
         }
 
         public function remove($id)
@@ -78,13 +93,18 @@
         }
 
 
+        public function errorLogin($message="")
+        {
+            require_once(VIEWS_PATH."login-keep.php");
+        }
+
     public function Login($username, $password)
     {
         
         $newDao = new keeperDAO();
         //$keeper = $this->keeperDAO->searchkeeper($username);ASI NO 
         $keeper = $newDao->searchKeeper($username);
-        
+        $message = "";
         if ($keeper) {
 
             if ($keeper->getPassword() === $password) {
@@ -94,11 +114,11 @@
                 return $keeper;
             } else {
 
-                require_once(VIEWS_PATH."navbar-home.php");
-                
-                require_once(VIEWS_PATH."main-home.php");
-                return false;
+                $this->errorLogin("Password error!");
             }
+        }else
+        {
+            $this->errorLogin("Not such owner with that username!");
         }
     }
 

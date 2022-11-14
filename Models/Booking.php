@@ -1,6 +1,10 @@
 <?php
 namespace Models;
 
+ use DAObdd\KeeperDAO as KeeperDAO;
+ use DAObdd\OwnerDAO as OwnerDAO;
+ use DAObdd\PetDAO as PetDAO;
+
 class Booking {
 
     private $codeBook;
@@ -126,9 +130,12 @@ class Booking {
      *
      * @return  self
      */ 
-    public function setIdOwner($idOwner)
+    public function setIdOwner($idOwner)//Tuve que modificar esto por el hecho del muestreo para el listado de booking,queda feo que se vean id sin sentido
     {
-        $this->idOwner = $idOwner;
+        $ownerDAO = new OwnerDAO();
+        $ownerUname = $ownerDAO->getUsernameOwner($idOwner);
+        
+        $this->idOwner = $ownerUname["username"];
 
         return $this;
     }
@@ -148,7 +155,10 @@ class Booking {
      */ 
     public function setIdKeeper($idKeeper)
     {
-        $this->idKeeper = $idKeeper;
+        $keeperDAO = new KeeperDAO();
+        $keeperUname = $keeperDAO->getUsernamekeeper($idKeeper);
+        
+        $this->idKeeper = $keeperUname["username"];
 
         return $this;
     }
@@ -168,7 +178,10 @@ class Booking {
      */ 
     public function setIdPet($idPet)
     {
-        $this->idPet = $idPet;
+        $petDAO = new petDAO();
+        $petUname = $petDAO->getPetName($idPet);
+        
+        $this->idPet = $petUname["name"];
 
         return $this;
     }
