@@ -41,7 +41,6 @@ include_once('header.php');
         <div class="col">
         <label class="form-label" for="Cuil">CUIL</label>
         <input type="number" id="Cuil" class="form-control" name="cuil" oninput="validateCuil()" value="<?php if (isset($_POST['cuil'])) echo $_POST['cuil']?>" />
-        <p style="color:red;"><?php if(isset($cuilMessage)) echo $cuilMessage;?></p>
         </div>
             <div class="col">
                 <input type="text" id="Address" class="form-control" name="address" value="<?php if (isset($_POST['address'])) echo $_POST['address']?>" required />
@@ -78,7 +77,6 @@ include_once('header.php');
                 <div class="form-outline">
                     <input type="text" id="userName" class="form-control" name="username" value="<?php if (isset($_POST['username'])) echo $_POST['username']?>" required />
                     <label class="form-label" for="firstName">Username</label>
-                    <p style="color:red;"><?php if(isset($usernameMessage)) echo $usernameMessage;?></p>
                 </div>
             </div>
             <!-- pass -->
@@ -93,12 +91,17 @@ include_once('header.php');
             <div class="form-outline">
                 <input type="email" id="Email" class="form-control" name="email" value="<?php if (isset($_POST['email'])) echo $_POST['email']?>" required />
                 <label class="form-label" for="Email">Email</label>
-                <p style="color:red;"><?php if(isset($emailMessage)) echo $emailMessage;?></p>
             </div>
         </div>
         <!-- Submit button -->
         <button type="submit" class="btn btn-primary btn-block mb-4">Register</button>
     </form>
+    <br>
+    <?php if ($message != null) { ?>
+    <p style="color:red;">
+    <?php echo $message; ?>
+    </p>
+    <?php } ?>
     <script src="../Views/js/validations.js"></script>
 </body>
 
