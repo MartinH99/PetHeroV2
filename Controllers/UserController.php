@@ -31,10 +31,15 @@
         {
             if(strcmp($userType,"owner") == 0)
             {
+                $message = "";
                 require_once(VIEWS_PATH."owner-signup.php");
+                
+                
             }else if(strcmp($userType,"keeper") == 0)
             {
+                $message="";
                 require_once(VIEWS_PATH."keeper-signup.php");
+                
             }
         }
 
@@ -42,12 +47,13 @@
         {
             if(strcmp($userType,"owner") == 0)
             {
-                $message = "";
+                
                 require_once(VIEWS_PATH."login-own.php");
+                
             }else if(strcmp($userType,"keeper") == 0)
             {
-                $message = "";
                 require_once(VIEWS_PATH."login-keep.php");
+                
             }
         }
 

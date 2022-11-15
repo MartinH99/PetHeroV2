@@ -35,7 +35,6 @@ use Exception;
         
         public function showSignUpKeeper($message = "")
         {
-            
             require_once(VIEWS_PATH."keeper-signup.php");
         }
 
@@ -69,7 +68,9 @@ use Exception;
                  $this->keeperDAO->Add($keeper);
             }catch(Exception $ex)
             {
-                $this->showSignUpKeeper("Error en el nombre");
+                $message = "Error en el usuario";
+                $this->showSignUpKeeper($message);
+                
             }
            
             
