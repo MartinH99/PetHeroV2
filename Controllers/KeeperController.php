@@ -49,33 +49,130 @@ use Exception;
         public function Add($firstname,$lastname,$username,$password,$email,$address,$telephone,$cuil,$availStart,$availEnd,$price)
         {
 
+            try{
+                $keeper = new Keeper();
             
-            $keeper = new Keeper();
-
-            $keeper->setUsername($username);
+            if($this->validateUser($username) == true)
+            {
+                $keeper->setUsername($username);
+            }else
+            {
+                $usernameMessage = "This username is not available.";
+                require_once(VIEWS_PATH."keeper-signup.php");
+            }
             $keeper->setPassword($password);
-            $keeper->setEmail($email);
-            $keeper->setFirstName($firstname);
+
+            if($this->validateEmail($email) == true)
+            {
+                $keeper->setEmail($email);
+            }else
+            {
+                $emailMessage = "This email is already registered.";
+                require_once(VIEWS_PATH."keeper-signup.php");
+            }
+
+            if($firstname != null)
+            {
+                $keeper->setFirstName($firstname);
+            }else
+            {
+                $nameMessage = "This field cannot be empty.";
+                require_once(VIEWS_PATH."keeper-signup.php");
+            }
             $keeper->setLastname($lastname);
             $keeper->setAddress($address);
             $keeper->setTelephone($telephone);
-            $keeper->setCuil($cuil);
+            if($this->validateCuil($cuil) == true)
+            {
+                $keeper->setCuil($cuil);
+            }else
+            {
+                $cuilMessage = "This CUIL is already registered.";
+                require_once(VIEWS_PATH."keeper-signup.php");
+            }
             $keeper->setAvailStart($availStart); 
             $keeper->setAvailEnd($availEnd); 
             $keeper->setPrice($price);
             
-            try{
-                 session_destroy();
-                 $this->keeperDAO->Add($keeper);
+            session_destroy();
+            $this->keeperDAO->Add($keeper);
             }catch(Exception $ex)
             {
-                $this->showSignUpKeeper("Error en el nombre");
+                require_once(VIEWS_PATH."keeper-signup.php");
+                
             }
            
             
-            
             //require_once(VIEWS_PATH."login-keep.php");
         }
+
+
+
+
+
+
+        
+        public function validateCuil($cuil)
+        {
+            try {
+
+                $flag = true;
+
+                $keeperCuil = $this->keeperDAO->searchKeeperbyCuil($cuil);
+
+                if($keeperCuil != false)
+                {
+                    $flag = false;
+                }
+                return $flag;
+            }catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+        
+        public function validateEmail($email)
+        {
+            try {
+
+                $flag = true;
+
+                $keeperEmail = $this->keeperDAO->searchKeeperbyEmail($email);
+
+                if($keeperEmail != false)
+                {
+                    $flag = false;
+                }
+                return $flag;
+            }catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+        
+        public function validateUser($username)
+        {
+            try {
+
+                $flag = true;
+
+                $keeperUser = $this->keeperDAO->searchKeeper($username);
+
+                if($keeperUser != false)
+                {
+                    $flag = false;
+                }
+                return $flag;
+            }catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+
+
+
+
+
 
         public function remove($id)
         {
