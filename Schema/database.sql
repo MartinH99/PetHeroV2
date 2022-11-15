@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:4306
--- Generation Time: Nov 14, 2022 at 04:38 PM
+-- Generation Time: Nov 15, 2022 at 06:26 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -108,8 +108,8 @@ CREATE TABLE `keepers` (
   `password` varchar(50) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `address` varchar(50) DEFAULT NULL,
-  `telephone` int(10) UNSIGNED DEFAULT NULL,
-  `cuil` int(11) DEFAULT NULL,
+  `telephone` int(12) UNSIGNED DEFAULT NULL,
+  `cuil` bigint(11) DEFAULT NULL,
   `availStart` date DEFAULT NULL,
   `availEnd` date DEFAULT NULL,
   `price` float UNSIGNED DEFAULT NULL,
@@ -130,7 +130,11 @@ INSERT INTO `keepers` (`keeperId`, `firstname`, `lastname`, `username`, `passwor
 (4, 'dfghdfg', 'hhhh', 'registrado', '1234', 'reg@gmai.com', 'asd 2', 656654, 234456, '2022-11-10', '2022-11-24', 222, 1, NULL, NULL, NULL),
 (5, 'skiper', 'kip', 'quiper', '1234', 'sdjkfnmnn@gmai.com', '923 askjdn', 824390, 894598, '2022-11-17', '2022-11-18', 90, 1, NULL, NULL, NULL),
 (6, 'zzzzzz', 'zzz', 'quip', '1234', 'sdkjlfnm@gmai.com', 'zzz 123', 6785, 545636, '2022-11-10', '2022-11-17', 55, 1, NULL, NULL, NULL),
-(7, 'zxxczxcc', 'xzccx', 'kip', '1234', '324@gmail.com', '34asdxc', 2345667, 456564, '2022-11-18', '2022-11-25', 56, 1, NULL, NULL, NULL);
+(7, 'zxxczxcc', 'xzccx', 'kip', '1234', '324@gmail.com', '34asdxc', 2345667, 456564, '2022-11-18', '2022-11-25', 56, 1, NULL, NULL, NULL),
+(8, 'prueba', 'Carla', 'kyper', '123456', 'asdkn@gmail.com', 'asdas 23', 4294967295, 2147483647, '2022-11-18', '2022-12-01', 80, 1, NULL, NULL, NULL),
+(9, 'aszzxzxzxzx', 'zxxzx', 'kipper', '123456', 'aklsdmmm@gmail.com', 'cxzc 23', 566778888, 99999, '0000-00-00', '0000-00-00', 231, 1, 1, 1, 2),
+(10, 'aszxzxzx', 'zxxasdzx', 'kupper', '123456', 'aklsdtmmm@gmail.com', 'cxzc 23', 566778888, 995999, '2022-11-17', '2022-11-30', 21, 1, 1, 1, 2),
+(11, 'aszytx', 'ghmnbm', 'keepper', '123456', 'akls666m@gmail.com', 'cxuzct 23', 566778888, 91238293857, '2022-11-17', '2022-11-30', 231, 1, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -158,7 +162,8 @@ INSERT INTO `owners` (`ownerId`, `firstname`, `lastname`, `dni`, `username`, `pa
 (1, 'usernombre', 'userapellido', 123123, 'user', '1234', 'asjkdn@gmail.com', 'asdjn 213', 123123),
 (2, 'asdasdasdasd', 'gsdfasd', 312443, 'usuario2', '1234', 'askjdnm@gmail.com', 'asdsd2', 65456),
 (3, 'ssssssss', 'ffffffff', 3456666, 'usuario3', '1234', 'aslkdms@gaail.com', 'dasdasd', 343111),
-(4, 'zzzzwwww', 'sdgdsfg', 4566723, 'usuarioprueba', '1234', 'pruebbba@gmail.com', 'asdg 223', 89686);
+(4, 'zzzzwwww', 'sdgdsfg', 4566723, 'usuarioprueba', '1234', 'pruebbba@gmail.com', 'asdg 223', 89686),
+(5, 'asdzzzzzz', 'ccccccc', 234156666, 'usercito', '123456', 'usercito@gmail.com', 'asdas 2312', 345436534);
 
 -- --------------------------------------------------------
 
@@ -313,3 +318,5 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+select * from keepers;

@@ -35,7 +35,6 @@ use Exception;
         
         public function showSignUpKeeper($message = "")
         {
-            
             require_once(VIEWS_PATH."keeper-signup.php");
         }
 
@@ -49,66 +48,52 @@ use Exception;
         public function Add($firstname,$lastname,$username,$password,$email,$address,$telephone,$cuil,$availStart,$availEnd,$price)
         {
 
-            try{
-                $keeper = new Keeper();
+           try{
             
-            if($this->validateUser($username) == true)
+            if($this->validateUser($username))
             {
-                $keeper->setUsername($username);
-            }else
-            {
-                $usernameMessage = "This username is not available.";
-                require_once(VIEWS_PATH."keeper-signup.php");
-            }
-            $keeper->setPassword($password);
+                if($this->validateEmail($email))
+                {
+                    if($this->validateCuil($cuil))
+                    {
+                        $keeper = new Keeper();
+                        $keeper->setUsername($username);
+                        $keeper->setPassword($password);
+                        $keeper->setEmail($email);
+                        $keeper->setFirstName($firstname);
+                        $keeper->setLastname($lastname);
+                        $keeper->setAddress($address);
+                        $keeper->setTelephone($telephone);
+                        $keeper->setCuil($cuil);
+                        $keeper->setAvailStart($availStart); 
+                        $keeper->setAvailEnd($availEnd); 
+                        $keeper->setPrice($price);
+                        $this->keeperDAO->Add($keeper);
+                        require_once(VIEWS_PATH."login-keep.php");
+                    }else
+                    {
+                        $message = "This CUIL is already registered.";
+                         require_once(VIEWS_PATH . "keeper-signup.php");
+                    }
+                }
+                else
+                {
+                    $message = "This email is already registered.";
+                    require_once(VIEWS_PATH . "keeper-signup.php");
+                }
 
-            if($this->validateEmail($email) == true)
-            {
-                $keeper->setEmail($email);
             }else
             {
-                $emailMessage = "This email is already registered.";
-                require_once(VIEWS_PATH."keeper-signup.php");
+                $message = "This username is not available.";
+                require_once(VIEWS_PATH . "keeper-signup.php");
             }
-
-            if($firstname != null)
-            {
-                $keeper->setFirstName($firstname);
-            }else
-            {
-                $nameMessage = "This field cannot be empty.";
-                require_once(VIEWS_PATH."keeper-signup.php");
-            }
-            $keeper->setLastname($lastname);
-            $keeper->setAddress($address);
-            $keeper->setTelephone($telephone);
-            if($this->validateCuil($cuil) == true)
-            {
-                $keeper->setCuil($cuil);
-            }else
-            {
-                $cuilMessage = "This CUIL is already registered.";
-                require_once(VIEWS_PATH."keeper-signup.php");
-            }
-            $keeper->setAvailStart($availStart); 
-            $keeper->setAvailEnd($availEnd); 
-            $keeper->setPrice($price);
-            
-            session_destroy();
-            $this->keeperDAO->Add($keeper);
-            }catch(Exception $ex)
-            {
-                require_once(VIEWS_PATH."keeper-signup.php");
                 
-            }
-           
-            
-            //require_once(VIEWS_PATH."login-keep.php");
+            }catch(Exception $e)
+            {
+                 $message = $e->getMessage();
+                 require_once(VIEWS_PATH . "keeper-signup.php");
+            } 
         }
-
-
-
-
 
 
         
@@ -118,11 +103,11 @@ use Exception;
 
                 $flag = true;
 
-                $keeperCuil = $this->keeperDAO->searchKeeperbyCuil($cuil);
+                $keeperCuil = $this->keeperDAO->searchKeeperbyCuil($cuil); //si devuelve false es porque no lo encontró
 
                 if($keeperCuil != false)
                 {
-                    $flag = false;
+                    $flag = false; //si flag es false es porque ya existe
                 }
                 return $flag;
             }catch(Exception $ex)
