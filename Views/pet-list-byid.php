@@ -36,7 +36,14 @@
               }
             ?>                          
           </tbody>
-        </table></form> 
+        </table>
+      </form> 
+      <br>
+    <?php if (isset($Amessage)) { ?>
+    <p style="color:red;">
+    <?php echo $Amessage; ?>
+    </p>
+    <?php } ?>
       </div>
     </div>
     <!-- / main body -->

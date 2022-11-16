@@ -10,16 +10,16 @@ include('nav-bar-owner.php');
             <form action="<?php echo FRONT_ROOT."Pet/Add" ?>" method="post">
                 <div class="form-outline ">
                     <label class="form-label" for="Name">Name</label>
-                    <input type="text" id="Name" name="name" class="form-control" />
+                    <input type="text" id="Name" name="name" class="form-control" value="<?php if (isset($_POST['name'])) echo $_POST['name']?>"/>
                 </div>
 
                 <div class="form-outline">
                     <label class="form-label" for="Breed">Breed</label>
-                    <input type="text" id="Race" class="form-control" name="breed" />
+                    <input type="text" id="Race" class="form-control" name="breed" value="<?php if (isset($_POST['breed'])) echo $_POST['breed']?>" />
                 </div>
 
                 <div id="sizePet" class="mt-4">
-                    <h5>Size :</h5>
+                    <label class="form-label" for="size">Size:</label>
                     <div class="form-check">
                         <label class="form-check-label" for="sma"> Small </label>
                         <input class="form-check-input" type="radio" name="size" id="sma" value="small" />
@@ -47,9 +47,14 @@ include('nav-bar-owner.php');
 
 
                 <div class="mt-4 d-flex justify-content-center mb-5">
-                <button class="btn btn-primary" type="submit">Agregar mascota</button>
+                <button class="btn btn-primary" type="submit">Add pet</button>
                 </div>
             </form>
+            <?php if (isset($message)) { ?>
+    <p style="color:red;">
+    <?php echo $message; ?>
+    </p>
+    <?php } ?>
         </div>
     </div>
 </div>
