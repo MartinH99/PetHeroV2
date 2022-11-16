@@ -24,7 +24,7 @@
                         
                     </div>
 
-                    <p class="d-inline-block bg-light text-danger"><b><?php echo $message ?></b></p>
+                    <p class="d-inline-block bg-light text-danger"><b><?php if(isset($message)) echo $message; ?></b></p>
                     <!-- 2 column grid layout for inline styling -->
                     <div class="row mb-4">
                         <div class="col d-flex justify-content-center">

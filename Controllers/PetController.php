@@ -6,6 +6,7 @@
     use Models\Pet as Pet;
     use Models\Cat as Cat;
     use Models\Dog as Dog;
+    use \Exception;
 
     class PetController{
 
@@ -45,54 +46,92 @@
         
         public function Add($name, $size,$breed,$animalType) ///Aca no tomo el id de la mascota porque se hace automatico al ingresar al DAO 
         {///Pueden pasar esta func a los otros controllers /**Consultar como la funcion recibe estos parametros del form relacionado al Router/Request  */
-            echo "ANIMALTYPE";var_dump($animalType);
-            if(strcmp($animalType,"cat") ==0) //En este caso al ser perro/gato alcanza,supongo que si se agranda se podria concatenar variables o un switch
+            
+            try{
+                if(!empty($animalType))
+                {
+
+                    if(!empty($size))
+                    {
+    
+                        if(!empty($breed))
+                        {
+        
+                            if(!empty($name))
+                            {
+            
+                                if(strcmp($animalType,"cat") ==0) //En este caso al ser perro/gato alcanza,supongo que si se agranda se podria concatenar variables o un switch
+                                {
+                                    $pet = new Cat();
+                                }else if(strcmp($animalType,"dog") ==0){
+                                    $pet = new Dog();
+                                }
+                                
+                                $pet->setName($name);
+                                
+                                $pet->setBreed($breed); //Con breed se podria llegar a hacer lo de size en cuanto a idBreed directo
+                    
+                                $user = $_SESSION["userLogged"];
+                                $pet->setOwnerId($user->getId()); //La idea seria que levante directamente el id de la sesion...
+                                
+                                switch($size)
+                                {
+                                    case 'small':
+                                        $pet->setSize(1);
+                                        break;
+                                    case 'medium':
+                                        $pet->setSize(2);
+                                        break;
+                                    case 'large':
+                                        $pet->setSize(3);
+                                        break;
+                    
+                                    default:
+                                        $pet->setAnimalType(0);
+                                }
+                    
+                                switch($animalType)
+                                {
+                                    case 'dog':
+                                        $pet->setAnimalType(1);
+                                        break;
+                                    case 'cat':
+                                        $pet->setAnimalType(2);
+                                        break;
+                    
+                                    default: 
+                                        $pet->setAnimalType(0);
+                                }
+                    
+                                $this->petDAO->Add($pet);
+                                $this->ShowRegisterPetView(); //Redirecciona de nuevo al add por si tenes mas mascotas
+                                $message = "Pet successfully added.";
+                            }else
+                            {
+                                $message = "The field Name cannot be empty.";
+                                require_once(VIEWS_PATH."add-pet.php");
+                            }
+                        }else
+                        {
+                            $message = "The field Breed cannot be empty.";
+                            require_once(VIEWS_PATH."add-pet.php");
+                        }
+                    }else
+                    {
+                        $message = "You must choose a size.";
+                        require_once(VIEWS_PATH."add-pet.php");
+                    }
+                }else
+                {
+                    $message = "You must choose an animal type.";
+                    require_once(VIEWS_PATH."add-pet.php");
+                }
+            }catch(Exception $e)
             {
-                $pet = new Cat();
-            }else if(strcmp($animalType,"dog") ==0){
-                $pet = new Dog();
+                $message = $e->getMessage();
+                require_once(VIEWS_PATH."add-pet.php");
+
             }
-            
-            $pet->setName($name);
-            
-            $pet->setBreed($breed); //Con breed se podria llegar a hacer lo de size en cuanto a idBreed directo
-
-            $user = $_SESSION["userLogged"];
-            $pet->setOwnerId($user->getId()); //La idea seria que levante directamente el id de la sesion...
-            
-            switch($size)
-            {
-                case 'small':
-                    $pet->setSize(1);
-                    break;
-                case 'medium':
-                    $pet->setSize(2);
-                    break;
-                case 'large':
-                    $pet->setSize(3);
-                    break;
-
-                default:
-                    $pet->setAnimalType(0);
-            }
-
-            switch($animalType)
-            {
-                case 'dog':
-                    $pet->setAnimalType(1);
-                    break;
-                case 'cat':
-                    $pet->setAnimalType(2);
-                    break;
-
-                default: 
-                    $pet->setAnimalType(0);
-            }
-            echo "PET";var_dump($pet);
-            $this->petDAO->Add($pet);
-            
-
-            $this->ShowRegisterPetView(); //Redirecciona de nuevo al add por si tenes mas mascotas
         }
 
        
@@ -100,8 +139,20 @@
         public function Remove($petId)
         {
             require_once(VIEWS_PATH."validate-session-own.php");
-            $this->petDAO->remove($petId);
-            require_once(VIEWS_PATH."pet-list-byid.php");
+            $arraySession = array();
+            $arraySession = $_SESSION["userLogged"];
+            $idOwner = $arraySession->getId();
+            try{
+                $petListId = $this->petDAO->getPetsByOwnerId($idOwner);
+                $this->petDAO->remove($petId);
+                require_once(VIEWS_PATH."pet-list-byid.php");
+                $Amessage = "Pet successfully deleted.";
+
+            }catch(Exception $e)
+            {
+                $message = "Cannot delete this pet.";
+                require_once(VIEWS_PATH."pet-list-byid.php");
+            }
         }
 
 
