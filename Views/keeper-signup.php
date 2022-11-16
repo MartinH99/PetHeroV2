@@ -8,7 +8,7 @@ include_once('header.php');
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="validations.js"></script>
+    <!-- <script src="validations.js"></script> -->
     <title>Keeper Sign up</title>
 </head>
 
@@ -22,14 +22,14 @@ include_once('header.php');
             <h1>Personal information</h1>
             <div class="col">
                 <div class="form-outline">
-                    <input type="text" id="firstName" class="form-control" name="firstname" value="<?php if (isset($_POST['firstname'])) echo $_POST['firstname']?>" required />
+                    <input type="text" id="firstName" class="form-control" name="firstname" value="<?php if (isset($_POST['firstname'])) echo $_POST['firstname']?>" />
                     <label class="form-label" for="firstName">First name</label>
                 </div>
             </div>
             
             <div class="col">
                 <div class="form-outline">
-                    <input type="text" id="lastName" class="form-control" name="lastname" value="<?php if (isset($_POST['lastname'])) echo $_POST['lastname']?>" required />
+                    <input type="text" id="lastName" class="form-control" name="lastname" value="<?php if (isset($_POST['lastname'])) echo $_POST['lastname']?>"  />
                     <label class="form-label" for="lastName">Last name</label>
                 </div>
             </div>
@@ -43,29 +43,29 @@ include_once('header.php');
         <input type="number" id="Cuil" class="form-control" name="cuil" oninput="validateCuil()" value="<?php if (isset($_POST['cuil'])) echo $_POST['cuil']?>" />
         </div>
             <div class="col">
-                <input type="text" id="Address" class="form-control" name="address" value="<?php if (isset($_POST['address'])) echo $_POST['address']?>" required />
+                <input type="text" id="Address" class="form-control" name="address" value="<?php if (isset($_POST['address'])) echo $_POST['address']?>"  />
                 <label class="form-label" for="Address">Address</label>
             </div>
         </div>
         <?php date_default_timezone_set('America/Argentina/Buenos_Aires');
         $currentDate = date("Y-m-d");?>
         <label for="availabilityStart">Start date:</label>
-        <input id="availabilityStart" name="availStart" type="date" class="form-control"  value="<?php if (isset($_POST['availStart'])) echo $_POST['availStart']?>" placeholder="" required="" min="<?php echo $currentDate; ?>" oninput="validateStartDate()">
+        <input id="availabilityStart" name="availStart" type="date" class="form-control"  value="<?php if (isset($_POST['availStart'])) echo $_POST['availStart']?>" placeholder="" min="<?php echo $currentDate; ?>" oninput="validateStartDate()">
     </div>
     <br>
     <br>
     <div class="col">
         <label for="availabilityEnd">End date:</label>
-        <input id="availabilityEnd" name="availEnd" type="date" class="form-control" value="<?php if (isset($_POST['availEnd'])) echo $_POST['availEnd']?>" title="" required="" oninput="validateEndDate()">
+        <input id="availabilityEnd" name="availEnd" type="date" class="form-control" value="<?php if (isset($_POST['availEnd'])) echo $_POST['availEnd']?>" title="" oninput="validateEndDate()">
     </div>
         <br>
         <div class="row mb-4 mt-4">
             <div class="col">
-                <input type="number" id="Telephone" class="form-control" name="telephone" value="<?php if (isset($_POST['telephone'])) echo $_POST['telephone']?>" required />
+                <input type="number" id="Telephone" class="form-control" name="telephone" value="<?php if (isset($_POST['telephone'])) echo $_POST['telephone']?>"  />
                 <label class="form-label" for="Telephone">Telephone</label>
             </div>
             <div class="col">
-                <input type="number" id="Price" class="form-control" name="price" value="<?php if (isset($_POST['price'])) echo $_POST['price']?>" required />
+                <input type="number" id="Price" class="form-control" name="price" value="<?php if (isset($_POST['price'])) echo $_POST['price']?>" />
                 <label class="form-label" for="Price">Price</label>
             </div>
         </div>
@@ -75,7 +75,7 @@ include_once('header.php');
             <h1>Sign up information</h1>
             <div class="col">
                 <div class="form-outline">
-                    <input type="text" id="userName" class="form-control" name="username" value="<?php if (isset($_POST['username'])) echo $_POST['username']?>" required />
+                    <input type="text" id="userName" class="form-control" name="username" value="<?php if (isset($_POST['username'])) echo $_POST['username']?>" />
                     <label class="form-label" for="firstName">Username</label>
                 </div>
             </div>
@@ -83,13 +83,13 @@ include_once('header.php');
             <div class="col">
             <div class="form-outline">
                     <label class="form-label" for="Password">Password</label>
-                    <input type="password" id="Password" class="form-control" name="password" oninput="validatePassword()" value="<?php if (isset($_POST['password'])) echo $_POST['password']?>" required />
+                    <input type="password" id="Password" class="form-control" name="password" oninput="validatePassword()" value="<?php if (isset($_POST['password'])) echo $_POST['password']?>" />
                 </div>
             </div>
         </div>
         <div class="single-col">
             <div class="form-outline">
-                <input type="email" id="Email" class="form-control" name="email" value="<?php if (isset($_POST['email'])) echo $_POST['email']?>" required />
+                <input type="text" id="Email" class="form-control" name="email" value="<?php if (isset($_POST['email'])) echo $_POST['email']?>" />
                 <label class="form-label" for="Email">Email</label>
             </div>
         </div>
@@ -102,7 +102,7 @@ include_once('header.php');
     <?php echo $message; ?>
     </p>
     <?php } ?>
-    <script src="../Views/js/validations.js"></script>
+    <!-- <script src="../Views/js/validations.js"></script> -->
 </body>
 
 </html>

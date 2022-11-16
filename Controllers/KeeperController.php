@@ -50,43 +50,141 @@ use Exception;
 
            try{
             
-            if($this->validateUser($username))
+            if(!empty($firstname))
             {
-                if($this->validateEmail($email))
+                if(!empty($lastname))
                 {
-                    if($this->validateCuil($cuil))
+                    if(!empty($address))
                     {
-                        $keeper = new Keeper();
-                        $keeper->setUsername($username);
-                        $keeper->setPassword($password);
-                        $keeper->setEmail($email);
-                        $keeper->setFirstName($firstname);
-                        $keeper->setLastname($lastname);
-                        $keeper->setAddress($address);
-                        $keeper->setTelephone($telephone);
-                        $keeper->setCuil($cuil);
-                        $keeper->setAvailStart($availStart); 
-                        $keeper->setAvailEnd($availEnd); 
-                        $keeper->setPrice($price);
-                        $this->keeperDAO->Add($keeper);
-                        require_once(VIEWS_PATH."login-keep.php");
+                        if(!empty($username))
+                        {
+                            if($this->validateUser($username))
+                            {
+                                if(!empty($password))
+                                {
+                                    if(strlen($password) >= 6)
+                                    {
+
+                                        if(!empty($email))
+                                        {
+                                            if(filter_var($email, FILTER_VALIDATE_EMAIL))
+                                            {
+                                                
+                                                if($this->validateEmail($email))
+                                                {
+                                                    if(!empty($cuil))
+                                                    {
+                                                        if($this->validateCuil($cuil))
+                                                        {
+                                                           if(!empty($availStart))
+                                                           {
+                                                                if(!empty($availEnd))
+                                                                {
+                                                                    if(strlen($telephone) >= 9)
+                                                                    {
+                                                                        if(!empty($price))
+                                                                        {
+
+                                                                            $keeper = new Keeper();
+                                                                            $keeper->setUsername($username);
+                                                                            $keeper->setPassword($password);
+                                                                            $keeper->setEmail($email);
+                                                                            $keeper->setFirstName($firstname);
+                                                                            $keeper->setLastname($lastname);
+                                                                            $keeper->setAddress($address);
+                                                                            $keeper->setTelephone($telephone);
+                                                                            $keeper->setCuil($cuil);
+                                                                            $keeper->setAvailStart($availStart); 
+                                                                            $keeper->setAvailEnd($availEnd); 
+                                                                            $keeper->setPrice($price);
+                                                                            $this->keeperDAO->Add($keeper);
+                                                                            require_once(VIEWS_PATH."login-keep.php");
+                                                                        }else
+                                                                        {
+                                                                            $message = "The field '<b>Price</b>' cannot be empty.";
+                                                                            require_once(VIEWS_PATH . "keeper-signup.php");
+                                                                        }
+                                                                    }else
+                                                                    {
+                                                                        $message = "The '<b>telephone</b>' must have at least 9 numbers.";
+                                                                        require_once(VIEWS_PATH . "keeper-signup.php");
+                                                                    }
+                                                                }else
+                                                                {
+                                                                    $message = "The field '<b>End date</b>' cannot be empty.";
+                                                                    require_once(VIEWS_PATH . "keeper-signup.php");
+                                                                }
+                                                           }else
+                                                           {
+                                                                $message = "The field '<b>Start date</b>' cannot be empty.";
+                                                                require_once(VIEWS_PATH . "keeper-signup.php");
+                                                           }
+                                                        }else
+                                                        {
+                                                            $message = "The '<b>CUIL</b>' is already registered.";
+                                                             require_once(VIEWS_PATH . "keeper-signup.php");
+                                                        }
+                                                    }else
+                                                    {
+                                                        $message = "The field '<b>CUIL</b>' cannot be empty.";
+                                                        require_once(VIEWS_PATH . "keeper-signup.php");
+                                                    }
+                                                }else
+                                                {
+                                                    $message = "The '<b>email</b>' is already registered.";
+                                                    require_once(VIEWS_PATH . "keeper-signup.php");
+                                                }
+                                            }else
+                                            {
+                                                $message = "The '<b>email</b>' you entered is not valid.";
+                                                require_once(VIEWS_PATH . "keeper-signup.php");
+                                            }
+                                        }else
+                                        {
+                                            $message = "The field '<b>Email</b>' cannot be empty.";
+                                            require_once(VIEWS_PATH . "keeper-signup.php");
+                                        }
+                                    }else
+                                    {
+                                        $message = "The '<b>password</b>' must be at least 6 characters long.";
+                                        require_once(VIEWS_PATH . "keeper-signup.php");
+                                    }
+                                }else
+                                {
+                                    $message = "The field '<b>Password</b>' cannot be empty.";
+                                    require_once(VIEWS_PATH . "keeper-signup.php");
+                                }
+                
+                            }else
+                            {
+                                $message = "The '<b>username</b>' is not available.";
+                                require_once(VIEWS_PATH . "keeper-signup.php");
+                            }
+
+                        }else
+                        {
+                            $message = "The field '<b>Username</b>' cannot be empty.";
+                            require_once(VIEWS_PATH . "keeper-signup.php");
+                        }
+
                     }else
                     {
-                        $message = "This CUIL is already registered.";
-                         require_once(VIEWS_PATH . "keeper-signup.php");
+                        $message = "The field '<b>Address</b>' cannot be empty.";
+                        require_once(VIEWS_PATH . "keeper-signup.php");
                     }
-                }
-                else
+                    
+                }else
                 {
-                    $message = "This email is already registered.";
+                    $message = "The field '<b>Last name</b>' cannot be empty.";
                     require_once(VIEWS_PATH . "keeper-signup.php");
                 }
-
+                
             }else
             {
-                $message = "This username is not available.";
+                $message = "The field '<b>First name</b>' cannot be empty.";
                 require_once(VIEWS_PATH . "keeper-signup.php");
             }
+
                 
             }catch(Exception $e)
             {
