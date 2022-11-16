@@ -44,11 +44,19 @@ use Exception;
             $_SESSION["userLogged"] = $user;
         }
 
+        public function getCurrentDate()
+        {
+            date_default_timezone_set('America/Argentina/Buenos_Aires');
+            $currentDate = date("Y-m-d");
+            return $currentDate;
+        }
+
 
         public function Add($firstname,$lastname,$username,$password,$email,$address,$telephone,$cuil,$availStart,$availEnd,$price)
         {
 
-           try{
+            $currentDate = $this->getCurrentDate();
+            try{
             
             if(!empty($firstname))
             {
@@ -78,40 +86,54 @@ use Exception;
                                                         {
                                                            if(!empty($availStart))
                                                            {
-                                                                if(!empty($availEnd))
+                                                                if($availStart >= $currentDate)
                                                                 {
-                                                                    if(strlen($telephone) >= 9)
+                                                                    if(!empty($availEnd))
                                                                     {
-                                                                        if(!empty($price))
+                                                                        if($availEnd >= $availStart)
                                                                         {
-
-                                                                            $keeper = new Keeper();
-                                                                            $keeper->setUsername($username);
-                                                                            $keeper->setPassword($password);
-                                                                            $keeper->setEmail($email);
-                                                                            $keeper->setFirstName($firstname);
-                                                                            $keeper->setLastname($lastname);
-                                                                            $keeper->setAddress($address);
-                                                                            $keeper->setTelephone($telephone);
-                                                                            $keeper->setCuil($cuil);
-                                                                            $keeper->setAvailStart($availStart); 
-                                                                            $keeper->setAvailEnd($availEnd); 
-                                                                            $keeper->setPrice($price);
-                                                                            $this->keeperDAO->Add($keeper);
-                                                                            require_once(VIEWS_PATH."login-keep.php");
+                                                                            if(strlen($telephone) >= 9)
+                                                                            {
+                                                                                if(!empty($price))
+                                                                                {
+        
+                                                                                    $keeper = new Keeper();
+                                                                                    $keeper->setUsername($username);
+                                                                                    $keeper->setPassword($password);
+                                                                                    $keeper->setEmail($email);
+                                                                                    $keeper->setFirstName($firstname);
+                                                                                    $keeper->setLastname($lastname);
+                                                                                    $keeper->setAddress($address);
+                                                                                    $keeper->setTelephone($telephone);
+                                                                                    $keeper->setCuil($cuil);
+                                                                                    $keeper->setAvailStart($availStart); 
+                                                                                    $keeper->setAvailEnd($availEnd); 
+                                                                                    $keeper->setPrice($price);
+                                                                                    $this->keeperDAO->Add($keeper);
+                                                                                    require_once(VIEWS_PATH."login-keep.php");
+                                                                                }else
+                                                                                {
+                                                                                    $message = "The field '<b>Price</b>' cannot be empty.";
+                                                                                    require_once(VIEWS_PATH . "keeper-signup.php");
+                                                                                }
+                                                                            }else
+                                                                            {
+                                                                                $message = "The '<b>telephone</b>' must have at least 9 numbers.";
+                                                                                require_once(VIEWS_PATH . "keeper-signup.php");
+                                                                            }
                                                                         }else
                                                                         {
-                                                                            $message = "The field '<b>Price</b>' cannot be empty.";
+                                                                            $message = "'<b>End date</b>' must be greater than '<b>Start date</b>'.";
                                                                             require_once(VIEWS_PATH . "keeper-signup.php");
                                                                         }
                                                                     }else
                                                                     {
-                                                                        $message = "The '<b>telephone</b>' must have at least 9 numbers.";
+                                                                        $message = "The field '<b>End date</b>' cannot be empty.";
                                                                         require_once(VIEWS_PATH . "keeper-signup.php");
                                                                     }
                                                                 }else
                                                                 {
-                                                                    $message = "The field '<b>End date</b>' cannot be empty.";
+                                                                    $message = "'<b>Start date</b>' must be equal or greater than current date.";
                                                                     require_once(VIEWS_PATH . "keeper-signup.php");
                                                                 }
                                                            }else

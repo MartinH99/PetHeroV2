@@ -8,7 +8,6 @@ include_once('header.php');
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <script src="validations.js"></script> -->
     <title>Keeper Sign up</title>
 </head>
 
@@ -17,6 +16,7 @@ include_once('header.php');
 
     
     <form action="<?php echo FRONT_ROOT . "Keeper/Add" ?>" method="post">
+    <!-- los campos no tienen REQUIRED porque las validaciones estan hechas en el Controller -->
     <!-- INFORMACION PERSONAL -->
     <div class="row mb-4 mt-4">
             <h1>Personal information</h1>
@@ -47,16 +47,14 @@ include_once('header.php');
                 <label class="form-label" for="Address">Address</label>
             </div>
         </div>
-        <?php date_default_timezone_set('America/Argentina/Buenos_Aires');
-        $currentDate = date("Y-m-d");?>
         <label for="availabilityStart">Start date:</label>
-        <input id="availabilityStart" name="availStart" type="date" class="form-control"  value="<?php if (isset($_POST['availStart'])) echo $_POST['availStart']?>" placeholder="" min="<?php echo $currentDate; ?>" oninput="validateStartDate()">
+        <input id="availabilityStart" name="availStart" type="date" class="form-control"  value="<?php if (isset($_POST['availStart'])) echo $_POST['availStart']?>" placeholder="">
     </div>
     <br>
     <br>
     <div class="col">
         <label for="availabilityEnd">End date:</label>
-        <input id="availabilityEnd" name="availEnd" type="date" class="form-control" value="<?php if (isset($_POST['availEnd'])) echo $_POST['availEnd']?>" title="" oninput="validateEndDate()">
+        <input id="availabilityEnd" name="availEnd" type="date" class="form-control" value="<?php if (isset($_POST['availEnd'])) echo $_POST['availEnd']?>">
     </div>
         <br>
         <div class="row mb-4 mt-4">
@@ -102,7 +100,6 @@ include_once('header.php');
     <?php echo $message; ?>
     </p>
     <?php } ?>
-    <!-- <script src="../Views/js/validations.js"></script> -->
 </body>
 
 </html>
