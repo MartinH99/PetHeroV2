@@ -120,7 +120,7 @@ use Exception;
                                                                                     }
                                                                                 }else
                                                                                 {
-                                                                                    $message = "The '<b>telephone</b>' must have at least 9 numbers.";
+                                                                                    $message = "The telephone must have at least 9 numbers.";
                                                                                     require_once(VIEWS_PATH . "keeper-signup.php");
                                                                                 }
                                                                             }else
@@ -145,7 +145,7 @@ use Exception;
                                                                }
                                                             }else
                                                             {
-                                                                $message = "The '<b>CUIL</b>' is already registered.";
+                                                                $message = "The CUIL is already registered.";
                                                                  require_once(VIEWS_PATH . "keeper-signup.php");
                                                             }
                                                         }else
@@ -160,12 +160,12 @@ use Exception;
                                                     }
                                                 }else
                                                 {
-                                                    $message = "The '<b>email</b>' is already registered.";
+                                                    $message = "The email is already registered.";
                                                     require_once(VIEWS_PATH . "keeper-signup.php");
                                                 }
                                             }else
                                             {
-                                                $message = "The '<b>email</b>' you entered is not valid.";
+                                                $message = "The email you entered is not valid.";
                                                 require_once(VIEWS_PATH . "keeper-signup.php");
                                             }
                                         }else
@@ -175,7 +175,7 @@ use Exception;
                                         }
                                     }else
                                     {
-                                        $message = "The '<b>password</b>' must be at least 6 characters long.";
+                                        $message = "The password must be at least 6 characters long.";
                                         require_once(VIEWS_PATH . "keeper-signup.php");
                                     }
                                 }else
@@ -186,7 +186,7 @@ use Exception;
                 
                             }else
                             {
-                                $message = "The '<b>username</b>' is not available.";
+                                $message = "The username is not available.";
                                 require_once(VIEWS_PATH . "keeper-signup.php");
                             }
 
@@ -323,11 +323,11 @@ use Exception;
                 return $keeper;
             } else {
 
-                $this->errorLogin("Password error!");
+                $this->errorLogin("The password you entered is incorrect.");
             }
         }else
         {
-            $this->errorLogin("Not such owner with that username!");
+            $this->errorLogin("No such keeper with that username.");
         }
     }
 

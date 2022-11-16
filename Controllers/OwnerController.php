@@ -97,7 +97,7 @@
                                             
                                                             }else
                                                             {
-                                                                $message = "The field Email cannot be empty.";
+                                                                $message = "The field '<b>email</b>' cannot be empty.";
                                                                 require_once(VIEWS_PATH . "owner-signup.php");
                                                             }
                                     
@@ -109,7 +109,7 @@
                                     
                                                     }else
                                                     {
-                                                        $message = "The field Password cannot be empty.";
+                                                        $message = "The field '<b>Password</b>' cannot be empty.";
                                                         require_once(VIEWS_PATH . "owner-signup.php");
                                                     }
                                                 }else
@@ -119,7 +119,7 @@
                                                 }
                                             }else
                                             {
-                                                $message = "The field Username cannot be empty.";
+                                                $message = "The field '<b>Username</b>' cannot be empty.";
                                                 require_once(VIEWS_PATH . "owner-signup.php");
                                             }
                                         }else
@@ -129,7 +129,7 @@
                                         }
                                     }else
                                     {
-                                        $message = "The field Address cannot be empty.";
+                                        $message = "The field '<b>Address</b>' cannot be empty.";
                                         require_once(VIEWS_PATH . "owner-signup.php");
                                     }
                                 }else
@@ -144,17 +144,17 @@
                             }
                         }else
                         {
-                            $message = "The field DNI cannot be empty.";
+                            $message = "The field '<b>DNI</b>' cannot be empty.";
                             require_once(VIEWS_PATH . "owner-signup.php");
                         }
                     }else
                     {
-                        $message = "The field Lastname cannot be empty.";
+                        $message = "The field '<b>Last name</b>' cannot be empty.";
                         require_once(VIEWS_PATH . "owner-signup.php");
                     }
                 }else
                 {
-                    $message = "The field Firstname cannot be empty.";
+                    $message = "The field '<b>First name</b>' cannot be empty.";
                     require_once(VIEWS_PATH . "owner-signup.php");
                 }
 
@@ -256,7 +256,6 @@
             $newDao =new OwnerDAO();
             //$owner = $this->ownerDAO->searchOwner($username);ASI NO 
             $owner = $newDao->searchOwner($username);
-            var_dump($owner);
             if ($owner != false) {
 
                 if ($owner->getPassword() === $password) {
@@ -266,11 +265,11 @@
                     return $owner;
                 } else {
 
-                    $this->errorLogin("Password error!");
+                    $this->errorLogin("The password you entered is incorrect.");
                 }
             }else
             {
-                $this->errorLogin("Not such owner with that username!");
+                $this->errorLogin("No such owner with that username.");
             }
         }
 
