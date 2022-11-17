@@ -64,7 +64,7 @@ class BookingController
             $booking->setEndDate($initEnd);
             $booking->setStatus("pending");
             $booking->setInterval(0); //
-            
+
             $this->bookingDAO->Add($booking);
 
         }

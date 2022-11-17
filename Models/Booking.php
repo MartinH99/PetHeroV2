@@ -120,6 +120,75 @@ class Booking {
     /**
      * Get the value of idOwner
      */ 
+    public function getIdOwner2()
+    {
+        return $this->idOwner;
+    }
+
+    /**
+     * Set the value of idOwner
+     *
+     * @return  self
+     */ 
+    public function setIdOwner2($idOwner)//Tuve que modificar esto por el hecho del muestreo para el listado de booking,queda feo que se vean id sin sentido
+    {
+        $ownerDAO = new OwnerDAO();
+        $ownerUname = $ownerDAO->getUsernameOwner($idOwner);
+        
+        $this->idOwner = $ownerUname["username"];
+
+        return $this;
+    }
+
+    /**
+     * Get the value of idKeeper
+     */ 
+    public function getIdKeeper2()
+    {
+        return $this->idKeeper;
+    }
+
+    /**
+     * Set the value of idKeeper
+     *
+     * @return  self
+     */ 
+    public function setIdKeeper2($idKeeper)
+    {
+        $keeperDAO = new KeeperDAO();
+        $keeperUname = $keeperDAO->getUsernamekeeper($idKeeper);
+        
+        $this->idKeeper = $keeperUname["username"];
+
+        return $this;
+    }
+
+    /**
+     * Get the value of idPet
+     */ 
+    public function getIdPet2()
+    {
+        return $this->idPet;
+    }
+
+    /**
+     * Set the value of idPet
+     *
+     * @return  self
+     */ 
+    public function setIdPet2($idPet)
+    {
+        $petDAO = new petDAO();
+        $petUname = $petDAO->getPetName($idPet);
+        
+        $this->idPet = $petUname["name"];
+
+        return $this;
+    }
+
+    /**
+     * Get the value of idOwner
+     */ 
     public function getIdOwner()
     {
         return $this->idOwner;
@@ -130,12 +199,9 @@ class Booking {
      *
      * @return  self
      */ 
-    public function setIdOwner($idOwner)//Tuve que modificar esto por el hecho del muestreo para el listado de booking,queda feo que se vean id sin sentido
+    public function setIdOwner($idOwner)
     {
-        $ownerDAO = new OwnerDAO();
-        $ownerUname = $ownerDAO->getUsernameOwner($idOwner);
-        
-        $this->idOwner = $ownerUname["username"];
+        $this->idOwner = $idOwner;
 
         return $this;
     }
@@ -155,10 +221,7 @@ class Booking {
      */ 
     public function setIdKeeper($idKeeper)
     {
-        $keeperDAO = new KeeperDAO();
-        $keeperUname = $keeperDAO->getUsernamekeeper($idKeeper);
-        
-        $this->idKeeper = $keeperUname["username"];
+        $this->idKeeper = $idKeeper;
 
         return $this;
     }
@@ -178,10 +241,7 @@ class Booking {
      */ 
     public function setIdPet($idPet)
     {
-        $petDAO = new petDAO();
-        $petUname = $petDAO->getPetName($idPet);
-        
-        $this->idPet = $petUname["name"];
+        $this->idPet = $idPet;
 
         return $this;
     }

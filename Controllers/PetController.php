@@ -112,8 +112,9 @@
             try{
                 $petListId = $this->petDAO->getPetsByOwnerId($idOwner);
                 $this->petDAO->remove($petId);
-                require_once(VIEWS_PATH."pet-list-byid.php");
                 $Amessage = "Pet successfully deleted.";
+                require_once(VIEWS_PATH."pet-list-byid.php");
+                
 
             }catch(Exception $e)
             {

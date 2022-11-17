@@ -2,7 +2,7 @@
     <!-- main body -->
     <div class="content"> 
       <div class="scrollable">
-      <form action="<?php echo FRONT_ROOT."Pet/Remove" ?>" method="">
+      <form action="<?php echo FRONT_ROOT."Pet/Remove" ?>" method="post">
         <table style="text-align:center;">
           <thead>
             <tr>
@@ -18,7 +18,7 @@
           </thead>
           <tbody>
             <?php
-              foreach($petList as $pet)
+              foreach($petListId as $pet)
               {
                 ?>
                   <tr>
