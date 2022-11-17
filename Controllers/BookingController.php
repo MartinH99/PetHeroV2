@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use \Exception as Exception;
 use DAObdd\BookingDAO as BookingDAO;
 use Models\Booking as Booking;
 use Controllers\HomeController as HomeController;
@@ -60,6 +61,10 @@ class BookingController
 
         public function Add($initStart,$initEnd,$petId,$ownerId,$keeperId) ///$Pet seria el obj?
         {
+
+            try{
+
+            
             var_dump($petId);
             $booking = new Booking();
             //$interval;  fecha fin-inicio
@@ -72,8 +77,15 @@ class BookingController
             $booking->setInterval(0); //
 
             $this->bookingDAO->Add($booking);
-
             $this->ownerController->indexOwner("Reserva agregada!");
+
+            }catch(Exception $ex)
+            {
+                $message = $ex->getMessage();
+                require_once(VIEWS_PATH."booking-request.php");
+            }
+
+            
 
         }
 
