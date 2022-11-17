@@ -116,7 +116,7 @@
                     $pet->setBreed($row["breed"]);
                     $pet->setOwnerId($row["ownerId"]);
                     $pet->setAnimalType($row["animalTypeId"]);
-
+                    
                     array_push($petListId, $pet);
                 }
 

@@ -26,7 +26,7 @@ class CouponDAO
             $parameters["couponId"] = $this->setNextIdCoup();
             $paramteers["total"] = $coupon->setTotal();
             $paramteers["subtotal"] = $coupon->setSubtotal();
-            $paramteers[""] = $coupon->;
+            //$paramteers[""] = $coupon->;
             
         }catch(Exception $ex)
         {
