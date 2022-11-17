@@ -154,6 +154,8 @@ class KeeperDAO
                 $this->connection = Connection::GetInstance();
                 $result = $this->connection->Execute($query,$parameters); //Tendria que devolver el array asociativo...
                 $newResult  = reset($result);
+                echo "<br>";
+                var_dump($result);
                  //Si devuelve 1 es xq el Execute retorno alguna fila y sino error
             }catch(Exception $ex)
             {
@@ -248,7 +250,7 @@ class KeeperDAO
                 $keeper->setAvailEnd($value["availEnd"]);
                 $keeper->setStars($value["stars"]);
                 $keeper->setPrice($value["price"]);
-                $keeper->setPrice($value["typeKeep"]);
+                $keeper->setTypeKeep($value["typeKeep"]);
 
                 return $keeper;
             
@@ -313,7 +315,7 @@ class KeeperDAO
                     $keeper->setAvailEnd($row["availEnd"]);
                     $keeper->setPrice($row["price"]);
                     $keeper->setStars($row["stars"]);
-                    $keeper->setStars($row["typeKeep"]);
+                    $keeper->setTypeKeep($row["typeKeep"]);
 
                     
 
@@ -358,7 +360,7 @@ class KeeperDAO
                     $keeper->setAvailEnd($row["availEnd"]);
                     $keeper->setPrice($row["price"]);
                     $keeper->setStars($row["stars"]);
-                    $keeper->setStars($row["typeKeep"]);
+                    $keeper->setTypeKeep($row["typeKeep"]);
 
                     
 

@@ -44,10 +44,13 @@ include('nav-bar-owner.php');
             <?php 
                 foreach($petListById as $pet)
                 {
+                    if($pet->getSize() == $keeper->getTypeKeep())
+                    {
             ?>
                     <option value="<?php echo $pet->getId(); ?>"> <?php echo $pet->getName() ?></option>
 
             <?php
+                }
                 }
             ?>
         </select>
