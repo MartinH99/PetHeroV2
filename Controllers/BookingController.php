@@ -8,6 +8,8 @@ use Controllers\HomeController as HomeController;
 use DAObdd\PetDAO as PetDAO;
 use DAObdd\KeeperDAO as KeeperDAO;
 use DAObdd\OwnerDAO as OwnerDAO;
+use Controllers\OwnerController as OwnerController;
+use Controllers\UserController as UserController;
 
 class BookingController
 {
@@ -16,6 +18,8 @@ class BookingController
     private $petDAO;
     private $keeperDAO;
     private $ownerDAO;
+    private $ownerController;
+    private $userController;
 
     function __construct()
         {
@@ -23,6 +27,8 @@ class BookingController
             $this->petDAO = new PetDAO();
             $this->keeperDAO = new KeeperDAO();
             $this->ownerDAO = new OwnerDAO();
+            $this->ownerController = new OwnerController();
+            $this->userController = new UserController();
             //$this->homeController = new HomeController(); //No estoy seguro si esto esta bien
         }
 
@@ -45,7 +51,7 @@ class BookingController
             $id2 = $arraySession->getId();
             $petListById = $this->petDAO->getPetsByOwnerId($id2);
             $keeper = $this->keeperDAO->searchKeeperById($id);
-
+            var_dump($keeper);
            require_once(VIEWS_PATH."booking-request.php");
             
             
@@ -66,6 +72,8 @@ class BookingController
             $booking->setInterval(0); //
 
             $this->bookingDAO->Add($booking);
+
+            $this->ownerController->indexOwner("Reserva agregada!");
 
         }
 
