@@ -1,6 +1,6 @@
 
 <div class="form">
-<form action="<?php echo FRONT_ROOT ."Owner/filterDateKeep"?>">
+<form action="<?php echo FRONT_ROOT ."User/filterDateKeep_Size"?>">
 
 <script>
         function validate() {
@@ -14,6 +14,16 @@
     <div class="form-outline w-50 m-5 p-3">
         <label for="InitDate">Initial date:</label>
         <input type="date" id="InitDate" class="form-control" name="initDate" min="<?php echo date('Y-m-d'); ?>" required>
+    </div>
+    <div>
+        <div>
+            <label for="size">Size</label>
+            <select name="size" id="size">
+                <option value="1">Small</option>
+                <option value="2">Medium</option>
+                <option value="3">Large</option>
+            </select>
+        </div>
     </div>
     
     <br>

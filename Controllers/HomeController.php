@@ -29,6 +29,12 @@
             require_once(VIEWS_PATH."login.php");
         }
 
+        public function filterDateKeep_Size($initDate,$endDate,$size)
+        {
+            $keeperListNew = $this->KeeperDAO->filterKeeperByDate_Size($initDate,$endDate,$size);
+            require_once(VIEWS_PATH."main-home-by.php");
+        }
+
         public function ShowRegisterView()
         {
             require_once(VIEWS_PATH."signup.php");

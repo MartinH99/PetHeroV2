@@ -110,11 +110,10 @@
             $arraySession = $_SESSION["userLogged"];
             $idOwner = $arraySession->getId();
             try{
-                $petListId = $this->petDAO->getPetsByOwnerId($idOwner);
                 $this->petDAO->remove($petId);
-                $Amessage = "Pet successfully deleted.";
+                $petListId = $this->petDAO->getPetsByOwnerId($idOwner);
+                $message = "Pet successfully deleted.";
                 require_once(VIEWS_PATH."pet-list-byid.php");
-                
 
             }catch(Exception $e)
             {

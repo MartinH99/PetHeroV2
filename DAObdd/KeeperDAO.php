@@ -18,8 +18,8 @@ class KeeperDAO
             
             try
             { //Recordar que interval tiene que ser una entidad propia
-                $query = "INSERT INTO ".$this->tablename." (keeperId,firstname, lastname,username,password,email,address,telephone,cuil,availStart,availEnd,price,stars)
-                 VALUES (:keeperId, :firstname, :lastname,:username,:password,:email,:address,:telephone,:cuil,:availStart,:availEnd,:price,:stars);";
+                $query = "INSERT INTO ".$this->tablename." (keeperId,firstname, lastname,username,password,email,address,telephone,cuil,availStart,availEnd,price,stars,typeKeep)
+                 VALUES (:keeperId, :firstname, :lastname,:username,:password,:email,:address,:telephone,:cuil,:availStart,:availEnd,:price,:stars,:typeKeep);";
                 
 
                 $parameters["keeperId"] = $this->setNextIdKeep(); //$owner->getId(); Aca estaria bueno lo de el nextId con lastInsertId + inicial Tabla K1/O1
@@ -37,6 +37,7 @@ class KeeperDAO
                 //$parameters["interval"] = null; //Aca lo mejor seria getEnd - GetStart = interval y meterlo en su tabla devolviendo un id que se guarda acá (Podrias guardar el id o el valor d1)
                 $parameters["price"] = $keeper->getPrice();
                 $parameters["stars"] = 1;
+                $parameters["typeKeep"] = $keeper->getTypeKeep();
 
 
                 $this->connection = Connection::GetInstance();
@@ -79,7 +80,7 @@ class KeeperDAO
                     $keeper->setInterval(0);
                     $keeper->setPrice($row["price"]);
                     $keeper->setStars($row["stars"]);
-
+                    $keeper->setTypeKeep($row["typeKeep"]);
                     
 
                     array_push($keeperList, $keeper);
@@ -247,6 +248,7 @@ class KeeperDAO
                 $keeper->setAvailEnd($value["availEnd"]);
                 $keeper->setStars($value["stars"]);
                 $keeper->setPrice($value["price"]);
+                $keeper->setPrice($value["typeKeep"]);
 
                 return $keeper;
             
@@ -281,6 +283,51 @@ class KeeperDAO
 
     }
 
+    public function filterKeeperByDate_Size($initDate,$initEnd,$size)
+    {
+        try
+        {
+            $keeperListByDateSize = array();
+
+            $query = "SELECT * FROM $this->tablename WHERE availStart >= '$initDate' AND availEnd <= '$initEnd' AND typeKeep = $size;";
+
+            $this->connection = Connection::GetInstance();
+
+            $result = $this->connection->Execute($query);
+            var_dump($result);
+            foreach ($result as $row) //Voy pasando a un objeto owner lo que recupera de la BD en un array asociativo por filas
+                {                
+                    //Revisar si precisa del methodPass / rta = nop
+                    $keeper = new Keeper();
+
+                    $keeper->setId($row["keeperId"]);
+                    $keeper->setFirstname($row["firstname"]);
+                    $keeper->setLastName($row["lastname"]);
+                    $keeper->setUsername($row["username"]);
+                    $keeper->setPassword($row["password"]);
+                    $keeper->setEmail($row["email"]);
+                    $keeper->setAddress($row["address"]);
+                    $keeper->setTelephone($row["telephone"]);
+                    $keeper->setCuil($row["cuil"]);
+                    $keeper->setAvailStart($row["availStart"]);
+                    $keeper->setAvailEnd($row["availEnd"]);
+                    $keeper->setPrice($row["price"]);
+                    $keeper->setStars($row["stars"]);
+                    $keeper->setStars($row["typeKeep"]);
+
+                    
+
+                    array_push($keeperListByDateSize, $keeper);
+                }
+
+                return $keeperListByDateSize;
+
+        }catch(Exception $ex)
+        {
+            return $ex;
+        }
+    }
+
     public function filterKeepersByDate($initDate,$initEnd)
     {
         try
@@ -311,6 +358,7 @@ class KeeperDAO
                     $keeper->setAvailEnd($row["availEnd"]);
                     $keeper->setPrice($row["price"]);
                     $keeper->setStars($row["stars"]);
+                    $keeper->setStars($row["typeKeep"]);
 
                     
 

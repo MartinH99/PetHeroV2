@@ -24,7 +24,20 @@
         public function index($message = "")
         {
             require_once(VIEWS_PATH."navbar-home.php");
+            $keeperList = $this->KeeperDAO->getAll();
             require_once(VIEWS_PATH."main-home.php");
+        }
+
+        public function filterDateKeep($initDate,$endDate)
+        {
+            $keeperListNew = $this->KeeperDAO->filterKeepersByDate($initDate,$endDate);
+            require_once(VIEWS_PATH."main-home-by.php");
+        }
+
+        public function filterDateKeep_Size($initDate,$endDate,$size)
+        {
+            $keeperListNew = $this->KeeperDAO->filterKeeperByDate_Size($initDate,$endDate,$size);
+            require_once(VIEWS_PATH."main-home-by.php");
         }
 
         public function typeSignup($userType)

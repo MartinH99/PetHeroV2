@@ -6,6 +6,9 @@
       <form action="<?php echo FRONT_ROOT."Pet/Remove" ?>" method="post">
         <table style="text-align:center;">
           <thead>
+            <?php
+            if(!empty($petListId)){
+            ?>
             <tr>
               <th>Name</th>
               <th>Animal type</th>
@@ -34,14 +37,19 @@
                   </tr>
                 <?php
               }
+            }else
+            {
+              echo "You do not have any pets yet.";?> <a href="<?php echo FRONT_ROOT."Pet/ShowRegisterPetView"?>">Click here to add a pet</a>
+            <?php
+            }
             ?>                          
           </tbody>
         </table>
       </form> 
       <br>
-    <?php if (isset($Amessage)) { ?>
+    <?php if (isset($message)) { ?>
     <p style="color:red;">
-    <?php echo $Amessage; ?>
+    <?php echo $message; ?>
     </p>
     <?php } ?>
       </div>
