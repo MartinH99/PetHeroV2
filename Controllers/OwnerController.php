@@ -86,83 +86,77 @@
                                                                        // $this->indexOwner("Owner successfully registered!"); // si descomento esto se rompe
                                                                     }else
                                                                     {
-                                                                        $message = "The email is already registered.";
-                                                                        require_once(VIEWS_PATH . "owner-signup.php");
+                                                                        throw new Exception("The email is already registered.");
                                                                     }
                                                                 }else
                                                                 {
-                                                                    $message = "The email you entered is not valid.";
-                                                                    require_once(VIEWS_PATH . "owner-signup.php");
+                                                                    throw new Exception("The email you entered is not valid.");
                                                                 }
                                             
                                                             }else
                                                             {
-                                                                $message = "The field '<b>email</b>' cannot be empty.";
-                                                                require_once(VIEWS_PATH . "owner-signup.php");
+                                                                throw new Exception("The field '<b>email</b>' cannot be empty.");
                                                             }
                                     
                                                         }else
                                                         {
-                                                            $message = "The password must be at least 6 characters long.";
-                                                            require_once(VIEWS_PATH . "owner-signup.php");
+
+                                                            throw new Exception("The password must be at least 6 characters long.");
                                                         }
                                     
                                                     }else
                                                     {
-                                                        $message = "The field '<b>Password</b>' cannot be empty.";
-                                                        require_once(VIEWS_PATH . "owner-signup.php");
+
+                                                        throw new Exception("The field '<b>Password</b>' cannot be empty.");
                                                     }
                                                 }else
                                                 {
-                                                    $message = "The username is not available.";
-                                                    require_once(VIEWS_PATH . "owner-signup.php");
+
+                                                    throw new Exception("The username is not available.");
                                                 }
                                             }else
                                             {
-                                                $message = "The field '<b>Username</b>' cannot be empty.";
-                                                require_once(VIEWS_PATH . "owner-signup.php");
+
+                                                throw new Exception("The field '<b>Username</b>' cannot be empty.");
                                             }
                                         }else
                                         {
-                                            $message = "The telephone must have at least 9 numbers.";
-                                            require_once(VIEWS_PATH . "owner-signup.php");
+
+                                            throw new Exception("The telephone must have at least 9 numbers.");
                                         }
                                     }else
                                     {
-                                        $message = "The field '<b>Address</b>' cannot be empty.";
-                                        require_once(VIEWS_PATH . "owner-signup.php");
+
+                                        throw new Exception("he field '<b>Address</b>' cannot be empty.");
                                     }
                                 }else
                                 {
-                                    $message = "The DNI is already registered.";
-                                    require_once(VIEWS_PATH . "owner-signup.php");
+
+                                    throw new Exception("The DNI is already registered.");
                                 }
                             }else
                             {
-                                $message = "The DNI you entered is not valid.";
-                                require_once(VIEWS_PATH . "owner-signup.php");
+                                throw new Exception("The DNI you entered is not valid.");
                             }
                         }else
                         {
-                            $message = "The field '<b>DNI</b>' cannot be empty.";
-                            require_once(VIEWS_PATH . "owner-signup.php");
+
+                            throw new Exception("The field '<b>DNI</b>' cannot be empty.");
                         }
                     }else
                     {
-                        $message = "The field '<b>Last name</b>' cannot be empty.";
-                        require_once(VIEWS_PATH . "owner-signup.php");
+                        throw new Exception("The field '<b>Last name</b>' cannot be empty.");
                     }
                 }else
                 {
-                    $message = "The field '<b>First name</b>' cannot be empty.";
-                    require_once(VIEWS_PATH . "owner-signup.php");
+                    throw new Exception("The field '<b>First name</b>' cannot be empty.");
                 }
 
 
             }catch(Exception $e)
             {
-                 $message = $e->getMessage();
-                 require_once(VIEWS_PATH . "owner-signup.php");
+                $e->getMessage();
+                require_once(VIEWS_PATH . "owner-signup.php");
             } 
 
          }

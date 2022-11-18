@@ -1,4 +1,6 @@
-<?php include("navbar-home.php"); ?>
+<?php 
+include("header.php");
+include("navbar-home.php"); ?>
 <div class="card-body mb-3 ">
     <div class="row g-0 d-flex align-items-center bg-dark text-white ">
         <div class="col-lg-4 d-none d-lg-flex">
