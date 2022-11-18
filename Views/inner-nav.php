@@ -19,7 +19,7 @@
               <a
                 class="nav-link active"
                 aria-current="page"
-                href="../index.html"
+                href="<?php echo FRONT_ROOT."Home/index"?>"
                 >Home</a
               >
             </li>
@@ -33,15 +33,7 @@
             <li
               class="nav-item p-1 bg-dark border-end w-50 d-flex justify-content-center"
             >
-              <a class="nav-link" href="#">Pets</a>
-            </li>
-            <li
-              class="nav-item p-1 bg-dark border-end w-50 d-flex justify-content-center"
-            >
-              <a class="nav-link" href="#">About us</a>
-            </li>
-            <li class="nav-item p-1 bg-dark w-50 d-flex justify-content-center">
-              <a class="nav-link" href="../secciones/contacto.html">Contact</a>
+              <a class="nav-link" href="<?php echo FRONT_ROOT."Pet/ShowListPetsView"?>"> Pets</a>
             </li>
           </ul>
         </div>
