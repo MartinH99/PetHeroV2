@@ -8,7 +8,7 @@ include("inner-nav.php");
 <form action="<?php echo FRONT_ROOT . "Booking/modifyStatusBook" ?>" method="post">
 
     <div class="row card-group w-60 mt-5 mb-4 ms-8 p-5 ">
-        <?php foreach ($allBookingById as $booking) {
+        <?php foreach ($allBookingByIdFormated as $booking) {
         ?>
             <div class="col-md-4">
                 <div class="card bg-light m-5 border-start ">
@@ -25,9 +25,9 @@ include("inner-nav.php");
                         </h5>
                         <h6 class="card-subtitle text-secondary fst-italic  fw-light d-flex justify-content-center">Participants
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Owner username: <?php $idOwn = $booking->getIdOwner(); $ownUser = $ownDao->getUsernameOwner($idOwn); echo $ownUser["username"];?></li>
-                                <li class="list-group-item">Keeper username: <?php $idKeep = $booking->getIdKeeper(); $keeperUser = $keepDao->getKeeperUsername($idKeep); echo $keeperUser["username"];?></li>
-                                <li class="list-group-item">Pet name: <?php $idPet = $booking->getIdPet(); $petname = $petDao->getPetName($idPet); echo $petname["name"];?></li>
+                                <li class="list-group-item">Owner username: <?php echo $booking->getIdOwner2();?></li>
+                                <li class="list-group-item">Keeper username: <?php echo $booking->getIdKeeper2();?></li>
+                                <li class="list-group-item">Pet name: <?php echo $booking->getIdPet2();?></li>
                             </ul>
                         </h6>
                         <h4>Status: <?php echo $booking->getStatus(); ?></h4>

@@ -48,58 +48,66 @@
         {///Pueden pasar esta func a los otros controllers /**Consultar como la funcion recibe estos parametros del form relacionado al Router/Request  */
             
 
-            if(empty($name) || empty($size) || empty($breed) || empty($animalType))
+            try
             {
-                $this->ShowRegisterPetView("Fields cannot be empty.");
-            }else
+
+                if(empty($name) || empty($size) || empty($breed) || empty($animalType))
+                {
+                    throw new Exception ("You must complete all fields.");
+                }else
+                {
+                    if(strcmp($animalType,"cat") ==0) //En este caso al ser perro/gato alcanza,supongo que si se agranda se podria concatenar variables o un switch
+                    {
+                        $pet = new Cat();
+                    }else if(strcmp($animalType,"dog") ==0){
+                        $pet = new Dog();
+                    }
+                
+                    $pet->setName($name);
+                    
+                    $pet->setBreed($breed); //Con breed se podria llegar a hacer lo de size en cuanto a idBreed directo
+    
+                    $user = $_SESSION["userLogged"];
+                    $pet->setOwnerId($user->getId()); //La idea seria que levante directamente el id de la sesion...
+                
+                    switch($size)
+                    {
+                        case 'small':
+                            $pet->setSize(1);
+                            break;
+                        case 'medium':
+                            $pet->setSize(2);
+                            break;
+                        case 'large':
+                            $pet->setSize(3);
+                            break;
+    
+                        default:
+                            $pet->setAnimalType(0);
+                    }
+    
+                    switch($animalType)
+                    {
+                        case 'dog':
+                            $pet->setAnimalType(1);
+                            break;
+                        case 'cat':
+                            $pet->setAnimalType(2);
+                            break;
+    
+                        default: 
+                            $pet->setAnimalType(0);
+                    }
+                    
+                    
+                
+                    $this->petDAO->Add($pet);
+                    $this->ShowRegisterPetView("Pet registered"); //Redirecciona de nuevo al add por si tenes mas mascotas
+                }
+            }catch(Exception $ex)
             {
-                if(strcmp($animalType,"cat") ==0) //En este caso al ser perro/gato alcanza,supongo que si se agranda se podria concatenar variables o un switch
-                {
-                    $pet = new Cat();
-                }else if(strcmp($animalType,"dog") ==0){
-                    $pet = new Dog();
-                }
-            
-                $pet->setName($name);
-                
-                $pet->setBreed($breed); //Con breed se podria llegar a hacer lo de size en cuanto a idBreed directo
-
-                $user = $_SESSION["userLogged"];
-                $pet->setOwnerId($user->getId()); //La idea seria que levante directamente el id de la sesion...
-            
-                switch($size)
-                {
-                    case 'small':
-                        $pet->setSize(1);
-                        break;
-                    case 'medium':
-                        $pet->setSize(2);
-                        break;
-                    case 'large':
-                        $pet->setSize(3);
-                        break;
-
-                    default:
-                        $pet->setAnimalType(0);
-                }
-
-                switch($animalType)
-                {
-                    case 'dog':
-                        $pet->setAnimalType(1);
-                        break;
-                    case 'cat':
-                        $pet->setAnimalType(2);
-                        break;
-
-                    default: 
-                        $pet->setAnimalType(0);
-                }
-                
-                
-            
-                $this->petDAO->Add($pet);
-                $this->ShowRegisterPetView("Pet registered"); //Redirecciona de nuevo al add por si tenes mas mascotas
+                $message = $ex->getMessage();
+                require_once(VIEWS_PATH."add-pet.php");
             }
         }
 

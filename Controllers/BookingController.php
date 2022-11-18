@@ -52,7 +52,6 @@ class BookingController
         $id2 = $arraySession->getId();
         $petListById = $this->petDAO->getPetsByOwnerId($id2);
         $keeper = $this->keeperDAO->searchKeeperById($id);
-        var_dump($keeper);
         require_once(VIEWS_PATH . "booking-request.php");
     }
 
@@ -85,32 +84,25 @@ class BookingController
                                                  $this->bookingDAO->Add($booking);
                                                  $this->ownerController->indexOwner("Keeper booked!");
                                              } else {
-                                                 $message = "The keeper will not be available on the end date you entered.";
-                                                 $this->AddBookView($keeperId, $message);
+                                                 throw new Exception ("The keeper will not be available on the end date you entered.");
                                              }
                                          } else {
-                                             $message = "End date must be equal or greater than start date.";
-                                             $this->AddBookView($keeperId, $message);
+                                             throw new Exception ("End date must be equal or greater than start date.");
                                          }
                                      } else {
-                                         $message = "The field '<b>End date</b>' cannot be empty.";
-                                         $this->AddBookView($keeperId, $message);
+                                         throw new Exception ("The field '<b>End date</b>' cannot be empty.");
                                      }
                                  } else {
-                                     $message = "The keeper will not be available on the start date you entered.";
-                                     $this->AddBookView($keeperId, $message);
+                                     throw new Exception ("The keeper will not be available on the start date you entered.");
                                  }
                              } else {
-                                 $message = "Start date must be equal or greater than current date.";
-                                 $this->AddBookView($keeperId, $message);
+                                 throw new Exception ("Start date must be equal or greater than current date.");
                              }
                          } else {
-                             $message = "The field '<b>Start date</b>' cannot be empty.";
-                             $this->AddBookView($keeperId, $message);
+                             throw new Exception ("The field '<b>Start date</b>' cannot be empty.");
                          }
                      } else {
-                         $message = "You must choose one of your pets.";
-                         $this->AddBookView($keeperId, $message);
+                          throw new Exception ("You must choose one of your pets.");
                      }
             }else
             {
@@ -138,42 +130,34 @@ class BookingController
                                                 $this->bookingDAO->Add($booking);
                                                 $this->ownerController->indexOwner("Keeper booked!");
                                             } else {
-                                                $message = "The keeper will not be available on the end date you entered.";
-                                                $this->AddBookView($keeperId, $message);
+                                                throw new Exception ("The keeper will not be available on the end date you entered.");
                                             }
                                         } else {
-                                            $message = "End date must be equal or greater than start date.";
-                                            $this->AddBookView($keeperId, $message);
+                                            throw new Exception ("End date must be equal or greater than start date.");
                                         }
                                     } else {
-                                        $message = "The field '<b>End date</b>' cannot be empty.";
-                                        $this->AddBookView($keeperId, $message);
+                                        throw new Exception ("The field '<b>End date</b>' cannot be empty.");
                                     }
                                 } else {
-                                    $message = "The keeper will not be available on the start date you entered.";
-                                    $this->AddBookView($keeperId, $message);
+                                    throw new Exception ("The keeper will not be available on the start date you entered.");
                                 }
                             } else {
-                                $message = "Start date must be equal or greater than current date.";
-                                $this->AddBookView($keeperId, $message);
+                                throw new Exception ("The keeper will not be available on the start date you entered.");
                             }
                         } else {
-                            $message = "The field '<b>Start date</b>' cannot be empty.";
-                            $this->AddBookView($keeperId, $message);
+                            throw new Exception ("The field '<b>Start date</b>' cannot be empty.");
                         }
                     } else {
-                        $message = "You must choose one of your pets.";
-                        $this->AddBookView($keeperId, $message);
+                        throw new Exception ("You must choose one of your pets.");
                     }
                 }else
                 {
-                    $message = "This keeper does not keep pets of that breed's type";
-                    $this->AddBookView($keeperId, $message);
+                    throw new Exception ("This keeper does not keep pets of that breed's type");
                 }
             }
-        } catch (Exception $ex) {
+        }catch (Exception $ex) {
             $message = $ex->getMessage();
-            $this->AddBookView($keeperId);
+            $this->AddBookView($keeperId,$message);
         }
     }
 
@@ -261,24 +245,39 @@ class BookingController
         $arraySession = $_SESSION["userLogged"];
         $id2 = $arraySession->getId();
         $allBookingById = $this->bookingDAO->getAllById($id2);
-        $keepDao =$this->keeperDAO;
-        $ownDao = $this->ownerDAO;
-        $petDao = $this->petDAO;
-        // $ownerUsername = $this->ownerDAO->getUsernameOwner($booking->getIdOwner());
-        // $keeperUsername = $this->keeperDAO->getUsernameKeeper($booking->getIdKeeper());
-        // $petName = $this->petDAO->getPetName($booking->getIdPet());
+        //$keepDao =$this->keeperDAO;
+       // $ownDao = $this->ownerDAO;
+       // $petDao = $this->petDAO;
+       
         require_once(VIEWS_PATH . "booking-status.php");
     }
 
     public function modifyStatusBook($codeBook, $status)
     {
-        var_dump($_POST);
         require_once(VIEWS_PATH . "validate-session-own.php");
         $this->bookingDAO->updateBooking($status, $codeBook);
         $arraySession = array(); ///Si hacer todo esto del usuario logeado O directamente levantarlo del html...
         $arraySession = $_SESSION["userLogged"];
         $id2 = $arraySession->getId();
+        $booking = $this->bookingDAO->getOneBook($codeBook);
         $allBookingById = $this->bookingDAO->getAllById($id2);
+        $allBookingByIdFormated = array();
+        foreach ($allBookingById as $booking)
+        {
+            $idOwner = $booking->getIdOwner();
+            $idKeeper = $booking->getIdKeeper();
+            $idPet = $booking->getIdPet();
+
+            $booking->setIdOwner2($idOwner);
+            $booking->setIdKeeper2($idKeeper);
+            $booking->setIdPet2($idPet);
+
+            array_push($allBookingByIdFormated, $booking);
+        }
+        $ownerUsername = $this->ownerDAO->getUsernameOwner($booking->getIdOwner());
+        $keeperUsername = $this->keeperDAO->getUsernameKeeper($booking->getIdKeeper());
+        $petName = $this->petDAO->getPetName($booking->getIdPet());
+        
         require_once(VIEWS_PATH . "booking-status.php");
     }
 

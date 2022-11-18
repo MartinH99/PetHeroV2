@@ -107,7 +107,6 @@ class KeeperDAO
 
                 $resultado = $this->connection->ExecuteNonQuery($query, $parameters);
 
-                var_dump($resultado);
             }catch(Exception $ex)
             {
                 throw $ex;
@@ -313,7 +312,7 @@ class KeeperDAO
             $this->connection = Connection::GetInstance();
 
             $result = $this->connection->Execute($query);
-            var_dump($result);
+
             foreach ($result as $row) //Voy pasando a un objeto owner lo que recupera de la BD en un array asociativo por filas
                 {                
                     //Revisar si precisa del methodPass / rta = nop
@@ -358,7 +357,7 @@ class KeeperDAO
             $this->connection = Connection::GetInstance();
 
             $result = $this->connection->Execute($query);
-            var_dump($result);
+    
             foreach ($result as $row) //Voy pasando a un objeto owner lo que recupera de la BD en un array asociativo por filas
                 {                
                     //Revisar si precisa del methodPass / rta = nop

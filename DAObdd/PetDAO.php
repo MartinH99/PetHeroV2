@@ -62,9 +62,6 @@
                     $pet->setBreed($row["breed"]);
                     $pet->setOwnerId($row["ownerId"]);
                     $pet->setAnimalType($row["animalTypeId"]);
-                  
-
-                    var_dump($pet);
 
                     array_push($petList, $pet);
                 }
@@ -188,11 +185,6 @@
                 $this->connection = Connection::GetInstance();
                 $result = $this->connection->Execute($query,$parameters); //Tendria que devolver el array asociativo...
                 $newResult  = reset($result);
-
-
-                echo "NEWRESULT;";
-                var_dump($newResult);
-
 
                  //Si devuelve 1 es xq el Execute retorno alguna fila y sino error
             }catch(Exception $ex)

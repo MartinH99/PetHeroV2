@@ -84,7 +84,7 @@ class OwnerDAO
                     $owner->setAddress($row["address"]);
                     $owner->setTelephone($row["telephone"]);
 
-                    var_dump($owner);
+  
 
                     array_push($ownerList, $owner);
                 }
@@ -107,7 +107,7 @@ class OwnerDAO
                 $parameters["ownerId"] = $ownerId;
                 $resultado = $this->connection->ExecuteNonQuery($query, $parameters);
 
-                var_dump($resultado);
+        
             }catch(Exception $ex)
             {
                 throw $ex;
