@@ -50,6 +50,7 @@ class KeeperDAO
             }
         }
 
+
         public function getAll()
         {
             try
@@ -154,8 +155,6 @@ class KeeperDAO
                 $this->connection = Connection::GetInstance();
                 $result = $this->connection->Execute($query,$parameters); //Tendria que devolver el array asociativo...
                 $newResult  = reset($result);
-                echo "<br>";
-                var_dump($result);
                  //Si devuelve 1 es xq el Execute retorno alguna fila y sino error
             }catch(Exception $ex)
             {
