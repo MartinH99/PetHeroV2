@@ -60,53 +60,116 @@ class BookingController
     {
 
         $currentDate = $this->getCurrentDate();
+        $keeper = $this->keeperDAO->searchKeeperById($keeperId);
+        $booking = $this->bookingDAO->getFirstBreedBook($keeperId,$initStart);
+        
         try {
-
-            if (!empty($petId)) {
-                if (!empty($initStart)) {
-                    if ($initStart >= $currentDate) {
-                        if ($this->validateStartDate($initStart, $keeperId)) {
-                            if (!empty($initEnd)) {
-                                if ($initStart <= $initEnd) {
-                                    if ($this->validateEndDate($initEnd, $keeperId)) {
-                                        $booking = new Booking();
-                                        $booking->setIdOwner($ownerId);
-                                        $booking->setIdKeeper($keeperId);
-                                        $booking->setIdPet($petId);
-                                        $booking->setInitDate($initStart);
-                                        $booking->setEndDate($initEnd);
-                                        $booking->setStatus("pending");
-                                        $booking->setInterval(0); //
-
-                                        $this->bookingDAO->Add($booking);
-                                        $this->ownerController->indexOwner("Keeper booked!");
+            if($booking == false)
+            {
+                     if (!empty($petId)) {
+                         if (!empty($initStart)) {
+                             if ($initStart >= $currentDate) {
+                                 if ($this->validateStartDate($initStart, $keeperId)) {
+                                     if (!empty($initEnd)) {
+                                         if ($initStart <= $initEnd) {
+                                             if ($this->validateEndDate($initEnd, $keeperId)) {
+                                                 $booking = new Booking();
+                                                 $booking->setIdOwner($ownerId);
+                                                 $booking->setIdKeeper($keeperId);
+                                                 $booking->setIdPet($petId);
+                                                 $booking->setInitDate($initStart);
+                                                 $booking->setEndDate($initEnd);
+                                                 $booking->setStatus("pending");
+                                                 $booking->setInterval(0); //
+         
+                                                 $this->bookingDAO->Add($booking);
+                                                 $this->ownerController->indexOwner("Keeper booked!");
+                                             } else {
+                                                 $message = "The keeper will not be available on the end date you entered.";
+                                                 $this->AddBookView($keeperId, $message);
+                                             }
+                                         } else {
+                                             $message = "End date must be equal or greater than start date.";
+                                             $this->AddBookView($keeperId, $message);
+                                         }
+                                     } else {
+                                         $message = "The field '<b>End date</b>' cannot be empty.";
+                                         $this->AddBookView($keeperId, $message);
+                                     }
+                                 } else {
+                                     $message = "The keeper will not be available on the start date you entered.";
+                                     $this->AddBookView($keeperId, $message);
+                                 }
+                             } else {
+                                 $message = "Start date must be equal or greater than current date.";
+                                 $this->AddBookView($keeperId, $message);
+                             }
+                         } else {
+                             $message = "The field '<b>Start date</b>' cannot be empty.";
+                             $this->AddBookView($keeperId, $message);
+                         }
+                     } else {
+                         $message = "You must choose one of your pets.";
+                         $this->AddBookView($keeperId, $message);
+                     }
+            }else
+            {
+                $idPet = $booking->getIdPet();
+                $petAux = $this->petDAO->getPetById($idPet);
+                $petIngresado = $this->petDAO->getPetById($petId);
+                if($petAux->getBreed() == $petIngresado->getBreed())
+                {
+                    if (!empty($petId)) {
+                        if (!empty($initStart)) {
+                            if ($initStart >= $currentDate) {
+                                if ($this->validateStartDate($initStart, $keeperId)) {
+                                    if (!empty($initEnd)) {
+                                        if ($initStart <= $initEnd) {
+                                            if ($this->validateEndDate($initEnd, $keeperId)) {
+                                                $booking = new Booking();
+                                                $booking->setIdOwner($ownerId);
+                                                $booking->setIdKeeper($keeperId);
+                                                $booking->setIdPet($petId);
+                                                $booking->setInitDate($initStart);
+                                                $booking->setEndDate($initEnd);
+                                                $booking->setStatus("pending");
+                                                $booking->setInterval(0); //
+        
+                                                $this->bookingDAO->Add($booking);
+                                                $this->ownerController->indexOwner("Keeper booked!");
+                                            } else {
+                                                $message = "The keeper will not be available on the end date you entered.";
+                                                $this->AddBookView($keeperId, $message);
+                                            }
+                                        } else {
+                                            $message = "End date must be equal or greater than start date.";
+                                            $this->AddBookView($keeperId, $message);
+                                        }
                                     } else {
-                                        $message = "The keeper will not be available on the end date you entered.";
+                                        $message = "The field '<b>End date</b>' cannot be empty.";
                                         $this->AddBookView($keeperId, $message);
                                     }
                                 } else {
-                                    $message = "End date must be equal or greater than start date.";
+                                    $message = "The keeper will not be available on the start date you entered.";
                                     $this->AddBookView($keeperId, $message);
                                 }
                             } else {
-                                $message = "The field '<b>End date</b>' cannot be empty.";
+                                $message = "Start date must be equal or greater than current date.";
                                 $this->AddBookView($keeperId, $message);
                             }
                         } else {
-                            $message = "The keeper will not be available on the start date you entered.";
+                            $message = "The field '<b>Start date</b>' cannot be empty.";
                             $this->AddBookView($keeperId, $message);
                         }
                     } else {
-                        $message = "Start date must be equal or greater than current date.";
+                        $message = "You must choose one of your pets.";
                         $this->AddBookView($keeperId, $message);
                     }
-                } else {
-                    $message = "The field '<b>Start date</b>' cannot be empty.";
+                }else
+                {
+                    $message = "This keeper does not keep pets of that breed's type";
                     $this->AddBookView($keeperId, $message);
                 }
-            } else {
-                $message = "You must choose one of your pets.";
-                $this->AddBookView($keeperId, $message);
             }
         } catch (Exception $ex) {
             $message = $ex->getMessage();
@@ -198,6 +261,9 @@ class BookingController
         $arraySession = $_SESSION["userLogged"];
         $id2 = $arraySession->getId();
         $allBookingById = $this->bookingDAO->getAllById($id2);
+        $keepDao =$this->keeperDAO;
+        $ownDao = $this->ownerDAO;
+        $petDao = $this->petDAO;
         // $ownerUsername = $this->ownerDAO->getUsernameOwner($booking->getIdOwner());
         // $keeperUsername = $this->keeperDAO->getUsernameKeeper($booking->getIdKeeper());
         // $petName = $this->petDAO->getPetName($booking->getIdPet());

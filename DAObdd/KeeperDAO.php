@@ -229,6 +229,24 @@ class KeeperDAO
             }
         }
 
+        public function getKeeperUsername($keeperId)
+        {
+
+            $query = "SELECT `username` FROM $this->tablename WHERE keeperId = :keeperId;";
+            $parameters["keeperId"] = $keeperId;
+            try
+            {
+                
+                $this->connection = Connection::GetInstance();
+                $result = $this->connection->Execute($query,$parameters); //Tendria que devolver el array asociativo...
+                $newResult  = reset($result);
+                 //Si devuelve 1 es xq el Execute retorno alguna fila y sino error
+                 return $newResult;
+            }catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
 
 
         public function mapping2($value) //No pude aplicar el mapping del video de Lab xq crasheaba siempre ya sea por falta de parametros,error en array|object o el array asociativa ya se generaba raro 

@@ -25,9 +25,9 @@ include("inner-nav.php");
                         </h5>
                         <h6 class="card-subtitle text-secondary fst-italic  fw-light d-flex justify-content-center">Participants
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Owner username :<?php echo $booking->getIdOwner(); ?></li>
-                                <li class="list-group-item">Keeper username :<?php echo $booking->getIdKeeper(); ?></li>
-                                <li class="list-group-item">Pet name :<?php echo $booking->getIdPet(); ?></li>
+                                <li class="list-group-item">Owner username :<?php echo $booking->getIdOwner2(); ?></li>
+                                <li class="list-group-item">Keeper username :<?php echo $booking->getIdKeeper2(); ?></li>
+                                <li class="list-group-item">Pet name :<?php echo $booking->getIdPet2(); ?></li>
                             </ul>
                         </h6>
                         <h4>Status : <?php echo $booking->getStatus(); ?></h4>

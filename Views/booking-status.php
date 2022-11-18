@@ -18,19 +18,19 @@ include("inner-nav.php");
 
                         <h5 class="card-title text-dark fs-6 d-flex justify-content-center ">Booking Info
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Codebook :<?php echo $booking->getCodeBook(); ?></li>
-                                <li class="list-group-item">Init date :<?php echo $booking->getInitDate(); ?></li>
-                                <li class="list-group-item">End date :<?php echo $booking->getEndDate();; ?></li>
+                                <li class="list-group-item">Codebook: <?php echo $booking->getCodeBook(); ?></li>
+                                <li class="list-group-item">Init date: <?php echo $booking->getInitDate(); ?></li>
+                                <li class="list-group-item">End date: <?php echo $booking->getEndDate(); ?></li>
                             </ul>
                         </h5>
                         <h6 class="card-subtitle text-secondary fst-italic  fw-light d-flex justify-content-center">Participants
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Owner username :<?php echo $booking->getIdOwner(); ?></li>
-                                <li class="list-group-item">Keeper username :<?php echo $booking->getIdKeeper(); ?></li>
-                                <li class="list-group-item">Pet name :<?php echo $booking->getIdPet(); ?></li>
+                                <li class="list-group-item">Owner username: <?php $idOwn = $booking->getIdOwner(); $ownUser = $ownDao->getUsernameOwner($idOwn); echo $ownUser["username"];?></li>
+                                <li class="list-group-item">Keeper username: <?php $idKeep = $booking->getIdKeeper(); $keeperUser = $keepDao->getKeeperUsername($idKeep); echo $keeperUser["username"];?></li>
+                                <li class="list-group-item">Pet name: <?php $idPet = $booking->getIdPet(); $petname = $petDao->getPetName($idPet); echo $petname["name"];?></li>
                             </ul>
                         </h6>
-                        <h4>Status : <?php echo $booking->getStatus(); ?></h4>
+                        <h4>Status: <?php echo $booking->getStatus(); ?></h4>
                     </div>
                     <div class="d-flex card-footer">
 
