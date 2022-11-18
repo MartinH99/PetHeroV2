@@ -50,7 +50,7 @@
 
             if(empty($name) || empty($size) || empty($breed) || empty($animalType))
             {
-                $this->ShowRegisterPetView("Algo fallo");
+                $this->ShowRegisterPetView("Fields cannot be empty.");
             }else
             {
                 if(strcmp($animalType,"cat") ==0) //En este caso al ser perro/gato alcanza,supongo que si se agranda se podria concatenar variables o un switch
@@ -95,11 +95,11 @@
                     default: 
                         $pet->setAnimalType(0);
                 }
-                var_dump($pet);
+                
                 
             
                 $this->petDAO->Add($pet);
-                $this->ShowRegisterPetView("Registrado pet"); //Redirecciona de nuevo al add por si tenes mas mascotas
+                $this->ShowRegisterPetView("Pet registered"); //Redirecciona de nuevo al add por si tenes mas mascotas
             }
         }
 
