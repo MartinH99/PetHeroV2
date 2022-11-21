@@ -30,13 +30,13 @@ include('nav-bar-owner.php');
     </div>
     <div class="col">
         <label for="availabilityStart">Start date:</label>
-        <input type="date" id="availabilityStart" class="form-control" name="initStart" min="<?php echo date('Y-m-d'); ?>" required>
+        <input type="date" id="availabilityStart" class="form-control" name="initStart">
     </div>
     <br>
     <br>
     <div class="col">
         <label for="availabilityEnd">End date:</label>
-        <input type="date" id="availabilityEnd" class="form-control" name="initEnd" title="La fecha inicial debe ser menor que la fecha final" oninput="validate()" required>
+        <input type="date" id="availabilityEnd" class="form-control" name="initEnd" title="La fecha inicial debe ser menor que la fecha final" oninput="validate()" >
     </div>
 
     <div>
@@ -58,3 +58,7 @@ include('nav-bar-owner.php');
     <button type="submit" class="btn btn-primary">Enviar</button>
 </form>
 <br>
+   <p style="color:red;" ><?php if(isset($message)) echo $message;?></p> 
+<?php
+include_once('footer.php');
+?>

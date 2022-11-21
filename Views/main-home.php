@@ -5,8 +5,10 @@ include("avail-dates.php");
 ?>
 <form action="<?php echo FRONT_ROOT ."Booking/AddBookView"?>" method="post">
 <div class="container-fluid bg-light d-flex justify-content-center ">
-    <div class="row card-group w-60 mt-5 mb-4 ms-8 p-5 ">
-        
+    <div class="row card-group w-60 mt-5 mb-4 ms-8 p-5 ">  
+         <?php 
+if(isset($message))
+    echo "<script> alert('".$message."'); </script>"; ?>
         <?php foreach ($keeperList as $keeper) {
         ?>
         <div class="col-md-4">
