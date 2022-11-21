@@ -47,30 +47,74 @@ class BookingController
         public function AddBookView($id)
         {
             require_once(VIEWS_PATH."validate-session-own.php");
+
             $arraySession = array();
             $arraySession = $_SESSION["userLogged"];
             $id2 = $arraySession->getId();
-            $petListById = $this->petDAO->getPetsByOwnerId($id2);
-            $keeper = $this->keeperDAO->searchKeeperById($id);
-            var_dump($keeper);
-           require_once(VIEWS_PATH."booking-request.php");
+
+            $petListById = $this->petDAO->getPetsByOwnerId($id2); //Listado de las mascotas del owner
+            $keeper = $this->keeperDAO->searchKeeperById($id); //Busco al keeper para imprimir su perfil
+
             
-            
-            
+
+            require_once(VIEWS_PATH."booking-request.php"); //Pensar lo de hacer 2 b
+
+                // $idPet = $bookingBreed->getIdPet();
+                // $petBreedBook = $this->petDAO->getPetById($idPet);
+                // $breedType = $petBreedBook->getBreed();  
+           
         }
 
-        public function Add($initStart,$initEnd,$petId,$ownerId,$keeperId) ///$Pet seria el obj?
+        public function checkInitialBreed($book)//Recibe la 1 reserva
+        {
+                $idPetInitial = $book->getIdPet(); //toma el id de la mascota de primera reserva
+                $petBreedInitial = $this->petDAO->getPetById($idPetInitial);//busca a la mascota por su id en la tabla
+                $breedInitial = $petBreedInitial->getBreed();//Sacas la raza de la pet inicial 
+                echo "BREED INITIAL <br><br>";
+                var_dump($breedInitial);
+                return $breedInitial;
+        }
+
+        public function Add($initStart,$initEnd,$petId,$ownerId,$keeperId) ///
         {
 
             try{
 
+            $bookingBreed = $this->bookingDAO->getFirstBreedBook($keeperId,$initStart);//Tomas la primera reserva de ese dia
             
+            echo "Booking breed <br><br>";
+            var_dump($bookingBreed);
+
+
+            var_dump($bookingBreed);    
+            if($bookingBreed != false)//Si no es falsa la reserva de ese dia obj initial toma el valor de dicha reserva
+            {
+                $initialBreed = $this->checkInitialBreed($bookingBreed);
+                echo "Initial breed si es F <br><br>";
+                var_dump($bookingBreed);
+    
+            }
             var_dump($petId);
             $booking = new Booking();
             //$interval;  fecha fin-inicio
             $booking->setIdOwner($ownerId);
             $booking->setIdKeeper($keeperId);
-            $booking->setIdPet($petId);
+            if($bookingBreed == false)//Si no habia reservas ese dia para el keeper
+            {
+                
+                $booking->setIdPet($petId); //Seteas el la mascota que te llega del form
+            }else
+            {
+                $incomingPet = $this->petDAO->getPetById($petId);//Buscas la mascota por id
+                echo "Incoming pet <br><br>";
+                var_dump($incomingPet);
+                if($incomingPet->getBreed() != $initialBreed)//Comparas la raza de la mascota con la de initial
+                {
+                    echo "ERROR EN EL AGREGADO";
+                    $this->AddBookView($keeperId);
+                }
+            }
+            
             $booking->setInitDate($initStart);
             $booking->setEndDate($initEnd);
             $booking->setStatus("pending");

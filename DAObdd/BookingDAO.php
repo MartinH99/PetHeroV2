@@ -272,7 +272,7 @@ class BookingDAO
                 $booking->setCodeBook($value["codeBook"]);
                 $booking->setInitDate($value["initDate"]);
                 $booking->setendDate($value["endDate"]);
-                $booking->setInterval($value["interval"]);
+                $booking->setInterval($value["interv"]);
                 $booking->setStatus($value["status"]);
                 $booking->setIdOwner($value["ownerId"]);
                 $booking->setIdKeeper($value["keeperId"]);
@@ -343,6 +343,44 @@ class BookingDAO
         }
 
 
+        public function getFirstBreedBook($keeperId,$initDate)
+        {
+            try
+            {
+                $query = "SELECT * FROM $this->tablename WHERE initDate = :initDate AND keeperId = :keeperId
+                ORDER BY codeBook ASC LIMIT 0, 1;";
+
+                $parameters["keeperId"] =$keeperId; 
+                $parameters["initDate"] = $initDate;
+
+
+                $this->connection = Connection::GetInstance();
+    
+                $result = $this->connection->Execute($query,$parameters);
+
+                $newResult = reset($result);
+                
+                echo "NEWRESULT query dao post reset <br><br>";
+                var_dump($newResult);
+                
+            }catch(Exception $ex)
+            {
+                throw $ex;
+            }
+
+            
+            if(!empty($newResult))
+            {
+                
+                return $this->mapping2Booking($newResult);
+                //Result viene en un array asocitativo,pero estamos trabajado con POO...
+            }else 
+            {
+                return false;
+            }
+
+
+        }
 
         
 

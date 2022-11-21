@@ -173,6 +173,8 @@ class KeeperDAO
                 return false;
             }
         }
+
+        
          public function searchKeeperbyEmail($email)
         {
 
