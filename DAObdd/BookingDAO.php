@@ -211,16 +211,21 @@ class BookingDAO
         {
             try
             {
-                $query = "SELECT * $this->tablename where codeBook = $codeBook;";
+                $query = "SELECT * FROM $this->tablename where codeBook = :codeBook ;";
 
                 $this->connection = Connection::GetInstance();
 
-                $resultado = $this->connection->Execute($query);
+                $parameters["codeBook"] = $codeBook;
+
+                $resultado = $this->connection->Execute($query,$parameters);
+
+                echo "RESULTADO : <br>";
+                var_dump($resultado);
 
                 $book = reset($resultado);
-
-                
-
+                var_dump($book);
+                echo "RESULTADO : <br>";
+                //var_dump($book);
                 
             }catch(Exception $ex)
             {
@@ -372,7 +377,6 @@ class BookingDAO
 
 
         }
-
 
         
 

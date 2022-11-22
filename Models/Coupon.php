@@ -9,7 +9,7 @@ class Coupon{
     private $total;
     private $subtotal;  //50%
     private $codeBook; //Ver si me manejo solo con el id de Booking para dps referenciar al obj o directamente usar al obj acá?!?
-
+    private $couponStatus;
 
     /**
      * Get the value of couponId
@@ -89,6 +89,28 @@ class Coupon{
     public function setCodeBook($codeBook)
     {
         $this->codeBook = $codeBook;
+
+        return $this;
+    }
+
+  
+
+    /**
+     * Get the value of couponStatus
+     */ 
+    public function getCouponStatus()
+    {
+        return $this->couponStatus;
+    }
+
+    /**
+     * Set the value of couponStatus
+     *
+     * @return  self
+     */ 
+    public function setCouponStatus($couponStatus)
+    {
+        $this->couponStatus = $couponStatus;
 
         return $this;
     }
