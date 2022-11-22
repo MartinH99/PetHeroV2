@@ -1,5 +1,6 @@
 <?php
 
+        namespace Models;
     class Photo{
 
         private $name;
@@ -68,5 +69,3 @@
                 return $this;
         }
     }
-
-?>

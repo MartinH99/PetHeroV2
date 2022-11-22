@@ -15,14 +15,14 @@
         <a class="nav-link" href="<?php echo FRONT_ROOT."User/Logout"?>">Logout</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<?php echo FRONT_ROOT."Booking/getBookingsById"?>">Mis reservas</a>
+        <a class="nav-link" href="<?php echo FRONT_ROOT."Booking/getBookingsById"?>">My Bookings</a>
       </li>
       <li class="nav-item dropdown">
         <button class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
           Hello,<?php echo $_SESSION["userLogged"]->getUsername(); ?>
         </button>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="<?php echo FRONT_ROOT."Coupon/showCouponListKeepView"?>">My coupons</a>
           <a class="dropdown-item" href="#">Another action</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Something else here</a>

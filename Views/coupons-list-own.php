@@ -4,11 +4,11 @@ include("nav-bar-keeper.php");
 include("inner-nav.php");
 ?>
 
-<h1>Booking status change</h1>
+<h1>Booking status pendings</h1>
 <form action="<?php echo FRONT_ROOT . "Booking/modifyStatusBook" ?>" method="post">
 
     <div class="row card-group w-60 mt-5 mb-4 ms-8 p-5 ">
-        <?php foreach ($allBookingById as $booking) {
+        <?php foreach ($allBookingByIdndStatus as $booking) {
         ?>
             <div class="col-md-4">
                 <div class="card bg-light m-5 border-start ">
@@ -37,8 +37,8 @@ include("inner-nav.php");
                         <button type="submit" class="btn" name="codeBook" value="<?php echo $booking->getCodeBook(); ?>" id="danger-outlined"> Modify </button>
 
                         <div class="form-check">
-                            <label class="form-check-label" for="Accepted">Accept</label>
-                            <input class="form-check-input" name="status" type="radio" value="accepted" id="Accepted" />
+                            <label class="form-check-label" for="Confirmed">Confirm</label>
+                            <input class="form-check-input" name="status" type="radio" value="confirmed" id="Confirmed" />
                            
                         </div>
 
@@ -47,10 +47,6 @@ include("inner-nav.php");
                             <input class="form-check-input" name="status" type="radio" value="rejected" id="Rejected" />
                             
                         </div>
-
-                        
-
-
                         <div class="d-grid gap-2 col-9 mx-auto">
 
 

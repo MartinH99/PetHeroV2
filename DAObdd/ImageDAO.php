@@ -43,7 +43,7 @@ namespace DAObdd;
                 foreach ($resultSet as $row)
                 {                
                     $photo = new Photo();
-                    $photo->setImageId($row["imageId"]);
+                    //$photo->setId($row["imageId"]);
                     $photo->setName($row["name"]);
 
                     array_push($imageList, $photo);
