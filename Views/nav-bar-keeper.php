@@ -19,6 +19,9 @@
         </button>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#">Your profile</a>
+          <a class="dropdown-item" href="<?php echo FRONT_ROOT."Coupon/showCouponListKeepView"?>">My coupons</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
         </div>
       </li>
 

@@ -37,8 +37,8 @@ include("inner-nav.php");
                         <button type="submit" class="btn" name="codeBook" value="<?php echo $booking->getCodeBook(); ?>" id="danger-outlined"> Modify </button>
 
                         <div class="form-check">
-                            <label class="form-check-label" for="Confirmed">Confirm</label>
-                            <input class="form-check-input" name="status" type="radio" value="confirmed" id="Confirmed" />
+                            <label class="form-check-label" for="Accepted">Accept</label>
+                            <input class="form-check-input" name="status" type="radio" value="accepted" id="Accepted" />
                            
                         </div>
 

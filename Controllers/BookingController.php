@@ -11,16 +11,18 @@ use DAObdd\KeeperDAO as KeeperDAO;
 use DAObdd\OwnerDAO as OwnerDAO;
 use Controllers\OwnerController as OwnerController;
 use Controllers\UserController as UserController;
+use Models\Coupon as Coupon;
+use DAObdd\CouponDAO as CouponDAO;
 
 class BookingController
 {
     private $bookingDAO;
-    private $tablename = "bookings";
     private $petDAO;
     private $keeperDAO;
     private $ownerDAO;
     private $ownerController;
     private $userController;
+    private $couponDAO;
 
     function __construct()
     {
@@ -30,6 +32,7 @@ class BookingController
         $this->ownerDAO = new OwnerDAO();
         $this->ownerController = new OwnerController();
         $this->userController = new UserController();
+        $this->couponDAO = new CouponDAO();
         //$this->homeController = new HomeController(); //No estoy seguro si esto esta bien
     }
 
@@ -216,32 +219,32 @@ class BookingController
         require_once(VIEWS_PATH . "booking-request.php");
     }
 
-    public function getBookingsById()
+    public function getBookingsById()//Funcion que se dispara al clickear 'My Bookings'
     {
         require_once(VIEWS_PATH . "validate-session-own.php");
-        $arraySession = array(); ///Si hacer todo esto del usuario logeado O directamente levantarlo del html...
+        $arraySession = array(); 
         $arraySession = $_SESSION["userLogged"];
         $id2 = $arraySession->getId();
         //var_dump($id2);
-        $bookingListById = $this->bookingDAO->getBookingByKeepId($id2);
-        require_once(VIEWS_PATH . "bookings-keep.php");
+        $bookingListById = $this->bookingDAO->getBookingByKeepId($id2); //Levanta todas las reservas del keeper
+        require_once(VIEWS_PATH . "bookings-keep.php"); //Simplemente lista las bookings de x = idKeeper (logeado)
         ///return $bookingListById;
     }
 
-    public function getBookingsByStatus($status)
+    public function getBookingsByStatus($status)//Cuando estan en la vista de la funcion de arriba,es la que filtra por estados
     {
         require_once(VIEWS_PATH . "validate-session-own.php");
         $arraySession = array(); ///Si hacer todo esto del usuario logeado O directamente levantarlo del html...
         $arraySession = $_SESSION["userLogged"];
         $id2 = $arraySession->getId();
         $bookingListByKeepStatus = $this->bookingDAO->getBookingByStatus2($status, $id2);
-        require_once(VIEWS_PATH . "bookings-keep-status.php");
+        require_once(VIEWS_PATH . "bookings-keep-status.php");//bookings-keep.php filtrado por status
     }
 
-    public function showChangeStatus()
+    public function showChangeStatus() //Al clickear edit status te redirecciona acá
     {
-        require_once(VIEWS_PATH . "validate-session-own.php");
-        $arraySession = array(); ///Si hacer todo esto del usuario logeado O directamente levantarlo del html...
+        require_once(VIEWS_PATH . "validate-session-keep.php");
+        $arraySession = array(); 
         $arraySession = $_SESSION["userLogged"];
         $id2 = $arraySession->getId();
         $allBookingById = $this->bookingDAO->getAllById($id2);
@@ -252,10 +255,22 @@ class BookingController
         require_once(VIEWS_PATH . "booking-status.php");
     }
 
-    public function modifyStatusBook($codeBook, $status)
+    public function modifyStatusBook($codeBook, $status)//Al confirmar o rechazar actua esto --probar acá lo del cupon--
     {
         require_once(VIEWS_PATH . "validate-session-own.php");
         $this->bookingDAO->updateBooking($status, $codeBook);
+        //A partir de aca seria la generacion del coupon --faltan validaciones
+        $bookingAux = $this->bookingDAO->getOneBook($codeBook); //Creo un obj booking con toda la info referida por ID
+        if($status == "accepted")
+        {
+            $coupon = new Coupon();
+            $keeper = $this->keeperDAO->searchKeeperById($bookingAux->getIdKeeper());//Creo un obj para tener la info de Keeper
+            $coupon->setTotal($keeper->getPrice());
+            $coupon->setsubTotal($keeper->getPrice()/2);
+            $coupon->setCodeBook($codeBook);
+            $coupon->setCouponStatus("accepted");
+            $this->couponDAO->generateCoupon($coupon);
+        }
         $arraySession = array(); ///Si hacer todo esto del usuario logeado O directamente levantarlo del html...
         $arraySession = $_SESSION["userLogged"];
         $id2 = $arraySession->getId();
@@ -282,7 +297,7 @@ class BookingController
     }
 
 
-    public function showBooksPendings($status = "pending")
+    public function showBooksPendings($status = "pending") //Booking status 2
     {
         require_once(VIEWS_PATH . "validate-session-own.php");
         $arraySession = array(); ///Si hacer todo esto del usuario logeado O directamente levantarlo del html...
@@ -292,7 +307,7 @@ class BookingController
         require_once(VIEWS_PATH . "booking-status2.php");
     }
 
-    public function showBooksByConfirmed($status = "confirmed")
+    public function showBooksByConfirmed($status = "confirmed")//Booking status 3
     {
         require_once(VIEWS_PATH . "validate-session-own.php");
         $arraySession = array(); ///Si hacer todo esto del usuario logeado O directamente levantarlo del html...
@@ -301,4 +316,10 @@ class BookingController
         $allBookingByIdndStatus = $this->bookingDAO->getAllByIdStatus($id2, $status);
         require_once(VIEWS_PATH . "booking-status3.php");
     }
+
+//                  IMPORTANTE
+//     En caso de que la reserva sea aceptada por el Keeper, se envía un cupón de pago
+// al Owner con el 50% del costo del total de la estadía. Al momento de efectuar el pago, la
+// reserva queda confirmada.
+
 }

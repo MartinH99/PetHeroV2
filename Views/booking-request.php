@@ -36,10 +36,10 @@ include('nav-bar-owner.php');
           </tbody>
         </table>
 
-        <div class="hidden">
+    <div class="hidden">
         <input id="prodId" name="ownerId" type="hidden" value="<?php echo $_SESSION["userLogged"]->getId(); ?>">
         <input id="prodId" name="keeperId" type="hidden" value="<?php echo $keeper->getId(); ?>">
-        </div>
+    </div>
     <div class="col">
         <label for="availabilityStart">Start date:</label>
         <input type="date" id="availabilityStart" class="form-control" name="initStart">
@@ -53,17 +53,16 @@ include('nav-bar-owner.php');
 
     <div>
         <select name="petId" id="Name">
-            <?php 
-                foreach($petListById as $pet)
-                {
-                    if($pet->getSize() == $keeper->getTypeKeep())
-                    {
-            ?>
-                    <option value="<?php echo $pet->getId(); ?>"> <?php echo $pet->getName() ?></option>
-
             <?php
+            foreach ($petListById as $pet) { ?>
+
+                <?php if($pet->getSize() == $keeper->getTypekeep()) //Valido que los animales a elegir sea tamaño keeper
+                {?>
+                    <option value="<?php echo $pet->getId(); ?>"> <?php echo $pet->getName() ?></option>
+                <?php
                 }
-                }
+                ?>
+            <?php }
             ?>
         </select>
     </div>
