@@ -19,6 +19,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="<?php echo FRONT_ROOT."Pet/ShowListPetsbyOwnView"?>">My pets</a>
           <a class="dropdown-item" href="#">Your profile</a>
+             <a class="dropdown-item" href="<?php echo FRONT_ROOT."Coupon/showCouponListOwnView"?>">My coupons</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">My bookings</a>
         </div>
