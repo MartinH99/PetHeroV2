@@ -68,9 +68,6 @@ class BookingDAO
                     $booking->setIdOwner($row["ownerId"]);
                     $booking->setIdKeeper($row["keeperId"]);
                     $booking->setIdPet($row["petId"]);
-                
-
-                    var_dump($booking);
 
                     array_push($bookingList, $booking);
                 }
@@ -95,7 +92,7 @@ class BookingDAO
 
                 $resultado = $this->connection->ExecuteNonQuery($query, $parameters);
 
-                var_dump($resultado);
+       
             }catch(Exception $ex)
             {
                 throw $ex;
@@ -117,7 +114,6 @@ class BookingDAO
             
 
             $newResult = reset($result);//Hago esto xq result devuelve un arreglo que en la 1°pos tiene otro arreglo asoc donde id esta en $x["ownerId"]
-            var_dump($result);
             $lastId = $newResult["codeBook"];
             
             
@@ -149,7 +145,7 @@ class BookingDAO
                 $this->connection = Connection::GetInstance();
 
                 $resultadoQuery = $this->connection->Execute($query);
-                var_dump($resultadoQuery);
+    
                 echo "<br>";
                 echo "<br>";
                 //$bookInfo = array();
@@ -250,7 +246,7 @@ class BookingDAO
             try
             {
                 $query = "UPDATE $this->tablename SET `status` = :status where codeBook = :codeBook;";
-                var_dump($query);
+    
                 $this->connection = Connection::GetInstance();
                 $parameters["status"] = $status;
                 $parameters["codeBook"] = $codeBook;
@@ -258,7 +254,7 @@ class BookingDAO
                 
                 
                 $result = $this->connection->ExecuteNonQuery($query, $parameters);
-                var_dump($result);
+      
                 
                 
             }catch(Exception $ex)
@@ -315,7 +311,6 @@ class BookingDAO
                     $booking->setIdPet($row["petId"]);
                 
 
-                    var_dump($booking);
 
                     array_push($bookingList, $booking);
                 }
@@ -358,23 +353,21 @@ class BookingDAO
 
 
                 $this->connection = Connection::GetInstance();
-    
+
                 $result = $this->connection->Execute($query,$parameters);
 
                 $newResult = reset($result);
-                
+
                 echo "NEWRESULT query dao post reset <br><br>";
-                var_dump($newResult);
-                
             }catch(Exception $ex)
             {
                 throw $ex;
             }
 
-            
+
             if(!empty($newResult))
             {
-                
+
                 return $this->mapping2Booking($newResult);
                 //Result viene en un array asocitativo,pero estamos trabajado con POO...
             }else 

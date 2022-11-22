@@ -23,14 +23,14 @@ class CouponDAO
         try
         {
             
-            $query = "INSERT INTO ".$this->tablename." (couponId,total,subtotal,codeBook) 
-            VALUES (:couponId, :total, :subtotal, :codeBook); ";
+            $query = "INSERT INTO ".$this->tablename." (couponId,total,subtotal,couponStatus,codeBook) 
+            VALUES (:couponId, :total, :subtotal, :couponStatus,:codeBook); ";
 
             $parameters["couponId"] = $this->setNextIdCoup();
-            $paramteers["total"] = $coupon->getTotal();
-            $paramteers["subtotal"] = $coupon->getSubtotal();
-            $paramteers["codeBook"] = $coupon->getCodeBook();
-            $paramteers["couponStatus"] = $coupon->getCouponStatus();
+            $parameters["total"] = $coupon->getTotal();
+            $parameters["subtotal"] = $coupon->getSubtotal();
+            $parameters["codeBook"] = $coupon->getCodeBook();
+            $parameters["couponStatus"] = $coupon->getCouponStatus();
             
             $this->connection = Connection::GetInstance();
                   

@@ -4,25 +4,37 @@ include('nav-bar-owner.php');
 ?>
 
 <h2>Keeper profile</h2>
-<form action="<?php echo FRONT_ROOT . "Booking/Add" ?>" method="post">
-    <script>
-        function validate() {
-            if (document.getElementById('availabilityEnd').value < document.getElementById('availabilityStart').value)
-                document.getElementById('availabilityEnd').setCustomValidity('Esta fecha debe ser mayor a la fecha inicial');
-            else
-                document.getElementById('availabilityEnd').setCustomValidity('');
-        }
-    </script>
-    <!-- Esto deberia ser como el resumen del keeper en el q solicitaste-->
-    <td><?php echo $keeper->getId() ?></td>
-    <td><?php echo $keeper->getFirstName() ?></td>
-    <td><?php echo $keeper->getLastName() ?></td>
-    <td><?php echo $keeper->getUserName() ?></td>
-    <td><?php echo $keeper->getEmail() ?></td>
-    <td><?php echo $keeper->getAddress() ?></td>
-    <td><?php echo $keeper->getAvailStart() ?></td>
-    <td><?php echo $keeper->getAvailEnd() ?></td>
-    <td><?php echo $keeper->getPrice() ?></td>
+<form action="<?php echo FRONT_ROOT."Booking/Add" ?>" method="post">
+                    <!-- Esto deberia ser como el resumen del keeper en el q solicitaste-->
+                    <table>
+          <thead>
+            <tr>
+              <th>First name</th>
+              <th>Last name</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Address</th>
+              <th>Telephone</th>
+              <th>Cuil</th>
+              <th>Start</th>
+              <th>End</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+                  <tr>
+                    <td><?php echo $keeper->getFirstName() ?></td>
+                    <td><?php echo $keeper->getLastName() ?></td>
+                    <td><?php echo $keeper->getUserName() ?></td>
+                    <td><?php echo $keeper->getEmail() ?></td>
+                    <td><?php echo $keeper->getAddress() ?></td>
+                    <td><?php echo $keeper->getCuil() ?></td>
+                    <td><?php echo $keeper->getAvailStart() ?></td>
+                    <td><?php echo $keeper->getAvailEnd() ?></td>
+                    <td><?php echo $keeper->getPrice() ?></td>
+                  </tr>    
+          </tbody>
+        </table>
 
     <div class="hidden">
         <input id="prodId" name="ownerId" type="hidden" value="<?php echo $_SESSION["userLogged"]->getId(); ?>">
