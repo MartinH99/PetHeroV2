@@ -18,8 +18,8 @@ class KeeperDAO
             
             try
             { //Recordar que interval tiene que ser una entidad propia
-                $query = "INSERT INTO ".$this->tablename." (keeperId,firstname, lastname,username,password,email,address,telephone,cuil,availStart,availEnd,price,stars)
-                 VALUES (:keeperId, :firstname, :lastname,:username,:password,:email,:address,:telephone,:cuil,:availStart,:availEnd,:price,:stars);";
+                $query = "INSERT INTO ".$this->tablename." (keeperId,firstname, lastname,username,password,email,address,telephone,cuil,availStart,availEnd,price,stars,typeKeep)
+                 VALUES (:keeperId, :firstname, :lastname,:username,:password,:email,:address,:telephone,:cuil,:availStart,:availEnd,:price,:stars,:typeKeep);";
                 
 
                 $parameters["keeperId"] = $this->setNextIdKeep(); //$owner->getId(); Aca estaria bueno lo de el nextId con lastInsertId + inicial Tabla K1/O1
@@ -37,6 +37,7 @@ class KeeperDAO
                 //$parameters["interval"] = null; //Aca lo mejor seria getEnd - GetStart = interval y meterlo en su tabla devolviendo un id que se guarda acá (Podrias guardar el id o el valor d1)
                 $parameters["price"] = $keeper->getPrice();
                 $parameters["stars"] = 1;
+                $parameters["typeKeep"] = $keeper->getTypeKeep();
 
 
                 $this->connection = Connection::GetInstance();
@@ -48,6 +49,7 @@ class KeeperDAO
                 throw $ex;
             }
         }
+
 
         public function getAll()
         {
@@ -79,7 +81,7 @@ class KeeperDAO
                     $keeper->setInterval(0);
                     $keeper->setPrice($row["price"]);
                     $keeper->setStars($row["stars"]);
-
+                    $keeper->setTypeKeep($row["typeKeep"]);
                     
 
                     array_push($keeperList, $keeper);
@@ -105,7 +107,6 @@ class KeeperDAO
 
                 $resultado = $this->connection->ExecuteNonQuery($query, $parameters);
 
-                var_dump($resultado);
             }catch(Exception $ex)
             {
                 throw $ex;
@@ -170,6 +171,81 @@ class KeeperDAO
                 return false;
             }
         }
+         public function searchKeeperbyEmail($email)
+        {
+
+            $query = "SELECT * FROM $this->tablename WHERE email = :email;";
+            $parameters["email"] = $email;
+            try
+            {
+                
+                $this->connection = Connection::GetInstance();
+                $result = $this->connection->Execute($query,$parameters); //Tendria que devolver el array asociativo...
+                $newResult  = reset($result);
+                 //Si devuelve 1 es xq el Execute retorno alguna fila y sino error
+            }catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            
+
+            if(!empty($newResult))
+            {
+                
+                return $this->mapping2($newResult);
+                //Result viene en un array asocitativo,pero estamos trabajado con POO...
+            }else 
+            {
+                return false;
+            }
+        }
+
+        public function searchKeeperbyCuil($cuil)
+        {
+            $query = "SELECT * FROM $this->tablename WHERE cuil = :cuil;";
+            $parameters["cuil"] = $cuil;
+            try
+            {
+                
+                $this->connection = Connection::GetInstance();
+                $result = $this->connection->Execute($query,$parameters); //Tendria que devolver el array asociativo...
+                $newResult  = reset($result);
+                 //Si devuelve 1 es xq el Execute retorno alguna fila y sino error
+            }catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            
+
+            if(!empty($newResult))
+            {
+                
+                return $this->mapping2($newResult);
+                //Result viene en un array asocitativo,pero estamos trabajado con POO...
+            }else 
+            {
+                return false;
+            }
+        }
+
+        public function getKeeperUsername($keeperId)
+        {
+
+            $query = "SELECT `username` FROM $this->tablename WHERE keeperId = :keeperId;";
+            $parameters["keeperId"] = $keeperId;
+            try
+            {
+                
+                $this->connection = Connection::GetInstance();
+                $result = $this->connection->Execute($query,$parameters); //Tendria que devolver el array asociativo...
+                $newResult  = reset($result);
+                 //Si devuelve 1 es xq el Execute retorno alguna fila y sino error
+                 return $newResult;
+            }catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
 
 
         public function mapping2($value) //No pude aplicar el mapping del video de Lab xq crasheaba siempre ya sea por falta de parametros,error en array|object o el array asociativa ya se generaba raro 
@@ -190,6 +266,7 @@ class KeeperDAO
                 $keeper->setAvailEnd($value["availEnd"]);
                 $keeper->setStars($value["stars"]);
                 $keeper->setPrice($value["price"]);
+                $keeper->setTypeKeep($value["typeKeep"]);
 
                 return $keeper;
             
@@ -223,6 +300,115 @@ class KeeperDAO
         
 
     }
+
+    public function filterKeeperByDate_Size($initDate,$initEnd,$size)
+    {
+        try
+        {
+            $keeperListByDateSize = array();
+
+            $query = "SELECT * FROM $this->tablename WHERE availStart >= '$initDate' AND availEnd <= '$initEnd' AND typeKeep = $size;";
+
+            $this->connection = Connection::GetInstance();
+
+            $result = $this->connection->Execute($query);
+
+            foreach ($result as $row) //Voy pasando a un objeto owner lo que recupera de la BD en un array asociativo por filas
+                {                
+                    //Revisar si precisa del methodPass / rta = nop
+                    $keeper = new Keeper();
+
+                    $keeper->setId($row["keeperId"]);
+                    $keeper->setFirstname($row["firstname"]);
+                    $keeper->setLastName($row["lastname"]);
+                    $keeper->setUsername($row["username"]);
+                    $keeper->setPassword($row["password"]);
+                    $keeper->setEmail($row["email"]);
+                    $keeper->setAddress($row["address"]);
+                    $keeper->setTelephone($row["telephone"]);
+                    $keeper->setCuil($row["cuil"]);
+                    $keeper->setAvailStart($row["availStart"]);
+                    $keeper->setAvailEnd($row["availEnd"]);
+                    $keeper->setPrice($row["price"]);
+                    $keeper->setStars($row["stars"]);
+                    $keeper->setTypeKeep($row["typeKeep"]);
+
+                    
+
+                    array_push($keeperListByDateSize, $keeper);
+                }
+
+                return $keeperListByDateSize;
+
+        }catch(Exception $ex)
+        {
+            return $ex;
+        }
+    }
+
+    public function filterKeepersByDate($initDate,$initEnd)
+    {
+        try
+        {
+            $keeperListByDate = array();
+
+            $query = "SELECT * FROM $this->tablename WHERE availStart >= '$initDate' AND availEnd <= '$initEnd';";
+
+            $this->connection = Connection::GetInstance();
+
+            $result = $this->connection->Execute($query);
+    
+            foreach ($result as $row) //Voy pasando a un objeto owner lo que recupera de la BD en un array asociativo por filas
+                {                
+                    //Revisar si precisa del methodPass / rta = nop
+                    $keeper = new Keeper();
+
+                    $keeper->setId($row["keeperId"]);
+                    $keeper->setFirstname($row["firstname"]);
+                    $keeper->setLastName($row["lastname"]);
+                    $keeper->setUsername($row["username"]);
+                    $keeper->setPassword($row["password"]);
+                    $keeper->setEmail($row["email"]);
+                    $keeper->setAddress($row["address"]);
+                    $keeper->setTelephone($row["telephone"]);
+                    $keeper->setCuil($row["cuil"]);
+                    $keeper->setAvailStart($row["availStart"]);
+                    $keeper->setAvailEnd($row["availEnd"]);
+                    $keeper->setPrice($row["price"]);
+                    $keeper->setStars($row["stars"]);
+                    $keeper->setTypeKeep($row["typeKeep"]);
+
+                    
+
+                    array_push($keeperListByDate, $keeper);
+                }
+
+                return $keeperListByDate;
+
+        }catch(Exception $ex)
+        {
+            return $ex;
+        }
+    }
+
+    public function getUsernameKeeper($idKeeper)
+        {
+
+            $query = "SELECT username FROM $this->tablename WHERE keeperId = :keeperId;";
+            $parameters["keeperId"] = $idKeeper;
+            try
+            {
+                
+                $this->connection = Connection::GetInstance();
+                $result = $this->connection->Execute($query,$parameters); //Tendria que devolver el array asociativo...
+                $newResult  = reset($result);
+                 //Si devuelve 1 es xq el Execute retorno alguna fila y sino error
+                 return $newResult;
+            }catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
 
 
     

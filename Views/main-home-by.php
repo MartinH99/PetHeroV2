@@ -5,9 +5,9 @@ include("avail-dates.php");
 ?>
 <form action="<?php echo FRONT_ROOT ."Booking/AddBookView"?>" method="post">
 <div class="container-fluid bg-light d-flex justify-content-center ">
-    <div class="row card-group w-60 mt-5 mb-4 ms-8 p-5 ">  
-         <p style="color:green;"><?php if(isset($message)) echo "$message" ;?></p>
-        <?php foreach ($keeperList as $keeper) {
+    <div class="row card-group w-60 mt-5 mb-4 ms-8 p-5 ">
+        
+        <?php foreach ($keeperListNew as $keeper) {
         ?>
         <div class="col-md-4">
             <div class="card bg-light m-5 border-start ">
@@ -17,7 +17,7 @@ include("avail-dates.php");
                         <?php echo $keeper->getFirstname(); ?>
                     </h5>
                     <h6 class="card-subtitle text-secondary fst-italic opacity-50 fw-light d-flex justify-content-center">
-                    Telephone : <?php echo  $keeper->getTelephone(); ?>
+                    Telephone : <?php echo $keeper->getTelephone(); ?>
                     </h6>
                 </div>
                 <div class="card-footer">

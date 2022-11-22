@@ -1,9 +1,13 @@
+<?php include_once("header.php")?>
+<?php include_once("navbar-home.php")?>
 <main class="hoc container clear"> 
     <!-- main body -->
     <div class="content"> 
       <div class="scrollable">
-      <form action="<?php echo FRONT_ROOT."Pet/Remove" ?>" method="">
+      <form action="<?php echo FRONT_ROOT."Pet/Remove" ?>" method="post">
         <table style="text-align:center;">
+        <?php if(!empty($petListId))
+        {?>
           <thead>
             <tr>
               <th>Id</th>
@@ -18,7 +22,7 @@
           </thead>
           <tbody>
             <?php
-              foreach($petList as $pet)
+              foreach($petListId as $pet)
               {
                 ?>
                   <tr>
@@ -34,6 +38,10 @@
                   </tr>
                 <?php
               }
+            }else
+            {
+                echo "There are not any pets yet.";
+            }
             ?>                          
           </tbody>
         </table></form> 
@@ -43,3 +51,4 @@
     <div class="clear"></div>
   </main>
 </div>
+<?php include_once("footer.php")?>

@@ -1,4 +1,6 @@
-<?php include("navbar-home.php"); ?>
+<?php 
+include("header.php");
+include("navbar-home.php"); ?>
 <div class="card-body mb-3 ">
     <div class="row g-0 d-flex align-items-center bg-dark text-white ">
         <div class="col-lg-4 d-none d-lg-flex">
@@ -20,8 +22,11 @@
                     <div class="form-outline mb-4">
                         <input type="password" id="Password" class="form-control" name="password" placeholder="Password" />
                         <label class="form-label" for="Password">Password</label>
+
+                        
                     </div>
 
+                    <p class="d-inline-block bg-light text-danger"><b><?php if(isset($message)) echo $message; ?></b></p>
                     <!-- 2 column grid layout for inline styling -->
                     <div class="row mb-4">
                         <div class="col d-flex justify-content-center">

@@ -16,7 +16,6 @@
         {
             // require_once(VIEWS_PATH."validate-session-keep.php");
             // require_once(VIEWS_PATH."validate-session-own.php");
-
             require_once(VIEWS_PATH."navbar-home.php");
             $keeperList = $this->keeperDAO->getAll();
             require_once(VIEWS_PATH."main-home.php");
@@ -27,6 +26,12 @@
         {
             require_once(VIEWS_PATH."navbar-home.php");
             require_once(VIEWS_PATH."login.php");
+        }
+
+        public function filterDateKeep_Size($initDate,$endDate,$size)
+        {
+            $keeperListNew = $this->KeeperDAO->filterKeeperByDate_Size($initDate,$endDate,$size);
+            require_once(VIEWS_PATH."main-home-by.php");
         }
 
         public function ShowRegisterView()

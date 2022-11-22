@@ -7,7 +7,7 @@ include('nav-bar-owner.php');
     <h1 class="h1 dark text-center">ADD PET</h1>
     <div class="row h-100 border border-primary mt-5  ml-5  d-flex align-items-center justify-content-center">
         <div class="col-10 col-md-8 col-lg-6 mt-5">
-            <form action="<?php echo FRONT_ROOT."Pet/Add" ?>" method="post">
+        <form action="<?php echo FRONT_ROOT."Pet/Add" ?>" method="post">
                 <div class="form-outline ">
                     <label class="form-label" for="Name">Name</label>
                     <input type="text" id="Name" name="name" class="form-control" />
@@ -20,6 +20,7 @@ include('nav-bar-owner.php');
 
                 <div id="sizePet" class="mt-4">
                     <h5>Size :</h5>
+                    <input class="form-check-input" type="radio" name="size" id="sma" value="" checked="checked" hidden />
                     <div class="form-check">
                         <label class="form-check-label" for="sma"> Small </label>
                         <input class="form-check-input" type="radio" name="size" id="sma" value="small" />
@@ -45,11 +46,15 @@ include('nav-bar-owner.php');
                 </select>
                 </div>
 
-
                 <div class="mt-4 d-flex justify-content-center mb-5">
                 <button class="btn btn-primary" type="submit">Agregar mascota</button>
                 </div>
-            </form>
+            </form>
+            <?php if (isset($message)) { ?>
+    <p style="color:red;">
+    <?php echo $message; ?>
+    </p>
+    <?php } ?>
         </div>
     </div>
 </div>

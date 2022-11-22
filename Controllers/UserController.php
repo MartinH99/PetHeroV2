@@ -24,17 +24,35 @@
         public function index($message = "")
         {
             require_once(VIEWS_PATH."navbar-home.php");
+            $keeperList = $this->KeeperDAO->getAll();
             require_once(VIEWS_PATH."main-home.php");
+        }
+
+        public function filterDateKeep($initDate,$endDate)
+        {
+            $keeperListNew = $this->KeeperDAO->filterKeepersByDate($initDate,$endDate);
+            require_once(VIEWS_PATH."main-home-by.php");
+        }
+
+        public function filterDateKeep_Size($initDate,$endDate,$size)
+        {
+            $keeperListNew = $this->KeeperDAO->filterKeeperByDate_Size($initDate,$endDate,$size);
+            require_once(VIEWS_PATH."main-home-by.php");
         }
 
         public function typeSignup($userType)
         {
             if(strcmp($userType,"owner") == 0)
             {
+                $message = "";
                 require_once(VIEWS_PATH."owner-signup.php");
+                
+                
             }else if(strcmp($userType,"keeper") == 0)
             {
+                $message="";
                 require_once(VIEWS_PATH."keeper-signup.php");
+                
             }
         }
 
@@ -42,10 +60,13 @@
         {
             if(strcmp($userType,"owner") == 0)
             {
+                
                 require_once(VIEWS_PATH."login-own.php");
+                
             }else if(strcmp($userType,"keeper") == 0)
             {
                 require_once(VIEWS_PATH."login-keep.php");
+                
             }
         }
 

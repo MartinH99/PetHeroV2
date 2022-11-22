@@ -84,7 +84,7 @@ class OwnerDAO
                     $owner->setAddress($row["address"]);
                     $owner->setTelephone($row["telephone"]);
 
-                    var_dump($owner);
+  
 
                     array_push($ownerList, $owner);
                 }
@@ -107,7 +107,7 @@ class OwnerDAO
                 $parameters["ownerId"] = $ownerId;
                 $resultado = $this->connection->ExecuteNonQuery($query, $parameters);
 
-                var_dump($resultado);
+        
             }catch(Exception $ex)
             {
                 throw $ex;
@@ -147,6 +147,7 @@ class OwnerDAO
                 //  //Si devuelve 1 es xq el Execute retorno alguna fila y sino error
             }catch(Exception $ex)
             {
+                die("Error : ".$ex->getMessage());
                 throw $ex;
             }
             
@@ -162,7 +163,65 @@ class OwnerDAO
             }
         }
 
-        public function mapping2($value)
+        public function searchOwnerbyEmail($email)
+        {
+
+            $query = "SELECT * FROM $this->tablename WHERE email = :email;";
+            $parameters["email"] = $email;
+            try
+            {
+                
+                $this->connection = Connection::GetInstance();
+                $result = $this->connection->Execute($query,$parameters); //Tendria que devolver el array asociativo...
+                $newResult  = reset($result);
+                 //Si devuelve 1 es xq el Execute retorno alguna fila y sino error
+            }catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            
+
+            if(!empty($newResult))
+            {
+                
+                return $this->mapping2($newResult);
+                //Result viene en un array asocitativo,pero estamos trabajado con POO...
+            }else 
+            {
+                return false;
+            }
+        }
+
+        public function searchOwnerbyDni($dni)
+        {
+
+            $query = "SELECT * FROM $this->tablename WHERE dni = :dni;";
+            $parameters["dni"] = $dni;
+            try
+            {
+                
+                $this->connection = Connection::GetInstance();
+                $result = $this->connection->Execute($query,$parameters); //Tendria que devolver el array asociativo...
+                $newResult  = reset($result);
+                 //Si devuelve 1 es xq el Execute retorno alguna fila y sino error
+            }catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            
+
+            if(!empty($newResult))
+            {
+                
+                return $this->mapping2($newResult);
+                //Result viene en un array asocitativo,pero estamos trabajado con POO...
+            }else 
+            {
+                return false;
+            }
+        }
+
+        public function mapping2($value) //Como con callback se rompia lo hice mas 'rustico'
         {
             $value = is_array($value) ? $value : []; //Si es arreglo sigue con su valor sino se hace uno vacio  
 
@@ -223,8 +282,29 @@ class OwnerDAO
             return $ex;
         }
         
+        
 
     }
+
+    public function getUsernameOwner($idOwner)
+        {
+
+            $query = "SELECT username FROM $this->tablename WHERE ownerId = :ownerId;";
+            $parameters["ownerId"] = $idOwner;
+            try
+            {
+                
+                $this->connection = Connection::GetInstance();
+                $result = $this->connection->Execute($query,$parameters); //Tendria que devolver el array asociativo...
+                $newResult  = reset($result);
+                 //Si devuelve 1 es xq el Execute retorno alguna fila y sino error
+                 return $newResult;
+            }catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+
 
 }
 
