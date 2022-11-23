@@ -106,7 +106,7 @@ class CouponDAO
         }
     }
 
-    public function mapping2Booking($value)
+    public function mapping2Coupon($value)
         {
             $value = is_array($value) ? $value : []; //Si es arreglo sigue con su valor sino se hace uno vacio  
 
@@ -205,6 +205,36 @@ class CouponDAO
             catch(Exception $ex)
             {
                 throw $ex;
+            }
+        }
+
+        public function getCouponById($couponId)
+        {
+            
+            try
+            {
+                $query = "SELECT * FROM $this->tablename WHERE couponId = :couponId;";
+                $parameters["couponId"] = $couponId;
+
+                $this->connection = Connection::GetInstance();
+                $result = $this->connection->Execute($query,$parameters); //Tendria que devolver el array asociativo...
+                $newResult  = reset($result);
+
+                 //Si devuelve 1 es xq el Execute retorno alguna fila y sino error
+            }catch(Exception $ex)
+            {
+                throw $ex;
+            }
+
+
+            if(!empty($newResult))
+            {
+
+                return $this->mapping2Coupon($newResult);
+                //Result viene en un array asocitativo,pero estamos trabajado con POO...
+            }else 
+            {
+                return false;
             }
         }
 }

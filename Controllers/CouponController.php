@@ -33,6 +33,7 @@
         public function showCouponListKeepView()
         {
             require_once(VIEWS_PATH . "validate-session-keep.php");
+            //require_once(VIEWS_PATH. "nav-bar-keeper.php");
             $arraySession = array(); 
             $arraySession = $_SESSION["userLogged"];
             $idKeepLogged = $arraySession->getId();
@@ -71,6 +72,7 @@
         public function showCouponListOwnView()
         {
             require_once(VIEWS_PATH . "validate-session-own.php");
+            
             $arraySession = array(); 
             $arraySession = $_SESSION["userLogged"];
             $idOwnerLogged = $arraySession->getId();
@@ -104,5 +106,44 @@
                 array_push($arrayCouponBookInfoOwn,$infoCouponArr); //Pusheo todo al arreglo a iterar en el html
             }
             require_once(VIEWS_PATH. "coupons-list-own.php");
+        }
+
+        public function showPaymentCoupBook($couponId)
+        {
+            require_once(VIEWS_PATH . "validate-session-own.php");
+            
+            $coupon = $this->couponDAO->getCouponById($couponId); //Busco el cupon pasado por parametro
+
+            $book = $this->bookingDAO->getOneBook($coupon->getCodebook());//Del buscado de arriba 'extraigo' la info del booking
+
+                $infoCouponArr["couponId"] = $coupon->getCouponid();
+                $infoCouponArr["total"] = $coupon->getTotal();
+                $infoCouponArr["subtotal"] = $coupon->getSubtotal();
+                $infoCouponArr["codeBook"] = $coupon->getCodebook();
+                $infoCouponArr["couponStatus"] = $coupon->getCouponStatus();
+
+                $infoCouponArr["endDate"] = $book->getEndDate();
+                $infoCouponArr["initDate"] = $book->getInitDate();
+                $infoCouponArr["status"] = $book->getStatus();
+                $infoCouponArr["initDate"] = $book->getInitDate();
+                $infoCouponArr["endDate"] = $book->getEndDate();
+                $infoCouponArr["status"] = $book->getStatus();
+
+                //Trayendo cada objeto para la informacion total
+                $keeperObj = $this->keeperDAO->searchKeeperById($book->getIdKeeper());
+
+                $petObj = $this->petDAO->getPetById($book->getidPet());
+
+                $auxAsoc =$this->ownerDAO->getUsernameOwner($book->getIdOwner());
+                $infoCouponArr["ownerId"] = $auxAsoc["username"];
+
+                $auxAsoc = $this->keeperDAO->getUsernameKeeper($book->getIdKeeper());
+                $infoCouponArr["keeperId"] = $auxAsoc["username"];
+
+                $auxAsoc = $this->petDAO->getPetName($book->getidPet());
+                $infoCouponArr["petId"] = $auxAsoc["name"];
+
+                require_once(VIEWS_PATH. "payment-book.php");
+
         }
     }
