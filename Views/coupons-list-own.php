@@ -1,40 +1,40 @@
 <?php
 include("header.php");
-include("nav-bar-keeper.php");
+include("nav-bar-owner.php");
 include("inner-nav.php");
 ?>
 
-<h1>Booking status pendings</h1>
-<form action="<?php echo FRONT_ROOT . "Booking/modifyStatusBook" ?>" method="post">
+<h1>Coupons list</h1>
+<form action="" method="post">
 
     <div class="row card-group w-60 mt-5 mb-4 ms-8 p-5 ">
-        <?php foreach ($allBookingByIdndStatus as $booking) {
+        <?php foreach ($arrayCouponBookInfoOwn as $fullCouponBook) {
         ?>
             <div class="col-md-4">
                 <div class="card bg-light m-5 border-start ">
-                    <img src="http://cdn.sheknows.com/articles/2014/06/Mike_C/SheKnows_US/1039483/Woman-kissing-dog.jpg" class="card-img-top mt-3" alt="destacados" />
+                    <img src="https://cdn-icons-png.flaticon.com/512/2037/2037881.png" class="card-img-top mt-3" alt="destacados" />
                     <div class="card-body ">
 
 
-                        <h5 class="card-title text-dark fs-6 d-flex justify-content-center ">Booking Info
+                        <h5 class="card-title text-dark fs-6 d-flex justify-content-center ">Coupon Info
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Codebook :<?php echo $booking->getCodeBook(); ?></li>
-                                <li class="list-group-item">Init date :<?php echo $booking->getInitDate(); ?></li>
-                                <li class="list-group-item">End date :<?php echo $booking->getEndDate();; ?></li>
+                                <li class="list-group-item">Total :<?php echo $fullCouponBook["total"]; ?></li>
+                                <li class="list-group-item">Subtotal :<?php echo $fullCouponBook["subtotal"]; ?></li>
+                                <li class="list-group-item">Coupon status :<?php echo $fullCouponBook["couponStatus"]; ?></li>
                             </ul>
                         </h5>
                         <h6 class="card-subtitle text-secondary fst-italic  fw-light d-flex justify-content-center">Participants
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Owner username :<?php echo $booking->getIdOwner(); ?></li>
-                                <li class="list-group-item">Keeper username :<?php echo $booking->getIdKeeper(); ?></li>
-                                <li class="list-group-item">Pet name :<?php echo $booking->getIdPet(); ?></li>
+                                <li class="list-group-item">Owner username : <?php echo $fullCouponBook["ownerId"]; ?></li>
+                                <li class="list-group-item">Keeper username :<?php echo $fullCouponBook["keeperId"];?></li>
+                                <li class="list-group-item">Pet name :<?php echo $fullCouponBook["petId"];?></li>
                             </ul>
                         </h6>
-                        <h4>Status : <?php echo $booking->getStatus(); ?></h4>
+                        <h4>Status : <?php  ?></h4>
                     </div>
                     <div class="d-flex card-footer">
 
-                        <button type="submit" class="btn" name="codeBook" value="<?php echo $booking->getCodeBook(); ?>" id="danger-outlined"> Modify </button>
+                        <button type="submit" class="btn" name="codeBook" value="<?php  ?>" id="danger-outlined"> Modify </button>
 
                         <div class="form-check">
                             <label class="form-check-label" for="Confirmed">Confirm</label>

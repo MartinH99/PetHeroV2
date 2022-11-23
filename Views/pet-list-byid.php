@@ -1,4 +1,7 @@
-<?php include_once("nav-bar-owner.php")?>
+<?php
+include("header.php");
+ include_once("nav-bar-owner.php");?>
+
 <main class="hoc container clear"> 
     <!-- main body -->
     <div class="content"> 

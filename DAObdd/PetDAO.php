@@ -62,9 +62,6 @@
                     $pet->setBreed($row["breed"]);
                     $pet->setOwnerId($row["ownerId"]);
                     $pet->setAnimalType($row["animalTypeId"]);
-                  
-
-                    var_dump($pet);
 
                     array_push($petList, $pet);
                 }
@@ -177,10 +174,39 @@
             }
         }
 
+        public function getPetById($idPet)
+        {
+
+            $query = "SELECT * FROM $this->tablename WHERE petId = :petId;";
+            $parameters["petId"] = $idPet;
+            try
+            {
+
+                $this->connection = Connection::GetInstance();
+                $result = $this->connection->Execute($query,$parameters); //Tendria que devolver el array asociativo...
+                $newResult  = reset($result);
+
+                 //Si devuelve 1 es xq el Execute retorno alguna fila y sino error
+            }catch(Exception $ex)
+            {
+                throw $ex;
+            }
+
+
+            if(!empty($newResult))
+            {
+
+                return $this->mapping2Pet($newResult);
+                //Result viene en un array asocitativo,pero estamos trabajado con POO...
+            }else 
+            {
+                return false;
+            }
+        }
 
         public function mapping2Pet($value) //No pude aplicar el mapping del video de Lab xq crasheaba siempre ya sea por falta de parametros,error en array|object o el array asociativa ya se generaba raro 
         {
-            $value = is_array($value) ? $value : []; //Si es arreglo sigue con su valor sino se hace uno vacio  
+            $value = is_array($value) ? $value : []; //Si es arreglo sigue con su valor sino se hace uno vacio
 
                 $pet = new Pet();
                 $pet->setId($value["petId"]);
@@ -195,48 +221,8 @@
                 $pet->setDescrip("");
 
                 return $pet;
-            
+
         }
-
-
-
-        public function getPetById($idPet)
-        {
-
-            $query = "SELECT * FROM $this->tablename WHERE petId = :petId;";
-            $parameters["petId"] = $idPet;
-            try
-            {
-                
-                $this->connection = Connection::GetInstance();
-                $result = $this->connection->Execute($query,$parameters); //Tendria que devolver el array asociativo...
-                $newResult  = reset($result);
-                
-
-                echo "NEWRESULT;";
-                var_dump($newResult);
-
-
-                 //Si devuelve 1 es xq el Execute retorno alguna fila y sino error
-            }catch(Exception $ex)
-            {
-                throw $ex;
-            }
-            
-
-            if(!empty($newResult))
-            {
-                
-                return $this->mapping2Pet($newResult);
-                //Result viene en un array asocitativo,pero estamos trabajado con POO...
-            }else 
-            {
-                return false;
-            }
-        }
-
-
-    
         
 
     }

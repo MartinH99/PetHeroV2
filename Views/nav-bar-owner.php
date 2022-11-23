@@ -7,24 +7,21 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ms-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="<?php echo FRONT_ROOT."Home/TestView"?>">Test <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link" href="<?php echo FRONT_ROOT."User/Logout"?>">Logout</a>
-      </li>
+      </li> 
       <li class="nav-item">
-        <a class="nav-link" href="<?php echo FRONT_ROOT."Home/ShowRegisterPetView"?>">Agrego mascotas</a>
+        <a class="nav-link" href="<?php echo FRONT_ROOT."Home/ShowRegisterPetView"?>">Add a pet</a>
       </li>
       <li class="nav-item dropdown">
         <button class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
           Hello,<?php echo $_SESSION["userLogged"]->getUsername(); ?>
         </button>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="<?php echo FRONT_ROOT."Pet/ShowListPetsbyOwnView"?>">Mis Mascotas</a>
-          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item" href="<?php echo FRONT_ROOT."Pet/ShowListPetsbyOwnView"?>">My pets</a>
+          <a class="dropdown-item" href="#">Your profile</a>
+             <a class="dropdown-item" href="<?php echo FRONT_ROOT."Coupon/showCouponListOwnView"?>">My coupons</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
+          <a class="dropdown-item" href="#">My bookings</a>
         </div>
       </li>
     </ul>

@@ -24,7 +24,7 @@ class CouponDAO
         {
             
             $query = "INSERT INTO ".$this->tablename." (couponId,total,subtotal,couponStatus,codeBook) 
-            VALUES (:couponId, :total, :subtotal,:couponStatus,:codeBook); ";
+            VALUES (:couponId, :total, :subtotal, :couponStatus,:codeBook); ";
 
             $parameters["couponId"] = $this->setNextIdCoup();
             $parameters["total"] = $coupon->getTotal();

@@ -16,7 +16,6 @@
         {
             // require_once(VIEWS_PATH."validate-session-keep.php");
             // require_once(VIEWS_PATH."validate-session-own.php");
-            echo $message;
             require_once(VIEWS_PATH."navbar-home.php");
             $keeperList = $this->keeperDAO->getAll();
             require_once(VIEWS_PATH."main-home.php");

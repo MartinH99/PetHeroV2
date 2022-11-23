@@ -128,109 +128,109 @@ use Exception;
                                                                                             require_once(VIEWS_PATH."login-keep.php");
                                                                                         }else
                                                                                         {
-                                                                                            $message = "The field '<b>Price</b>' cannot be empty.";
-                                                                                            require_once(VIEWS_PATH . "keeper-signup.php");
+  
+                                                                                            throw new Exception("The field '<b>Price</b>' cannot be empty.");
                                                                                         }
                                                                                     }else
                                                                                     {
-                                                                                        $message = "The telephone must have at least 9 numbers.";
-                                                                                        require_once(VIEWS_PATH . "keeper-signup.php");
+   
+                                                                                        throw new Exception("The telephone must have at least 9 numbers.");
                                                                                     }
                                                                                 }else
                                                                                 {
-                                                                                    $message = "'<b>End date</b>' must be greater than '<b>Start date</b>'.";
-                                                                                    require_once(VIEWS_PATH . "keeper-signup.php");
+     
+                                                                                    throw new Exception("'<b>End date</b>' must be greater than '<b>Start date</b>'.");
                                                                                 }
                                                                             }else
                                                                             {
-                                                                                $message = "The field '<b>End date</b>' cannot be empty.";
-                                                                                require_once(VIEWS_PATH . "keeper-signup.php");
+       
+                                                                                throw new Exception("The field '<b>End date</b>' cannot be empty.");
                                                                             }
                                                                         }else
                                                                         {
-                                                                            $message = "'<b>Start date</b>' must be equal or greater than current date.";
-                                                                            require_once(VIEWS_PATH . "keeper-signup.php");
+
+                                                                            throw new Exception("'<b>Start date</b>' must be equal or greater than current date.");
                                                                         }
                                                                    }else
                                                                    {
-                                                                        $message = "The field '<b>Start date</b>' cannot be empty.";
-                                                                        require_once(VIEWS_PATH . "keeper-signup.php");
+
+                                                                        throw new Exception("The field '<b>Start date</b>' cannot be empty.");
                                                                    }
                                                                 }else
                                                                 {
-                                                                    $message = "The CUIL is already registered.";
-                                                                     require_once(VIEWS_PATH . "keeper-signup.php");
+    
+                                                                    throw new Exception("The CUIL is already registered.");
                                                                 }
                                                             }else
                                                             {
-                                                                $message = "The CUIL you entered is not valid.";
-                                                                require_once(VIEWS_PATH . "owner-signup.php");
+
+                                                                throw new Exception("The CUIL you entered is not valid.");
                                                             }
                                                         }else
                                                         {
-                                                            $message = "The field '<b>CUIL</b>' cannot be empty.";
-                                                            require_once(VIEWS_PATH . "keeper-signup.php");
+ 
+                                                            throw new Exception("The field '<b>CUIL</b>' cannot be empty.");
                                                         }
                                                     }else
                                                     {
-                                                        $message = "The email is already registered.";
-                                                        require_once(VIEWS_PATH . "keeper-signup.php");
+
+                                                        throw new Exception("The email is already registered.");
                                                     }
                                                 }else
                                                 {
-                                                    $message = "The email you entered is not valid.";
-                                                    require_once(VIEWS_PATH . "keeper-signup.php");
+    
+                                                    throw new Exception("The email you entered is not valid.");
                                                 }
                                             }else
                                             {
-                                                $message = "The field '<b>Email</b>' cannot be empty.";
-                                                require_once(VIEWS_PATH . "keeper-signup.php");
+
+                                                throw new Exception("The field '<b>Email</b>' cannot be empty.");
                                             }
                                         }else
                                         {
-                                            $message = "You must choose a size.";
-                                            require_once(VIEWS_PATH . "keeper-signup.php");
+    
+                                            throw new Exception("You must choose a size.");
                                         }
 
                                     }else
                                     {
-                                        $message = "The password must be at least 6 characters long.";
-                                        require_once(VIEWS_PATH . "keeper-signup.php");
+
+                                        throw new Exception("The password must be at least 6 characters long.");
                                     }
                                 }else
                                 {
-                                    $message = "The field '<b>Password</b>' cannot be empty.";
-                                    require_once(VIEWS_PATH . "keeper-signup.php");
+ 
+                                    throw new Exception("The field '<b>Password</b>' cannot be empty.");
                                 }
                 
                             }else
                             {
-                                $message = "The username is not available.";
-                                require_once(VIEWS_PATH . "keeper-signup.php");
+
+                                throw new Exception("The username is not available.");
                             }
 
                         }else
                         {
-                            $message = "The field '<b>Username</b>' cannot be empty.";
-                            require_once(VIEWS_PATH . "keeper-signup.php");
+  
+                            throw new Exception("The field '<b>Username</b>' cannot be empty.");
                         }
 
                     }else
                     {
-                        $message = "The field '<b>Address</b>' cannot be empty.";
-                        require_once(VIEWS_PATH . "keeper-signup.php");
+
+                        throw new Exception("The field '<b>Address</b>' cannot be empty.");
                     }
                     
                 }else
                 {
-                    $message = "The field '<b>Last name</b>' cannot be empty.";
-                    require_once(VIEWS_PATH . "keeper-signup.php");
+
+                    throw new Exception("The field '<b>Last name</b>' cannot be empty.");
                 }
                 
             }else
             {
-                $message = "The field '<b>First name</b>' cannot be empty.";
-                require_once(VIEWS_PATH . "keeper-signup.php");
+
+                throw new Exception("The field '<b>First name</b>' cannot be empty.");
             }
 
                 
