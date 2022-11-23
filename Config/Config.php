@@ -12,7 +12,7 @@ define("DB_HOST", "localhost");
 define("DB_NAME", "pethero");
 define("DB_USER", "root");
 define("DB_PASS", "");
-define("DB_PORT","");
+define("DB_PORT","4306");
 
 ?>
 

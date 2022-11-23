@@ -8,13 +8,50 @@ use \Exception as Exception;
 use DAObdd\KeeperDAO as Keeper;
 use DAObdd\OwnerDAO as Owner;
 use DAObdd\PetDAO as Pet;
-
+use \DateTime as DateTime;
+use \DatePeriod as DatePeriod;
 class BookingDAO
 {
 
     private $connection;
     private $tablename = "bookings";
 
+
+    function getRangeDateAux($date_ini, $date_end, $format)
+        {
+
+            $dt_ini = DateTime::createFromFormat($format, $date_ini);
+            $dt_end = DateTime::createFromFormat($format, $date_end);
+            $period = new DatePeriod(
+                $dt_ini,
+                new DateInterval('P1D'),
+                $dt_end,
+            );
+            $range = [];
+            foreach ($period as $date) {
+                $range[] = $date->format($format);
+            }
+            $range[] = $date_end;
+            return $range;
+        }
+
+    public function getIntervalByDates($initialDate,$endDate)
+    {
+    
+            $init = $initialDate;
+            $end = $endDate;
+
+            $ranges = $this->getRangeDateAux($init, $end, 'Y-m-d');
+
+            $i = 0;
+
+            foreach ($ranges as $fecha) {
+                echo $i . " " . $fecha . "<br>";
+                $i = $i + 1;
+            }
+        
+        return $i;
+    }
     public function Add(Booking $booking)
         {
             
@@ -27,7 +64,7 @@ class BookingDAO
                 $parameters["codeBook"] = $this->setNextIdBook(); //$owner->getId(); Aca estaria bueno lo de el nextId con lastInsertId + inicial Tabla K1/O1
                 $parameters["initDate"] = $booking->getInitDate();
                 $parameters["endDate"] = $booking->getEndDate();
-                $parameters["interv"] = $booking->getInterval();
+                $parameters["interv"] = $this->getIntervalByDates($booking->getInitDate(),$booking->getEndDate());
                 $parameters["status"] = $booking->getStatus();
                 //methodPass
                 $parameters["ownerId"] = $booking->getIdOwner();

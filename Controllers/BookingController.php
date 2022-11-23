@@ -316,6 +316,8 @@ class BookingController
         $allBookingByIdndStatus = $this->bookingDAO->getAllByIdStatus($id2, $status);
         require_once(VIEWS_PATH . "booking-status3.php");
     }
+    
+    
 
 //                  IMPORTANTE
 //     En caso de que la reserva sea aceptada por el Keeper, se envía un cupón de pago

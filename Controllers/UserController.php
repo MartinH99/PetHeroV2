@@ -30,12 +30,14 @@
 
         public function filterDateKeep($initDate,$endDate)
         {
+            require_once(VIEWS_PATH."navbar-home.php");
             $keeperListNew = $this->KeeperDAO->filterKeepersByDate($initDate,$endDate);
             require_once(VIEWS_PATH."main-home-by.php");
         }
 
         public function filterDateKeep_Size($initDate,$endDate,$size)
         {
+            require_once(VIEWS_PATH."navbar-home.php");
             $keeperListNew = $this->KeeperDAO->filterKeeperByDate_Size($initDate,$endDate,$size);
             require_once(VIEWS_PATH."main-home-by.php");
         }
