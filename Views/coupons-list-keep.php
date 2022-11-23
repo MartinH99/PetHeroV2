@@ -8,7 +8,13 @@ include("inner-nav.php");
 <form action="" method="post">
 
     <div class="row card-group w-60 mt-5 mb-4 ms-8 p-5 ">
-        <?php foreach ($arrayCouponBookInfo as $fullCouponBook) {
+        <?php  if(empty($arrayCouponBookInfoforeach)) 
+        {
+            echo "No bookings listed";
+        }else
+        {
+            foreach($arrayCouponBookInfo as $fullCouponBook)
+            {
         ?>
         
             <div class="col-md-4">
@@ -63,6 +69,7 @@ include("inner-nav.php");
                 </div>
             </div>
         <?php
+        }
         }
         ?>
 

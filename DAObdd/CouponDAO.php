@@ -237,6 +237,29 @@ class CouponDAO
                 return false;
             }
         }
+
+        public function updateCouponStatus($couponId,$couponStatus)
+        {
+            try
+            {
+                $query = "UPDATE $this->tablename SET `couponStatus` = :couponStatus where couponId = :couponId;";
+    
+                $this->connection = Connection::GetInstance();
+                $parameters["couponStatus"] = $couponStatus;
+                $parameters["couponId"] = $couponId;
+               
+                
+                
+                $result = $this->connection->ExecuteNonQuery($query, $parameters);
+      
+                
+                
+            }catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+    
 }
 
 ?>

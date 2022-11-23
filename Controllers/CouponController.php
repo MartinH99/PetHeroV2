@@ -146,4 +146,11 @@
                 require_once(VIEWS_PATH. "payment-book.php");
 
         }
+
+        public function payOutCoupBook($couponId,$codeBook)
+        {
+            $this->bookingDAO->updateBooking("confirmed",$codeBook);
+            $this->couponDAO->updateCouponStatus($couponId,"confirmed");
+            require_once(VIEWS_PATH. "coupons-list-own.php"); //Estaria bueno que diga "Pagaste tu reserva Jorge Owner"
+        }
     }

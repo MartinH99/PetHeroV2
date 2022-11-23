@@ -8,7 +8,13 @@ include("inner-nav.php");
 <form action="<?php echo FRONT_ROOT."Coupon/showPaymentCoupBook"?>" method="post">
 
     <div class="row card-group w-60 mt-5 mb-4 ms-8 p-5 ">
-        <?php foreach ($arrayCouponBookInfoOwn as $fullCouponBook) {
+        <?php if(empty($arrayCouponBookInfoOwn))
+        {
+            echo "No coupons in your listings";
+        }else
+        {
+            foreach ($arrayCouponBookInfoOwn as $fullCouponBook)
+            {
         ?>
             <div class="col-md-4">
                 <div class="card bg-light m-5 border-start ">
@@ -60,6 +66,7 @@ include("inner-nav.php");
                 </div>
             </div>
         <?php
+            }
         }
         ?>
 

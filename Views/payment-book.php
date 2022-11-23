@@ -68,6 +68,7 @@
                             </div>
                         </div>
                     </div>
+                    <form action="<?php echo FRONT_ROOT."Coupon/payOutCoupBook"?>" method="post">
                     <div class="col-12 px-0">
                         <div class="row bg-light m-0">
                             <div class="col-12 px-4 my-4">
@@ -97,14 +98,18 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- Hidden inputs donde mandas el codigo de reserva y el codigo del booking -->
+                            <input type="hidden" name="couponId" value="<?php echo $infoCouponArr["couponId"] ?>">
+                            <input type="hidden" name="codeBook"  value="<?php echo $infoCouponArr["codeBook"] ?>" >
                         </div>
                         <div class="row m-0">
                             <div class="col-12  mb-4 p-0">
-                                <div class="btn btn-primary">Purchase<span class="fas fa-arrow-right ps-2"></span>
-                                </div>
+                                <button type="submit" class="btn btn-primary">Purchase<span class="fas fa-arrow-right ps-2"></span>
+                                </button>
                             </div>
                         </div>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
