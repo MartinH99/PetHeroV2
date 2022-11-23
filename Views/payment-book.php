@@ -43,9 +43,7 @@
                 <div class="row m-0">
                     <div class="col-12 px-4">
                         <div class="d-flex align-items-end mt-4 mb-2">
-                            <p class="h4 m-0"><span class="pe-1">ZAZ</span><span class="pe-1">966</span><span
-                                    class="pe-1">B</span></p>
-                            <P class="ps-3 textmuted">1L</P>
+                            <p class="h4 m-0"><span class="pe-1">Brief</span></p>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <p class="textmuted">Days</p> <!-- Sacar de interval cant dias -->
