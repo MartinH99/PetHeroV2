@@ -255,14 +255,9 @@ class BookingDAO
                 $parameters["codeBook"] = $codeBook;
 
                 $resultado = $this->connection->Execute($query,$parameters);
-
-                echo "RESULTADO : <br>";
-                var_dump($resultado);
-
+                
                 $book = reset($resultado);
-                var_dump($book);
-                echo "RESULTADO : <br>";
-                //var_dump($book);
+             
                 
             }catch(Exception $ex)
             {
