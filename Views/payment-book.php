@@ -86,7 +86,7 @@
                                     </span>
                                     <div class=" w-100 d-flex flex-column align-items-end">
                                         <p class="text-muted">Expires</p>
-                                        <input class="form-control2" type="text" name="expire" value="<?php if (isset($_POST["expire"])) echo $_POST["expire"]?>" placeholder="MM/YYYY">
+                                        <input class="form-control2" type="month" name="expire" value="<?php if (isset($_POST["expire"])) echo $_POST["expire"]?>">
                                     </div>
                                 </div>
                                 <div class="d-flex mb-5">
