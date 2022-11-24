@@ -8,12 +8,12 @@ include("inner-nav.php");
 <form action="" method="post">
 
     <div class="row card-group w-60 mt-5 mb-4 ms-8 p-5 ">
-        <?php  if(empty($arrayCouponBookInfoforeach)) 
+        <?php  if(empty($arrayCouponBookInfoKeep)) 
         {
             echo "No bookings listed";
         }else
         {
-            foreach($arrayCouponBookInfo as $fullCouponBook)
+            foreach($arrayCouponBookInfoKeep as $fullCouponBook)
             {
         ?>
         

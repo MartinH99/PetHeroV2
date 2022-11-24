@@ -39,7 +39,7 @@
             $idKeepLogged = $arraySession->getId();
             $couponListByIdKeep = $this->couponDAO->getAllByIdKeeper($idKeepLogged);
             
-            $arrayCouponBookInfo = array();
+            $arrayCouponBookInfoKeep = array();
             foreach($couponListByIdKeep as $coupon) //Uso el objeto coupon para copiar su contenido en un array
             {                                       //Y dps creo un objeto booking -bookInfo- donde obtengo el resto de datos
                 $infoCouponArr["couponId"] = $coupon->getCouponid();
@@ -64,7 +64,7 @@
                 $auxAsoc = $this->petDAO->getPetName($bookInfo->getidPet());
                 $infoCouponArr["petId"] = $auxAsoc["name"];
                 
-                array_push($arrayCouponBookInfo,$infoCouponArr); //Pusheo todo al arreglo a iterar en el html
+                array_push($arrayCouponBookInfoKeep,$infoCouponArr); //Pusheo todo al arreglo a iterar en el html
             }
             require_once(VIEWS_PATH. "coupons-list-keep.php");
         }
@@ -152,5 +152,6 @@
             $this->bookingDAO->updateBooking("confirmed",$codeBook);
             $this->couponDAO->updateCouponStatus($couponId,"confirmed");
             require_once(VIEWS_PATH. "coupons-list-own.php"); //Estaria bueno que diga "Pagaste tu reserva Jorge Owner"
+            $this->showCouponListOwnView();
         }
     }

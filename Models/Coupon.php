@@ -6,7 +6,7 @@ namespace Models;
 class Coupon{
     
     private $couponId;
-    private $total;
+    private $total; //Dias x price estadias
     private $subtotal;  //50%
     private $codeBook; //Ver si me manejo solo con el id de Booking para dps referenciar al obj o directamente usar al obj acá?!?
     private $couponStatus;

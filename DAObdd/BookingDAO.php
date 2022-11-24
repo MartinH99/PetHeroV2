@@ -216,32 +216,49 @@ class BookingDAO
                 throw $ex;
             }
         }
+
+       
     
         
-        public function getBookingByStatus2($status,$idKeep) //Intente con un callback y la de arrayfilter pero no funciono
-        {   ///Recordar que esto trae array y no objetos
+        public function getBookingByStatusAndId($keeperId,$status)
+        {
             try
             {
-                $arrayStatus = array();
-                $bookingListById = $this->getBookingByKeepId($idKeep);
-                $i = 0;
-                while ($i < count($bookingListById)) 
-                {
-                    $booking = $bookingListById[$i];
-                    if(strcmp($booking["status"],$status) == 0)
-                    {
-                        array_push($arrayStatus,$booking);
-                    }
-                    $i++;
+                $bookingList = array(); //Inicializo un array de 
 
+                $query = "SELECT * FROM $this->tablename WHERE keeperId = :keeperId AND status = :status ;"; //Traigo todo de 
+
+                $parameters["keeperId"] = $keeperId;
+                $parameters["status"] = $status;
+
+                $this->connection = Connection::GetInstance();
+
+                $resultadoQuery = $this->connection->Execute($query,$parameters);
+                
+                foreach ($resultadoQuery as $row) //Voy pasando a un objeto owner lo que recupera de la BD en un array asociativo por filas
+                {                
+                    //Revisar si precisa del methodPass / rta = nop
+                    $booking = new Booking();
+                    $booking->setCodeBook($row["codeBook"]);
+                    $booking->setInitDate($row["initDate"]);
+                    $booking->setEndDate($row["endDate"]);
+                    $booking->setInterval($row["interv"]);
+                    $booking->setStatus($row["status"]);
+                    $booking->setIdOwner($row["ownerId"]);
+                    $booking->setIdKeeper($row["keeperId"]);
+                    $booking->setIdPet($row["petId"]);
+                
+
+
+                    array_push($bookingList, $booking);
                 }
-                return $arrayStatus;
+
+                return $bookingList;
             }
             catch(Exception $ex)
             {
                 throw $ex;
             }
-            //Al final no pude aplicar la funcion de arrayfilter con callback para que devuelva al mismo arreglo aquello que cumple con X condicion xq no estoy trabajando con un arrays de objs
         }
 
         public function getOneBook($codeBook)

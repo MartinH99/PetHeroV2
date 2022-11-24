@@ -59,12 +59,12 @@
                         </div> -->
                         <div class="d-flex justify-content-between mb-2">
                             <p class="textmuted">Pending 50%</p>
-                            <p class="fs-14 fw-bold">-<span class="fas fa-dollar-sign px-1"></span>(50%) xxxx</p>
+                            <p class="fs-14 fw-bold">-<span class="fas fa-dollar-sign px-1"></span>(50%)<?php echo $infoCouponArr["subtotal"]  ?></p>
                         </div>
                         <div class="d-flex justify-content-between mb-3">
                             <p class="textmuted fw-bold">Total</p>
                             <div class="d-flex align-text-top ">
-                                <span class="fas fa-dollar-sign mt-1 pe-1 fs-14 "></span><span class="h4">xxxxx</span>
+                                <span class="fas fa-dollar-sign mt-1 pe-1 fs-14 "></span><span class="h4"><?php echo $infoCouponArr["subtotal"] ?></span>
                             </div>
                         </div>
                     </div>

@@ -225,10 +225,41 @@ class BookingController
         $arraySession = array(); 
         $arraySession = $_SESSION["userLogged"];
         $id2 = $arraySession->getId();
-        //var_dump($id2);
-        $bookingListById = $this->bookingDAO->getBookingByKeepId($id2); //Levanta todas las reservas del keeper
+        
+        $bookingListById = $this->bookingDAO->getAllById($id2); //Levanta todas las reservas del keeper
+
+            $arrayBooking = array();
+            foreach($bookingListById as $coupon) //Uso el objeto coupon para copiar su contenido en un array
+            {                                       //Y dps creo un objeto booking -bookInfo- donde obtengo el resto de datos  
+                $bookInfo = $this->bookingDAO->getOneBook($coupon->getCodebook());
+
+                $infoCouponArr["codeBook"] = $bookInfo->getCodeBook();
+                $infoCouponArr["initDate"] = $bookInfo->getInitDate();
+                $infoCouponArr["endDate"] = $bookInfo->getEndDate();
+                $infoCouponArr["status"] = $bookInfo->getStatus();
+               
+                //Trayendo cada objeto para la informacion total
+                $keeperObj = $this->keeperDAO->searchKeeperById($bookInfo->getIdKeeper());
+
+                $petObj = $this->petDAO->getPetById($bookInfo->getidPet());
+
+                $ownerObj = $this->ownerDAO->searchOwnerById($bookInfo->getIdOwner());
+
+                //Voy reemplazando la var auxAsoc recibiendo un key->value que es el resultado de la consulta de la funcion
+                $auxAsoc =$this->ownerDAO->getUsernameOwner($bookInfo->getIdOwner());
+                $infoCouponArr["ownerId"] = $auxAsoc["username"];
+
+                $auxAsoc = $this->keeperDAO->getUsernameKeeper($bookInfo->getIdKeeper());
+                $infoCouponArr["keeperId"] = $auxAsoc["username"];
+
+                $auxAsoc = $this->petDAO->getPetName($bookInfo->getidPet());
+                $infoCouponArr["petId"] = $auxAsoc["name"];
+                
+                array_push($arrayBooking,$infoCouponArr); //Pusheo todo al arreglo a iterar en el html
+            }
+
         require_once(VIEWS_PATH . "bookings-keep.php"); //Simplemente lista las bookings de x = idKeeper (logeado)
-        ///return $bookingListById;
+        
     }
 
     public function getBookingsByStatus($status)//Cuando estan en la vista de la funcion de arriba,es la que filtra por estados
@@ -237,7 +268,37 @@ class BookingController
         $arraySession = array(); ///Si hacer todo esto del usuario logeado O directamente levantarlo del html...
         $arraySession = $_SESSION["userLogged"];
         $id2 = $arraySession->getId();
-        $bookingListByKeepStatus = $this->bookingDAO->getBookingByStatus2($status, $id2);
+        $bookingListByKeepStatus = $this->bookingDAO->getBookingByStatusAndId($id2,$status);
+
+            $arrayBooking = array();
+            foreach($bookingListByKeepStatus as $coupon) //Uso el objeto coupon para copiar su contenido en un array
+            {                                       //Y dps creo un objeto booking -bookInfo- donde obtengo el resto de datos  
+                $bookInfo = $this->bookingDAO->getOneBook($coupon->getCodebook());
+
+                $infoCouponArr["codeBook"] = $bookInfo->getCodeBook();
+                $infoCouponArr["initDate"] = $bookInfo->getInitDate();
+                $infoCouponArr["endDate"] = $bookInfo->getEndDate();
+                $infoCouponArr["status"] = $bookInfo->getStatus();
+               
+                //Trayendo cada objeto para la informacion total
+                $keeperObj = $this->keeperDAO->searchKeeperById($bookInfo->getIdKeeper());
+
+                $petObj = $this->petDAO->getPetById($bookInfo->getidPet());
+
+                $ownerObj = $this->ownerDAO->searchOwnerById($bookInfo->getIdOwner());
+                
+                //Voy reemplazando la var auxAsoc recibiendo un key->value que es el resultado de la consulta de la funcion
+                $auxAsoc =$this->ownerDAO->getUsernameOwner($bookInfo->getIdOwner());
+                $infoCouponArr["ownerId"] = $auxAsoc["username"];
+
+                $auxAsoc = $this->keeperDAO->getUsernameKeeper($bookInfo->getIdKeeper());
+                $infoCouponArr["keeperId"] = $auxAsoc["username"];
+
+                $auxAsoc = $this->petDAO->getPetName($bookInfo->getidPet());
+                $infoCouponArr["petId"] = $auxAsoc["name"];
+                
+                array_push($arrayBooking,$infoCouponArr); //Pusheo todo al arreglo a iterar en el html
+            }
         require_once(VIEWS_PATH . "bookings-keep-status.php");//bookings-keep.php filtrado por status
     }
 
@@ -248,9 +309,35 @@ class BookingController
         $arraySession = $_SESSION["userLogged"];
         $id2 = $arraySession->getId();
         $allBookingById = $this->bookingDAO->getAllById($id2);
-        //$keepDao =$this->keeperDAO;
-       // $ownDao = $this->ownerDAO;
-       // $petDao = $this->petDAO;
+        
+        $arrayBooking = array();
+            foreach($allBookingById as $coupon) //Uso el objeto coupon para copiar su contenido en un array
+            {                                       //Y dps creo un objeto booking -bookInfo- donde obtengo el resto de datos
+                // $infoCouponArr["couponId"] = $coupon->getCouponid();
+                // $infoCouponArr["total"] = $coupon->getTotal();
+                // $infoCouponArr["subtotal"] = $coupon->getSubtotal();
+                // $infoCouponArr["codeBook"] = $coupon->getCodebook();
+                // $infoCouponArr["couponStatus"] = $coupon->getCouponStatus();
+                
+                $bookInfo = $this->bookingDAO->getOneBook($coupon->getCodebook());
+                
+                $infoCouponArr["codeBook"] = $bookInfo->getCodeBook();
+                $infoCouponArr["initDate"] = $bookInfo->getInitDate();
+                $infoCouponArr["endDate"] = $bookInfo->getEndDate();
+                $infoCouponArr["status"] = $bookInfo->getStatus();
+               
+                //Voy reemplazando la var auxAsoc recibiendo un key->value que es el resultado de la consulta de la funcion
+                $auxAsoc =$this->ownerDAO->getUsernameOwner($bookInfo->getIdOwner());
+                $infoCouponArr["ownerId"] = $auxAsoc["username"];
+
+                $auxAsoc = $this->keeperDAO->getUsernameKeeper($bookInfo->getIdKeeper());
+                $infoCouponArr["keeperId"] = $auxAsoc["username"];
+
+                $auxAsoc = $this->petDAO->getPetName($bookInfo->getidPet());
+                $infoCouponArr["petId"] = $auxAsoc["name"];
+                
+                array_push($arrayBooking,$infoCouponArr); //Pusheo todo al arreglo a iterar en el html
+            }
        
         require_once(VIEWS_PATH . "booking-status.php");
     }
@@ -265,8 +352,8 @@ class BookingController
         {
             $coupon = new Coupon();
             $keeper = $this->keeperDAO->searchKeeperById($bookingAux->getIdKeeper());//Creo un obj para tener la info de Keeper
-            $coupon->setTotal($keeper->getPrice());
-            $coupon->setsubTotal($keeper->getPrice()/2);
+            $coupon->setTotal($keeper->getPrice() * $keeper->getInterval()); //El precio del cupon es por la cant de dias
+            $coupon->setsubTotal(($keeper->getPrice() * $keeper->getInterval() )/2);//El subtotal del cupon es por la cant de dias
             $coupon->setCodeBook($codeBook);
             $coupon->setCouponStatus("accepted");
             $this->couponDAO->generateCoupon($coupon);
@@ -276,22 +363,35 @@ class BookingController
         $id2 = $arraySession->getId();
         $booking = $this->bookingDAO->getOneBook($codeBook);
         $allBookingById = $this->bookingDAO->getAllById($id2);
-        $allBookingByIdFormated = array();
-        foreach ($allBookingById as $booking)
-        {
-            $idOwner = $booking->getIdOwner();
-            $idKeeper = $booking->getIdKeeper();
-            $idPet = $booking->getIdPet();
+        
+            $arrayBooking = array();
+            foreach($allBookingById as $coupon) //Uso el objeto coupon para copiar su contenido en un array
+            {                                       //Y dps creo un objeto booking -bookInfo- donde obtengo el resto de datos
+                // $infoCouponArr["couponId"] = $coupon->getCouponid();
+                // $infoCouponArr["total"] = $coupon->getTotal();
+                // $infoCouponArr["subtotal"] = $coupon->getSubtotal();
+                // $infoCouponArr["codeBook"] = $coupon->getCodebook();
+                // $infoCouponArr["couponStatus"] = $coupon->getCouponStatus();
+                
+                $bookInfo = $this->bookingDAO->getOneBook($coupon->getCodebook());
 
-            $booking->setIdOwner2($idOwner);
-            $booking->setIdKeeper2($idKeeper);
-            $booking->setIdPet2($idPet);
+                $infoCouponArr["codeBook"] = $bookInfo->getCodeBook();
+                $infoCouponArr["initDate"] = $bookInfo->getInitDate();
+                $infoCouponArr["endDate"] = $bookInfo->getEndDate();
+                $infoCouponArr["status"] = $bookInfo->getStatus();
+               
+                //Voy reemplazando la var auxAsoc recibiendo un key->value que es el resultado de la consulta de la funcion
+                $auxAsoc =$this->ownerDAO->getUsernameOwner($bookInfo->getIdOwner());
+                $infoCouponArr["ownerId"] = $auxAsoc["username"];
 
-            array_push($allBookingByIdFormated, $booking);
-        }
-        $ownerUsername = $this->ownerDAO->getUsernameOwner($booking->getIdOwner());
-        $keeperUsername = $this->keeperDAO->getUsernameKeeper($booking->getIdKeeper());
-        $petName = $this->petDAO->getPetName($booking->getIdPet());
+                $auxAsoc = $this->keeperDAO->getUsernameKeeper($bookInfo->getIdKeeper());
+                $infoCouponArr["keeperId"] = $auxAsoc["username"];
+
+                $auxAsoc = $this->petDAO->getPetName($bookInfo->getidPet());
+                $infoCouponArr["petId"] = $auxAsoc["name"];
+                
+                array_push($arrayBooking,$infoCouponArr); //Pusheo todo al arreglo a iterar en el html
+            }
         
         require_once(VIEWS_PATH . "booking-status.php");
     }
@@ -304,16 +404,73 @@ class BookingController
         $arraySession = $_SESSION["userLogged"];
         $id2 = $arraySession->getId();
         $allBookingByIdndStatus = $this->bookingDAO->getAllByIdStatus($id2, $status);
+
+            $arrayBooking = array();
+            foreach($allBookingByIdndStatus as $coupon) //Uso el objeto coupon para copiar su contenido en un array
+            {                                       //Y dps creo un objeto booking -bookInfo- donde obtengo el resto de datos
+                // $infoCouponArr["couponId"] = $coupon->getCouponid();
+                // $infoCouponArr["total"] = $coupon->getTotal();
+                // $infoCouponArr["subtotal"] = $coupon->getSubtotal();
+                // $infoCouponArr["codeBook"] = $coupon->getCodebook();
+                // $infoCouponArr["couponStatus"] = $coupon->getCouponStatus();
+                
+                $bookInfo = $this->bookingDAO->getOneBook($coupon->getCodebook());
+                $infoCouponArr["codeBook"] = $bookInfo->getCodeBook();
+                $infoCouponArr["initDate"] = $bookInfo->getInitDate();
+                $infoCouponArr["endDate"] = $bookInfo->getEndDate();
+                $infoCouponArr["status"] = $bookInfo->getStatus();
+               
+                //Voy reemplazando la var auxAsoc recibiendo un key->value que es el resultado de la consulta de la funcion
+                $auxAsoc =$this->ownerDAO->getUsernameOwner($bookInfo->getIdOwner());
+                $infoCouponArr["ownerId"] = $auxAsoc["username"];
+
+                $auxAsoc = $this->keeperDAO->getUsernameKeeper($bookInfo->getIdKeeper());
+                $infoCouponArr["keeperId"] = $auxAsoc["username"];
+
+                $auxAsoc = $this->petDAO->getPetName($bookInfo->getidPet());
+                $infoCouponArr["petId"] = $auxAsoc["name"];
+                
+                array_push($arrayBooking,$infoCouponArr); //Pusheo todo al arreglo a iterar en el html
+            }
+
         require_once(VIEWS_PATH . "booking-status2.php");
     }
 
-    public function showBooksByConfirmed($status = "confirmed")//Booking status 3
+    public function showBooksByConfirmed($status = "accepted")//Booking status 3
     {
         require_once(VIEWS_PATH . "validate-session-own.php");
         $arraySession = array(); ///Si hacer todo esto del usuario logeado O directamente levantarlo del html...
         $arraySession = $_SESSION["userLogged"];
         $id2 = $arraySession->getId();
         $allBookingByIdndStatus = $this->bookingDAO->getAllByIdStatus($id2, $status);
+
+            $arrayBooking = array();
+            foreach($allBookingByIdndStatus as $coupon) //Uso el objeto coupon para copiar su contenido en un array
+            {                                       //Y dps creo un objeto booking -bookInfo- donde obtengo el resto de datos
+                // $infoCouponArr["couponId"] = $coupon->getCouponid();
+                // $infoCouponArr["total"] = $coupon->getTotal();
+                // $infoCouponArr["subtotal"] = $coupon->getSubtotal();
+                // $infoCouponArr["codeBook"] = $coupon->getCodebook();
+                // $infoCouponArr["couponStatus"] = $coupon->getCouponStatus();
+                
+                $bookInfo = $this->bookingDAO->getOneBook($coupon->getCodebook());
+                $infoCouponArr["codeBook"] = $bookInfo->getCodeBook();
+                $infoCouponArr["initDate"] = $bookInfo->getInitDate();
+                $infoCouponArr["endDate"] = $bookInfo->getEndDate();
+                $infoCouponArr["status"] = $bookInfo->getStatus();
+               
+                //Voy reemplazando la var auxAsoc recibiendo un key->value que es el resultado de la consulta de la funcion
+                $auxAsoc =$this->ownerDAO->getUsernameOwner($bookInfo->getIdOwner());
+                $infoCouponArr["ownerId"] = $auxAsoc["username"];
+
+                $auxAsoc = $this->keeperDAO->getUsernameKeeper($bookInfo->getIdKeeper());
+                $infoCouponArr["keeperId"] = $auxAsoc["username"];
+
+                $auxAsoc = $this->petDAO->getPetName($bookInfo->getidPet());
+                $infoCouponArr["petId"] = $auxAsoc["name"];
+                
+                array_push($arrayBooking,$infoCouponArr); //Pusheo todo al arreglo a iterar en el html
+            }
         require_once(VIEWS_PATH . "booking-status3.php");
     }
     

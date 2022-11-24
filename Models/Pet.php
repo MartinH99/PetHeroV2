@@ -157,6 +157,26 @@ class Pet
         return $this->size;
     }
 
+    public function getSize2()
+        {
+                switch($this->size)
+                {
+                     case 1:
+                        $this->size = 'small';
+                        break;
+                        
+                        case 2:
+                                $this->size = 'medium';
+                                break;
+
+                                case 3:
+                                        $this->size = 'large';
+                                        break;
+
+                }
+                return $this->size;
+        }
+
     /**
      * Set the value of size
      *

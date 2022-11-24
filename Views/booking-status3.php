@@ -4,11 +4,16 @@ include("nav-bar-keeper.php");
 include("inner-nav.php");
 ?>
 
-<h1>Booking status pendings</h1>
+<h1>Booking status accepted</h1>
 <form action="<?php echo FRONT_ROOT . "Booking/modifyStatusBook" ?>" method="post">
 
     <div class="row card-group w-60 mt-5 mb-4 ms-8 p-5 ">
-        <?php foreach ($allBookingByIdndStatus as $booking) {
+    <?php if(empty($arrayBooking))
+        {
+            echo "Accepted's list is empty!";
+        }else
+        {
+            foreach ($arrayBooking as $booking) {
         ?>
             <div class="col-md-4">
                 <div class="card bg-light m-5 border-start ">
@@ -18,24 +23,24 @@ include("inner-nav.php");
 
                         <h5 class="card-title text-dark fs-6 d-flex justify-content-center ">Booking Info
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Codebook :<?php echo $booking->getCodeBook(); ?></li>
-                                <li class="list-group-item">Init date :<?php echo $booking->getInitDate(); ?></li>
-                                <li class="list-group-item">End date :<?php echo $booking->getEndDate();; ?></li>
+                                <li class="list-group-item">Codebook :<?php echo $booking["codeBook"] ?></li>
+                                <li class="list-group-item">Init date :<?php echo $booking["initDate"] ?></li>
+                                <li class="list-group-item">End date :<?php echo $booking["endDate"] ?></li>
                             </ul>
                         </h5>
                         <h6 class="card-subtitle text-secondary fst-italic  fw-light d-flex justify-content-center">Participants
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Owner username :<?php echo $booking->getIdOwner2(); ?></li>
-                                <li class="list-group-item">Keeper username :<?php echo $booking->getIdKeeper2(); ?></li>
-                                <li class="list-group-item">Pet name :<?php echo $booking->getIdPet2(); ?></li>
+                                <li class="list-group-item">Owner username :<?php echo $booking["ownerId"] ?></li>
+                                <li class="list-group-item">Keeper username :<?php echo $booking["keeperId"] ?></li>
+                                <li class="list-group-item">Pet name :<?php echo $booking["petId"] ?></li>
                             </ul>
                         </h6>
-                        <h4>Status : <?php echo $booking->getStatus(); ?></h4>
+                        <h4>Status : <?php echo $booking["status"] ?></h4>
                     </div>
                     <div class="card-footer">
 
                         <div class="p-2 d-inline">
-                        <button type="submit" class="btn" name="codeBook" value="<?php echo $booking->getCodeBook(); ?>" id="danger-outlined">Apply </button>
+                        <button type="submit" class="btn" name="codeBook" value="<?php echo $booking["codeBook"] ?>" id="danger-outlined">Apply </button>
                         </div>
 
                         <div class="ms-5 p-2 d-inline-flex">
@@ -43,10 +48,6 @@ include("inner-nav.php");
                             <label class="form-check-label" for="Cancelled">Cancel booking </label>
                             
                         </div>
-
-                        
-
-
                         <div class="d-grid gap-2 col-9 mx-auto">
 
 
@@ -55,6 +56,7 @@ include("inner-nav.php");
                 </div>
             </div>
         <?php
+            }
         }
         ?>
 
