@@ -154,7 +154,8 @@ class CouponDAO
                     $coupon->setCodeBook($row["codeBook"]);
                     $coupon->setCouponStatus($row["couponStatus"]);
 
-                    //var_dump($coupon);
+                    echo  "hola <br>";
+                    var_dump($coupon);
 
                     array_push($couponListByIdKeeper, $coupon);
                 }
