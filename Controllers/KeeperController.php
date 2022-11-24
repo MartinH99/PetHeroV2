@@ -5,7 +5,7 @@
     use DAObdd\KeeperDAO as KeeperDAO;
     use Models\Keeper as Keeper;
     use Controllers\HomeController as HomeController;
-use Exception;
+    use Exception;
 
     class KeeperController{
         private $keeperDAO;

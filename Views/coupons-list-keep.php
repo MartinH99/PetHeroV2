@@ -8,12 +8,12 @@ include("inner-nav.php");
 <form action="" method="post">
 
     <div class="row card-group w-60 mt-5 mb-4 ms-8 p-5 ">
-        <?php  if(empty($arrayCouponBookInfoforeach)) 
+        <?php  if(empty($arrayCouponBookInfoKeep)) 
         {
             echo "No bookings listed";
         }else
         {
-            foreach($arrayCouponBookInfo as $fullCouponBook)
+            foreach($arrayCouponBookInfoKeep as $fullCouponBook)
             {
         ?>
         
@@ -25,6 +25,8 @@ include("inner-nav.php");
 
                         <h5 class="card-title text-dark fs-6 d-flex justify-content-center ">Coupon Info
                             <ul class="list-group list-group-flush">
+                               <li class="list-group-item">Coupon asoc :<?php echo $fullCouponBook["couponId"]; ?></li>
+                                <li class="list-group-item">Codebook :<?php echo $fullCouponBook["codeBook"]; ?></li>
                                 <li class="list-group-item">Total :<?php echo $fullCouponBook["total"]; ?></li>
                                 <li class="list-group-item">Subtotal :<?php echo $fullCouponBook["subtotal"]; ?></li>
                                 <li class="list-group-item">Coupon status :<?php echo $fullCouponBook["couponStatus"]; ?></li>
