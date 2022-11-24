@@ -7,6 +7,11 @@ include("inner-nav.php");
 <h1>Booking status change</h1>
 <form action="<?php echo FRONT_ROOT . "Booking/modifyStatusBook" ?>" method="post">
 
+<?php if(empty($allBookingByIdFormated))
+{
+    echo "No hay bookings";
+}else
+{?>
     <div class="row card-group w-60 mt-5 mb-4 ms-8 p-5 ">
         <?php foreach ($allBookingByIdFormated as $booking) {
         ?>
@@ -60,6 +65,7 @@ include("inner-nav.php");
             </div>
         <?php
         }
+    }
         ?>
 
     </div>

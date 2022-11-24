@@ -33,12 +33,13 @@
         public function showCouponListKeepView()
         {
             require_once(VIEWS_PATH . "validate-session-keep.php");
+            //require_once(VIEWS_PATH. "nav-bar-keeper.php");
             $arraySession = array(); 
             $arraySession = $_SESSION["userLogged"];
             $idKeepLogged = $arraySession->getId();
             $couponListByIdKeep = $this->couponDAO->getAllByIdKeeper($idKeepLogged);
             
-            $arrayCouponBookInfo = array();
+            $arrayCouponBookInfoKeep = array();
             foreach($couponListByIdKeep as $coupon) //Uso el objeto coupon para copiar su contenido en un array
             {                                       //Y dps creo un objeto booking -bookInfo- donde obtengo el resto de datos
                 $infoCouponArr["couponId"] = $coupon->getCouponid();
@@ -63,14 +64,15 @@
                 $auxAsoc = $this->petDAO->getPetName($bookInfo->getidPet());
                 $infoCouponArr["petId"] = $auxAsoc["name"];
                 
-                array_push($arrayCouponBookInfo,$infoCouponArr); //Pusheo todo al arreglo a iterar en el html
+                array_push($arrayCouponBookInfoKeep,$infoCouponArr); //Pusheo todo al arreglo a iterar en el html
             }
             require_once(VIEWS_PATH. "coupons-list-keep.php");
         }
 
-        public function showCouponListOwnView()
+        public function showCouponListOwnView($message = "")
         {
             require_once(VIEWS_PATH . "validate-session-own.php");
+            
             $arraySession = array(); 
             $arraySession = $_SESSION["userLogged"];
             $idOwnerLogged = $arraySession->getId();
@@ -104,5 +106,111 @@
                 array_push($arrayCouponBookInfoOwn,$infoCouponArr); //Pusheo todo al arreglo a iterar en el html
             }
             require_once(VIEWS_PATH. "coupons-list-own.php");
+
+        }
+
+        public function showPaymentCoupBook($couponId)
+        {
+            require_once(VIEWS_PATH . "validate-session-own.php");
+            
+            $coupon = $this->couponDAO->getCouponById($couponId); //Busco el cupon pasado por parametro
+
+            $book = $this->bookingDAO->getOneBook($coupon->getCodebook());//Del buscado de arriba 'extraigo' la info del booking
+
+                $infoCouponArr["couponId"] = $coupon->getCouponid();
+                $infoCouponArr["total"] = $coupon->getTotal();
+                $infoCouponArr["subtotal"] = $coupon->getSubtotal();
+                $infoCouponArr["codeBook"] = $coupon->getCodebook();
+                $infoCouponArr["couponStatus"] = $coupon->getCouponStatus();
+
+                $infoCouponArr["endDate"] = $book->getEndDate();
+                $infoCouponArr["initDate"] = $book->getInitDate();
+                $infoCouponArr["status"] = $book->getStatus();
+                $infoCouponArr["initDate"] = $book->getInitDate();
+                $infoCouponArr["endDate"] = $book->getEndDate();
+                $infoCouponArr["status"] = $book->getStatus();
+
+                //Trayendo cada objeto para la informacion total
+                $keeperObj = $this->keeperDAO->searchKeeperById($book->getIdKeeper());
+
+                $petObj = $this->petDAO->getPetById($book->getidPet());
+
+                $auxAsoc =$this->ownerDAO->getUsernameOwner($book->getIdOwner());
+                $infoCouponArr["ownerId"] = $auxAsoc["username"];
+
+                $auxAsoc = $this->keeperDAO->getUsernameKeeper($book->getIdKeeper());
+                $infoCouponArr["keeperId"] = $auxAsoc["username"];
+
+                $auxAsoc = $this->petDAO->getPetName($book->getidPet());
+                $infoCouponArr["petId"] = $auxAsoc["name"];
+
+                require_once(VIEWS_PATH. "payment-book.php");
+
+        }
+
+        public function getCurrentDate()
+        {
+            date_default_timezone_set('America/Argentina/Buenos_Aires');
+            $currentDate = date("Y-m");
+            return $currentDate;
+        }
+
+        public function payOutCoupBook($couponId,$codeBook,$cardnumber,$expire,$cvc,$cardname)
+        {
+            $currentDate = $this->getCurrentDate();
+            try
+            {
+                    if(!empty($cardnumber))
+                    {
+                        if(strlen($cardnumber) == 16)
+                        {
+                            if(!empty($expire))
+                            {
+                                if($expire >= $currentDate)
+                                {
+                                    if(!empty($cvc))
+                                    {
+                                        if(strlen($cvc) == 3)
+                                        {
+                                            if(!empty($cardname))
+                                            {
+                                                $this->bookingDAO->updateBooking("confirmed",$codeBook);
+                                                $this->couponDAO->updateCouponStatus($couponId,"confirmed");
+                                                $this->showCouponListOwnView("Booking successfully payed!");
+                                            }else
+                                            {
+                                                throw new Exception("The field '<b>Cardholder Name</b>' cannot be empty.");
+                                            }
+                                        }else
+                                        {
+                                            throw new Exception("Invalid CVC.");
+                                        }
+                                    }else{
+                                        throw new Exception("The field '<b>CVC</b>' cannot be empty.");
+                                    }
+                                }else
+                                {
+                                    throw new Exception("Your card is expired.");
+                                }
+                            }else
+                            {
+                                throw new Exception("The field '<b>Expires</b>' cannot be empty.");
+                            }
+                        }else
+                        {
+                            throw new Exception("Invalid card number.");
+                        }
+                    }else
+                    {
+                        throw new Exception("The field '<b>Card Number</b>' cannot be empty.");
+                    }
+            }catch(Exception $e){
+
+                $message = $e->getMessage();
+                require_once(VIEWS_PATH . "payment-book.php");
+
+
+            }
+          
         }
     }

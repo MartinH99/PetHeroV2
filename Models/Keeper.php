@@ -151,6 +151,26 @@ class Keeper extends User
                 return $this->typeKeep;
         }
 
+        public function getTypeKeep2()
+        {
+                switch($this->typeKeep)
+                {
+                     case 1:
+                        $this->typeKeep = 'small';
+                        break;
+                        
+                        case 2:
+                                $this->typeKeep = 'medium';
+                                break;
+
+                                case 3:
+                                        $this->typeKeep = 'large';
+                                        break;
+
+                }
+                return $this->typeKeep;
+        }
+
         /**
          * Set the value of typeKeep
          *

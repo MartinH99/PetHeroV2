@@ -106,7 +106,7 @@ class CouponDAO
         }
     }
 
-    public function mapping2Booking($value)
+    public function mapping2Coupon($value)
         {
             $value = is_array($value) ? $value : []; //Si es arreglo sigue con su valor sino se hace uno vacio  
 
@@ -154,8 +154,6 @@ class CouponDAO
                     $coupon->setCodeBook($row["codeBook"]);
                     $coupon->setCouponStatus($row["couponStatus"]);
 
-                    //var_dump($coupon);
-
                     array_push($couponListByIdKeeper, $coupon);
                 }
 
@@ -195,8 +193,6 @@ class CouponDAO
                     $coupon->setCodeBook($row["codeBook"]);
                     $coupon->setCouponStatus($row["couponStatus"]);
 
-                    var_dump($coupon);
-
                     array_push($couponListByIdOwner, $coupon);
                 }
 
@@ -207,6 +203,59 @@ class CouponDAO
                 throw $ex;
             }
         }
+
+        public function getCouponById($couponId)
+        {
+            
+            try
+            {
+                $query = "SELECT * FROM $this->tablename WHERE couponId = :couponId;";
+                $parameters["couponId"] = $couponId;
+
+                $this->connection = Connection::GetInstance();
+                $result = $this->connection->Execute($query,$parameters); //Tendria que devolver el array asociativo...
+                $newResult  = reset($result);
+
+                 //Si devuelve 1 es xq el Execute retorno alguna fila y sino error
+            }catch(Exception $ex)
+            {
+                throw $ex;
+            }
+
+
+            if(!empty($newResult))
+            {
+
+                return $this->mapping2Coupon($newResult);
+                //Result viene en un array asocitativo,pero estamos trabajado con POO...
+            }else 
+            {
+                return false;
+            }
+        }
+
+        public function updateCouponStatus($couponId,$couponStatus)
+        {
+            try
+            {
+                $query = "UPDATE $this->tablename SET `couponStatus` = :couponStatus where couponId = :couponId;";
+    
+                $this->connection = Connection::GetInstance();
+                $parameters["couponStatus"] = $couponStatus;
+                $parameters["couponId"] = $couponId;
+               
+                
+                
+                $result = $this->connection->ExecuteNonQuery($query, $parameters);
+      
+                
+                
+            }catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+    
 }
 
 ?>
