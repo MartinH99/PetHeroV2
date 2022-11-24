@@ -50,11 +50,16 @@
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <p class="textmuted">Days</p> <!-- Sacar de interval cant dias -->
-                            <p class="fs-14 fw-bold">X</p>
+                            <p class="fs-14 fw-bold"><?php echo $infoCouponArr["interv"] ?></p>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
+                            <p class="textmuted">Total</p>
+                            <p class="fs-14 fw-bold"><span class="fas fa-dollar-sign pe-1"></span><?php echo $infoCouponArr["total"]  ?></p>
+                        </div>
+                    
+                        <div class="d-flex justify-content-between mb-2">
                             <p class="textmuted">Subtotal</p>
-                            <p class="fs-14 fw-bold"><span class="fas fa-dollar-sign pe-1"></span>xxxxx</p>
+                            <p class="fs-14 fw-bold"><span class="fas fa-dollar-sign pe-1"></span><?php echo $infoCouponArr["subtotal"]  ?></p>
                         </div>
                         <!-- <div class="d-flex justify-content-between mb-2">
                             <p class="textmuted">Shipping</p>
@@ -62,7 +67,7 @@
                         </div> -->
                         <div class="d-flex justify-content-between mb-2">
                             <p class="textmuted">Pending 50%</p>
-                            <p class="fs-14 fw-bold">-<span class="fas fa-dollar-sign px-1"></span>(50%)<?php echo $infoCouponArr["subtotal"]  ?></p>
+                            <p class="fs-14 fw-bold text-danger">-<span class="fas fa-dollar-sign px-1"></span><?php echo $infoCouponArr["subtotal"]  ?></p>
                         </div>
                         <div class="d-flex justify-content-between mb-3">
                             <p class="textmuted fw-bold">Total</p>

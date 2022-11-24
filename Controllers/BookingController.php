@@ -286,7 +286,7 @@ class BookingController
                 $petObj = $this->petDAO->getPetById($bookInfo->getidPet());
 
                 $ownerObj = $this->ownerDAO->searchOwnerById($bookInfo->getIdOwner());
-                
+
                 //Voy reemplazando la var auxAsoc recibiendo un key->value que es el resultado de la consulta de la funcion
                 $auxAsoc =$this->ownerDAO->getUsernameOwner($bookInfo->getIdOwner());
                 $infoCouponArr["ownerId"] = $auxAsoc["username"];
@@ -352,8 +352,12 @@ class BookingController
         {
             $coupon = new Coupon();
             $keeper = $this->keeperDAO->searchKeeperById($bookingAux->getIdKeeper());//Creo un obj para tener la info de Keeper
-            $coupon->setTotal($keeper->getPrice() * $keeper->getInterval()); //El precio del cupon es por la cant de dias
-            $coupon->setsubTotal(($keeper->getPrice() * $keeper->getInterval() )/2);//El subtotal del cupon es por la cant de dias
+            $initPrice = $keeper->getPrice();
+            $days = $bookingAux->getInterval();
+            $total = $initPrice * $days;
+            $coupon->setTotal($total); //El precio del cupon es por la cant de dias
+            $subTotal = $total/2;
+            $coupon->setsubTotal($subTotal);//El subtotal del cupon es por la cant de dias
             $coupon->setCodeBook($codeBook);
             $coupon->setCouponStatus("accepted");
             $this->couponDAO->generateCoupon($coupon);

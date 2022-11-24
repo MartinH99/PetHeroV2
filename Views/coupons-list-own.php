@@ -30,8 +30,8 @@ include("inner-nav.php");
                             <ul class="list-group list-group-flush">
                             <li class="list-group-item">Coupon asoc :<?php echo $fullCouponBook["couponId"]; ?></li>
                             <li class="list-group-item">Codebook :<?php echo $fullCouponBook["codeBook"]; ?></li>
-                                <li class="list-group-item">Total :<?php echo $fullCouponBook["total"]; ?></li>
-                                <li class="list-group-item">Subtotal :<?php echo $fullCouponBook["subtotal"]; ?></li>
+                                <li class="list-group-item">Total :<?php echo " $ ".$fullCouponBook["total"]; ?></li>
+                                <li class="list-group-item">Subtotal :<?php echo " $ ".$fullCouponBook["subtotal"]; ?></li>
                                 <li class="list-group-item">Coupon status :<?php echo $fullCouponBook["couponStatus"]; ?></li>
                             </ul>
                         
@@ -45,23 +45,23 @@ include("inner-nav.php");
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">Initial Date : <?php echo $fullCouponBook["initDate"]; ?></li>
                                 <li class="list-group-item">End Date :<?php echo $fullCouponBook["endDate"];?></li>
-                                <li class="list-group-item">Total Days :<?php echo "placeholder";?></li>
+                                <li class="list-group-item">Total Days :<?php echo $fullCouponBook["interv"];?></li>
                             </ul>
                             </div>
 
                             <div class="d-flex justify-content-between card-footer">
 
-                                <!-- <button type="submit" class="btn" name="codeBook" value="<?php  ?>" id="danger-outlined"> Modify </button> -->
+                            <button type="submit" class="btn" name="couponId" value="<?php echo $fullCouponBook["couponId"] ?>" id="danger-outlined"> Apply </button>
 
                                 <?php if($fullCouponBook["couponStatus"] == "accepted" && $fullCouponBook["status"] == "accepted")
                                 { ?>
                                         <div class="form-check">
-                                            <button type="submit" class="btn bg-success text-white" name="couponId" value="<?php echo $fullCouponBook["couponId"] ?>">Pay booking</button>
+                                            <input class="btn bg-success text-white" name="status" type="radio" value="confirmed" id="Confirmed" />Pay booking
                                         </div>
                                <?php } ?>
             
                                 <div class="form-check">
-                                    <a href="#" class="btn bg-danger text-white" name="couponId" v type="button">Cancel booking</a>
+                                <input class="btn bg-danger text-white" name="status" type="radio" value="cancelled" id="Cancelled" />Cancel booking
                                 </div>
                             </div>
                     </div>

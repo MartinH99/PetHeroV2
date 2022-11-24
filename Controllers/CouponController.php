@@ -51,6 +51,7 @@
                 $bookInfo = $this->bookingDAO->getOneBook($coupon->getCodebook());
                 
                 $infoCouponArr["initDate"] = $bookInfo->getInitDate();
+                $infoCouponArr["interv"] = $bookInfo->getInterval();
                 $infoCouponArr["endDate"] = $bookInfo->getEndDate();
                 $infoCouponArr["status"] = $bookInfo->getStatus();
                
@@ -90,6 +91,7 @@
                 $bookInfo = $this->bookingDAO->getOneBook($coupon->getCodebook());
                 
                 $infoCouponArr["initDate"] = $bookInfo->getInitDate();
+                $infoCouponArr["interv"] = $bookInfo->getInterval();
                 $infoCouponArr["endDate"] = $bookInfo->getEndDate();
                 $infoCouponArr["status"] = $bookInfo->getStatus();
                
@@ -109,24 +111,24 @@
 
         }
 
-        public function showPaymentCoupBook($couponId)
+        public function showPaymentCoupBook($couponId,$status)
         {
             require_once(VIEWS_PATH . "validate-session-own.php");
             
+
             $coupon = $this->couponDAO->getCouponById($couponId); //Busco el cupon pasado por parametro
 
             $book = $this->bookingDAO->getOneBook($coupon->getCodebook());//Del buscado de arriba 'extraigo' la info del booking
-
+            if($status == "confirmed")
+            {
                 $infoCouponArr["couponId"] = $coupon->getCouponid();
                 $infoCouponArr["total"] = $coupon->getTotal();
                 $infoCouponArr["subtotal"] = $coupon->getSubtotal();
                 $infoCouponArr["codeBook"] = $coupon->getCodebook();
                 $infoCouponArr["couponStatus"] = $coupon->getCouponStatus();
 
-                $infoCouponArr["endDate"] = $book->getEndDate();
                 $infoCouponArr["initDate"] = $book->getInitDate();
-                $infoCouponArr["status"] = $book->getStatus();
-                $infoCouponArr["initDate"] = $book->getInitDate();
+                $infoCouponArr["interv"] = $book->getInterval();
                 $infoCouponArr["endDate"] = $book->getEndDate();
                 $infoCouponArr["status"] = $book->getStatus();
 
@@ -145,6 +147,13 @@
                 $infoCouponArr["petId"] = $auxAsoc["name"];
 
                 require_once(VIEWS_PATH. "payment-book.php");
+            }else if($status == "cancelled")
+            {
+                $this->bookingDAO->updateBooking("cancelled",$coupon->getCodeBook());
+                $this->couponDAO->updateCouponStatus($couponId,"cancelled");
+                $this->showCouponListOwnView("Booking cancelled,don't do it again!");
+            }
+                
 
         }
 
@@ -213,4 +222,6 @@
             }
           
         }
+
+        
     }
