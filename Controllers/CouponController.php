@@ -151,7 +151,7 @@
         public function getCurrentDate()
         {
             date_default_timezone_set('America/Argentina/Buenos_Aires');
-            $currentDate = date("MM/YYYY");
+            $currentDate = date("Y-m");
             return $currentDate;
         }
 
@@ -166,7 +166,7 @@
                         {
                             if(!empty($expire))
                             {
-                                if($expire < $currentDate)
+                                if($expire >= $currentDate)
                                 {
                                     if(!empty($cvc))
                                     {
