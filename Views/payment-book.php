@@ -12,6 +12,8 @@
                             alt="">
                     </div>
                     <div class="row m-0 bg-light">
+                        <?php
+                        if(isset($infoCouponArr["keeperId"])){?>
                         <div class="col-md-4 col-6 ps-30 pe-0 my-4">
                             <p class="text-muted">Keeper username</p>
                             <p class="h5"><?php echo $infoCouponArr["keeperId"] ?>
@@ -36,6 +38,7 @@
                             <p class="text-muted">Stars</p>
                             <p class="h5 m-0"><?php echo $keeperObj->getStars() ?></p>
                         </div>
+                        <?php }?>
                     </div>
                 </div>
             </div>
@@ -77,24 +80,24 @@
                             <div class="col-12 px-4">
                                 <div class="d-flex  mb-4">
                                     <span class="">
-                                        <p class="text-muted">Card number</p>
-                                        <input class="form-control" type="text" value="4485 6888 2359 1498"
+                                        <p class="text-muted">Card number <br><sub>(no blanks)</sub></p>
+                                        <input class="form-control" type="text" name="cardnumber" value="<?php if (isset($_POST["cardnumber"])) echo $_POST["cardnumber"]?>"
                                             placeholder="1234 5678 9012 3456">
                                     </span>
                                     <div class=" w-100 d-flex flex-column align-items-end">
                                         <p class="text-muted">Expires</p>
-                                        <input class="form-control2" type="text" value="01/2020" placeholder="MM/YYYY">
+                                        <input class="form-control2" type="text" name="expire" value="<?php if (isset($_POST["expire"])) echo $_POST["expire"]?>" placeholder="MM/YYYY">
                                     </div>
                                 </div>
                                 <div class="d-flex mb-5">
                                     <span class="me-5">
                                         <p class="text-muted">Cardholder name</p>
-                                        <input class="form-control" type="text" value="Jorge Equis"
+                                        <input class="form-control" type="text" name="cardname" value="<?php if (isset($_POST["cardname"])) echo $_POST["cardname"]?>"
                                             placeholder="Name">
                                     </span>
                                     <div class="w-100 d-flex flex-column align-items-end">
                                         <p class="text-muted">CVC</p>
-                                        <input class="form-control3" type="text" value="630" placeholder="XXX">
+                                        <input class="form-control3" type="text" name="cvc" value="<?php if (isset($_POST["cvc"])) echo $_POST["cvc"]?>" placeholder="XXX">
                                     </div>
                                 </div>
                             </div>
@@ -103,6 +106,11 @@
                             <input type="hidden" name="codeBook"  value="<?php echo $infoCouponArr["codeBook"] ?>" >
                         </div>
                         <div class="row m-0">
+                        <?php if (isset($message)) { ?>
+                        <p style="color:#ff0000;">
+                        <?php echo $message; ?>
+                        </p>
+                        <?php } ?>
                             <div class="col-12  mb-4 p-0">
                                 <button type="submit" class="btn btn-primary">Purchase<span class="fas fa-arrow-right ps-2"></span>
                                 </button>
