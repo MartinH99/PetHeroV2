@@ -154,8 +154,6 @@ class CouponDAO
                     $coupon->setCodeBook($row["codeBook"]);
                     $coupon->setCouponStatus($row["couponStatus"]);
 
-                    //var_dump($coupon);
-
                     array_push($couponListByIdKeeper, $coupon);
                 }
 
@@ -194,8 +192,6 @@ class CouponDAO
                     $coupon->setSubtotal($row["subtotal"]);
                     $coupon->setCodeBook($row["codeBook"]);
                     $coupon->setCouponStatus($row["couponStatus"]);
-
-                    var_dump($coupon);
 
                     array_push($couponListByIdOwner, $coupon);
                 }

@@ -25,6 +25,8 @@ include("inner-nav.php");
 
                         <h5 class="card-title text-dark fs-6 d-flex justify-content-center ">Coupon Info
                             <ul class="list-group list-group-flush">
+                               <li class="list-group-item">Coupon asoc :<?php echo $fullCouponBook["couponId"]; ?></li>
+                                <li class="list-group-item">Codebook :<?php echo $fullCouponBook["codeBook"]; ?></li>
                                 <li class="list-group-item">Total :<?php echo $fullCouponBook["total"]; ?></li>
                                 <li class="list-group-item">Subtotal :<?php echo $fullCouponBook["subtotal"]; ?></li>
                                 <li class="list-group-item">Coupon status :<?php echo $fullCouponBook["couponStatus"]; ?></li>

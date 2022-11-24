@@ -69,7 +69,7 @@
             require_once(VIEWS_PATH. "coupons-list-keep.php");
         }
 
-        public function showCouponListOwnView()
+        public function showCouponListOwnView($message = "")
         {
             require_once(VIEWS_PATH . "validate-session-own.php");
             
@@ -106,6 +106,7 @@
                 array_push($arrayCouponBookInfoOwn,$infoCouponArr); //Pusheo todo al arreglo a iterar en el html
             }
             require_once(VIEWS_PATH. "coupons-list-own.php");
+
         }
 
         public function showPaymentCoupBook($couponId)
@@ -147,11 +148,69 @@
 
         }
 
-        public function payOutCoupBook($couponId,$codeBook)
+        public function getCurrentDate()
         {
-            $this->bookingDAO->updateBooking("confirmed",$codeBook);
-            $this->couponDAO->updateCouponStatus($couponId,"confirmed");
-            require_once(VIEWS_PATH. "coupons-list-own.php"); //Estaria bueno que diga "Pagaste tu reserva Jorge Owner"
-            $this->showCouponListOwnView();
+            date_default_timezone_set('America/Argentina/Buenos_Aires');
+            $currentDate = date("Y-m");
+            return $currentDate;
+        }
+
+        public function payOutCoupBook($couponId,$codeBook,$cardnumber,$expire,$cvc,$cardname)
+        {
+            $currentDate = $this->getCurrentDate();
+            try
+            {
+                    if(!empty($cardnumber))
+                    {
+                        if(strlen($cardnumber) == 16)
+                        {
+                            if(!empty($expire))
+                            {
+                                if($expire >= $currentDate)
+                                {
+                                    if(!empty($cvc))
+                                    {
+                                        if(strlen($cvc) == 3)
+                                        {
+                                            if(!empty($cardname))
+                                            {
+                                                $this->bookingDAO->updateBooking("confirmed",$codeBook);
+                                                $this->couponDAO->updateCouponStatus($couponId,"confirmed");
+                                                $this->showCouponListOwnView("Booking successfully payed!");
+                                            }else
+                                            {
+                                                throw new Exception("The field '<b>Cardholder Name</b>' cannot be empty.");
+                                            }
+                                        }else
+                                        {
+                                            throw new Exception("Invalid CVC.");
+                                        }
+                                    }else{
+                                        throw new Exception("The field '<b>CVC</b>' cannot be empty.");
+                                    }
+                                }else
+                                {
+                                    throw new Exception("Your card is expired.");
+                                }
+                            }else
+                            {
+                                throw new Exception("The field '<b>Expires</b>' cannot be empty.");
+                            }
+                        }else
+                        {
+                            throw new Exception("Invalid card number.");
+                        }
+                    }else
+                    {
+                        throw new Exception("The field '<b>Card Number</b>' cannot be empty.");
+                    }
+            }catch(Exception $e){
+
+                $message = $e->getMessage();
+                require_once(VIEWS_PATH . "payment-book.php");
+
+
+            }
+          
         }
     }

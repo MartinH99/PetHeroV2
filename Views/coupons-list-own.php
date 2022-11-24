@@ -5,7 +5,12 @@ include("inner-nav.php");
 ?>
 
 <h1>Coupons list</h1>
-<form action="<?php echo FRONT_ROOT."Coupon/showPaymentCoupBook"?>" method="post">
+<form action="<?php echo FRONT_ROOT . "Coupon/showPaymentCoupBook" ?>" method="post">
+    <?php if (isset($message)) { ?>
+        <p style="color:#00cc00;">
+            <?php echo $message; ?>
+        </p>
+    <?php } ?>
 
 
         <div class="row card-group w-60 mt-5 mb-4 ms-8 p-5 ">
